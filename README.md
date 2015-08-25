@@ -1,4 +1,4 @@
-# Ansible Role: Compass
+# Ansible Role: NPM
 
 Installs any number of NPM packages on RHEL/CentOS and Debian/Ubuntu servers.
 
@@ -25,7 +25,7 @@ Available variables are listed below, along with default values (see `defaults/m
   ### Notes
 
   This system was built in mind for DrupalVM.
-  
+
   The role fubarhouse.nodejs is currently under development.
 
 ## Example Playbook
