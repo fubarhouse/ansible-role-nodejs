@@ -1,12 +1,6 @@
 ---
 # file: roles/compass/tasks/main.yml
 
-- name: "Compass | Install Packages"
-  apt: pkg={{item}} state=installed
-  with_items:
-    - ruby-full
-    - rubygems
-
-- name: "Compass | Install Gems"
-  shell: gem install {{item}}
-  with_items: "{{compass_gems}}"
+- name: "NPM | Install Packages"
+  shell: npm install {{item}}
+  with_items: "{{npm_packages}}"
