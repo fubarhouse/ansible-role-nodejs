@@ -1,0 +1,6 @@
+---
+# compass gems to install
+compass_gems:
+  - bundler
+  - sass
+  - compass
