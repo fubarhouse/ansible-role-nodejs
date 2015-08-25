@@ -25,6 +25,8 @@ Available variables are listed below, along with default values (see `defaults/m
   ### Notes
 
   This system was built in mind for DrupalVM.
+  
+  The role fubarhouse.nodejs is currently under development.
 
 ## Example Playbook
 
