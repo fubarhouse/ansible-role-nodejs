@@ -2,6 +2,7 @@
 
 * Installs NVM (Node Version Manager)
 * Installs Node.js (Node Javascript Library)
+* Installs IOJS (Variant of Node.js)
 * Installs NPM (Node Package Manager)
 * Installs an array of NPM packages
 
@@ -15,19 +16,27 @@ Available variables are listed below, along with default values (see `defaults/m
 
 **Change the default NVM version.**
 
+```
 default_nvm_version: 0.26.1
+```
 
 **Change the default Node.js version.**
 
+```
 default_node_version: 0.12.7
+```
 
 **Change the default IO.JS version.**
 
+```
 default_io_version: 3.2.0
+```
 
 **Default username**
 
+```
 vagrant_user: vagrant
+```
 
 **Default NPM packages to install**
 
