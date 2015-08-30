@@ -48,6 +48,16 @@
   shell: export PATH=~/node_modules/.bin:$PATH
   when: "'{{ default_node_version }}' not in node_install_result.stdout"
 
+- name: "IOJS | Check"
+  shell: sudo -iu {{ vagrant_user }} nvm ls | grep "iojs-v{{ default_io_version }}"
+  register: io_install_result
+  ignore_errors: True
+  no_log: True
+
+- name: IOJS | Install
+  shell: sudo -iu {{ vagrant_user }} nvm install iojs-v{{ default_io_version }}
+  when: "'{{ default_io_version }}' not in io_install_result.stdout"
+
 - name: "NPM | Check installed packages"
   shell: /usr/local/.nvm/versions/node/v0.12.7/bin/npm list -g -depth=0
   register: installed_npm_packages

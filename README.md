@@ -13,27 +13,38 @@ Requirements are self-contained.
 
 Available variables are listed below, along with default values (see `defaults/main.yml`):
 
-**Change the default node version to install another version by default.**
+**Change the default NVM version.**
+
+default_nvm_version: 0.26.1
+
+**Change the default Node.js version.**
+
 default_node_version: 0.12.7
 
-**Change vagrant_user to the user on the system installing the software**
+**Change the default IO.JS version.**
+
+default_io_version: 3.2.0
+
+**Default username**
+
 vagrant_user: vagrant
 
-**Add or remove packages to meet your needs**
-  npm_packages:<br />
-    - backbone<br />
-    - grunt<br />
-    - underscore<br />
-    - yo
+**Default NPM packages to install**
+
+````  npm_packages:
+    - backbone
+    - grunt
+    - underscore
+    - yo ````
 
 ## Dependencies
 
   Dependencies will be installed as part of the provisioning process.
 
-  - git<br />
-  - curl<br />
-  - build-essential<br />
-  - libssl-dev<br />
+````  - git
+  - curl
+  - build-essential
+  - libssl-dev````
 
   ### Notes
 
@@ -55,4 +66,5 @@ MIT / BSD
 ## Author Information
 
 This role was created in 2015 by [Karl Hepworth](https://twitter.com/fubarhouse).
+
 Inspired from several role packages created by [Jeff Geerling](https://github.com/geerlingguy/).
