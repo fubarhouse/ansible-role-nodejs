@@ -55,7 +55,11 @@
   no_log: True
 
 - name: IOJS | Install
+<<<<<<< HEAD
   shell: sudo -iu {{ vagrant_user }} nvm install iojs-v{{ default_io_version }}
+=======
+  shell: nvm install iojs-v{{ default_io_version }}
+>>>>>>> d1a78a3a144d0f629ad7d052e092ec4ca1becafb
   when: "'{{ default_io_version }}' not in io_install_result.stdout"
 
 - name: "NPM | Check installed packages"
