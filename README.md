@@ -31,20 +31,24 @@ vagrant_user: vagrant
 
 **Default NPM packages to install**
 
-```  npm_packages:
+```
+  npm_packages:
     - backbone
     - grunt
     - underscore
-    - yo ```
+    - yo
+```
 
 ## Dependencies
 
   Dependencies will be installed as part of the provisioning process.
 
-```  - git
+```
+  - git
   - curl
   - build-essential
-  - libssl-dev```
+  - libssl-dev
+```
 
   ### Notes
 
@@ -52,7 +56,9 @@ vagrant_user: vagrant
 
 ## Example Playbook
 
-```  - { role: fubarhouse.npm, when: '"npm" in installed_extras' } ```
+```
+  - { role: fubarhouse.npm, when: '"npm" in installed_extras' }
+```
 
 ## Installation
 
