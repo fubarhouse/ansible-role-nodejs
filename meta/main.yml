@@ -1,0 +1,19 @@
+---
+dependencies: []
+
+galaxy_info:
+  author: fubarhouse
+  description: Provisions Node.js and a collection of NPM packages via NVM.
+  license: "license (BSD, MIT)"
+  min_ansible_version: 1.7.4
+  platforms:
+  - name: Ubuntu
+    versions:
+    - all
+  - name: Debian
+    versions:
+    - all
+  categories:
+    - system
+    - database
+    - development
