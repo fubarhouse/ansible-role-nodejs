@@ -1,42 +1,52 @@
 # Ansible Role: NPM
 
-Installs any number of NPM packages on RHEL/CentOS and Debian/Ubuntu servers.
+* Installs NVM (Node Version Manager)
+* Installs Node.js (Node Javascript Library)
+* Installs NPM (Node Package Manager)
+* Installs an array of NPM packages
 
 ## Requirements
 
-Requires `node.js` to be installed on the server.
-
-Recommended to use ansible role fubarhouse.compass to remove dependency issues.
+Requirements are self-contained.
 
 ## Role Variables
 
 Available variables are listed below, along with default values (see `defaults/main.yml`):
 
+**Change the default node version to install another version by default.**
+default_node_version: 0.12.7
+
+**Change vagrant_user to the user on the system installing the software**
+vagrant_user: vagrant
+
+**Add or remove packages to meet your needs**
   npm_packages:<br />
     - backbone<br />
     - grunt<br />
     - underscore<br />
-    - yo<br />
+    - yo
 
 ## Dependencies
 
-  Node.js
+  Dependencies will be installed as part of the provisioning process.
+
+  - git<br />
+  - curl<br />
+  - build-essential<br />
+  - libssl-dev<br />
 
   ### Notes
 
   This system was built in mind for DrupalVM.
 
-  The role fubarhouse.nodejs is currently under development.
-
 ## Example Playbook
 
-````  - { role: fubarhouse.npm, when: '"nodejs" in installed_extras' } ````
+````  - { role: fubarhouse.npm, when: '"npm" in installed_extras' } ````
 
 ## Installation
 
-  * Add fubarhouse.nodejs to your roles list.
   * Add fubarhouse.npm to your roles list.
-  * Override npm_packages variable in your config.yml as required.
+  * Override variables in your config.yml as required.
 
 ## License
 

@@ -1,7 +1,14 @@
 ---
+# default node application versions
+default_nvm_version: 0.26.1
+default_node_version: 0.12.7
+
+# default user name
+vagrant_user: vagrant
+
 # packages to install
 npm_packages:
-  - backbone
-  - grunt
-  - underscore
-  - yo
+  - { name: backbone }
+  - { name: grunt }
+  - { name: underscore }
+  - { name: yosay }
