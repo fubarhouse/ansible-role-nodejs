@@ -1,71 +1,10 @@
 ---
 # file: roles/compass/tasks/main.yml
 
-- name: "NVM | Check"
-  stat: path=/usr/local/.nvm/nvm.sh
-  register: nvm_installed
+- include: nvm.yml
 
-- name: "NVM | Install dependencies"
-  apt: name={{ item }} state=present
-  with_items:
-    - git
-    - curl
-    - build-essential
-    - libssl-dev
-  when: nvm_installed.stat.exists == false
+- include: nodejs.yml
 
-- name: "NVM | Prepare"
-  file: path=/usr/local/.nvm state=directory mode=0777 recurse=yes
-  when: nvm_installed.stat.exists == false
+- include: iojs.yml
 
-- name: "NVM | Install"
-  shell: curl -o- https://raw.githubusercontent.com/creationix/nvm/v{{ default_nvm_version }}/install.sh  | NVM_DIR=/usr/local/.nvm bash
-  when: nvm_installed.stat.exists == false
-
-- name: "NodeJS | Check"
-  shell: sudo -iu {{ vagrant_user }} nvm ls | grep {{ default_node_version }}
-  register: node_install_result
-  ignore_errors: True
-  no_log: True
-
-- name: "NodeJS | Prepare"
-  sudo: yes
-  sudo_user: "{{ vagrant_user }}"
-  lineinfile: >
-    dest=~/.profile
-    line="source /usr/local/.nvm/nvm.sh"
-  when: "'{{ default_node_version }}' not in node_install_result.stdout"
-
-- name: "NodeJS | Install"
-  shell: sudo -iu {{ vagrant_user }} nvm install {{ default_node_version }}
-  when: "'{{ default_node_version }}' not in node_install_result.stdout"
-
-- name: "NodeJS | Linking"
-  shell: sudo -iu {{ vagrant_user }} nvm alias default {{ default_node_version }}
-  when: "'{{ default_node_version }}' not in node_install_result.stdout"
-
-- name: "NodeJS | Configure"
-  shell: export PATH=~/node_modules/.bin:$PATH
-  when: "'{{ default_node_version }}' not in node_install_result.stdout"
-
-- name: "IOJS | Check"
-  shell: sudo -iu {{ vagrant_user }} nvm ls | grep "iojs-v{{ default_io_version }}"
-  register: io_install_result
-  ignore_errors: True
-  no_log: True
-
-- name: IOJS | Install
-  shell: sudo -iu {{ vagrant_user }} nvm install iojs-v{{ default_io_version }}
-  when: "'{{ default_io_version }}' not in io_install_result.stdout"
-
-- name: "NPM | Check installed packages"
-  shell: /usr/local/.nvm/versions/node/v0.12.7/bin/npm list -g -depth=0
-  register: installed_npm_packages
-  ignore_errors: True
-  no_log: True
-
-- name: "NPM | Install packages"
-  shell: sudo -iu {{ vagrant_user }} npm install -g {{ item.name }}
-  with_items:
-  - "{{ npm_packages }}"
-  when: "item.name not in installed_npm_packages.stdout"
+- include: npm.yml
