@@ -1,5 +1,5 @@
 ---
-# file: roles/compass/tasks/main.yml
+# file: roles/fubarhouse.npm/tasks/main.yml
 
 - include: nvm.yml
 

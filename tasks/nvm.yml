@@ -1,5 +1,5 @@
 ---
-# file: roles/compass/tasks/nvm.yml
+# file: roles/fubarhouse.npm/tasks/nvm.yml
 
 - name: "NVM | Check"
   stat: path=/usr/local/.nvm/nvm.sh
@@ -19,5 +19,5 @@
   when: nvm_installed.stat.exists == false
 
 - name: "NVM | Install"
-  shell: curl -o- https://raw.githubusercontent.com/creationix/nvm/v{{ default_nvm_version }}/install.sh  | NVM_DIR=/usr/local/.nvm bash
+  shell: curl -o- https://raw.githubusercontent.com/creationix/nvm/v{{ default_nvm_version }}/install.sh | NVM_DIR=/usr/local/.nvm bash
   when: nvm_installed.stat.exists == false

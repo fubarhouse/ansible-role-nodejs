@@ -1,5 +1,5 @@
 ---
-# file: roles/compass/tasks/iojs.yml
+# file: roles/fubarhouse.npm/tasks/iojs.yml
 
 - name: "IOJS | Check"
   shell: sudo -iu {{ vagrant_user }} nvm ls | grep "iojs-v{{ default_io_version }}"

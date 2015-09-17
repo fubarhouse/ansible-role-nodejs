@@ -1,5 +1,5 @@
 ---
-# file: roles/compass/tasks/npm.yml
+# file: roles/fubarhouse.npm/tasks/npm.yml
 
 - name: "NPM | Check installed packages"
   sudo: yes
@@ -16,3 +16,11 @@
   with_items:
   - "{{ npm_packages }}"
   when: "item.name not in installed_npm_packages.stdout"
+
+- name: "NPM | Update packages"
+  sudo: yes
+  sudo_user: "{{ vagrant_user }}"
+  shell: sudo -iu {{ vagrant_user }} npm update -g {{ item.name }} --save-dev
+  with_items:
+  - "{{ npm_packages }}"
+  when: "item.name in installed_npm_packages.stdout"
