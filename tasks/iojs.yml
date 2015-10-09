@@ -2,11 +2,11 @@
 # file: roles/fubarhouse.npm/tasks/iojs.yml
 
 - name: "IOJS | Check"
-  shell: sudo -iu {{ vagrant_user }} nvm ls | grep "iojs-v{{ default_io_version }}"
+  raw: . {{ nvm_usr_location }}/nvm.sh && nvm ls
   register: io_install_result
   ignore_errors: True
   no_log: True
 
 - name: IOJS | Install
-  shell: sudo -iu {{ vagrant_user }} nvm install iojs-v{{ default_io_version }}
+  raw: . {{ nvm_usr_location }}/nvm.sh && nvm install iojs-v{{ default_io_version }}
   when: "'{{ default_io_version }}' not in io_install_result.stdout"

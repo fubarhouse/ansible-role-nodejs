@@ -1,26 +1,7 @@
 ---
 # file: roles/fubarhouse.npm/tasks/npm.yml
 
-- name: "NPM | Check installed packages"
-  sudo: yes
-  sudo_user: "{{ vagrant_user }}"
-  shell: /usr/local/.nvm/versions/node/v{{ default_node_version }}/bin/npm list -g -depth=0
-  register: installed_npm_packages
-  ignore_errors: yes
-  no_log: yes
-
-- name: "NPM | Install packages"
-  sudo: yes
-  sudo_user: "{{ vagrant_user }}"
-  shell: sudo -iu {{ vagrant_user }} npm install -g {{ item.name }} --save-dev
+- name: "NPM | Ensure installed and updated"
+  raw: . {{ nvm_usr_location }}/nvm.sh && npm install {{ item.name }}
   with_items:
   - "{{ npm_packages }}"
-  when: "item.name not in installed_npm_packages.stdout"
-
-- name: "NPM | Update packages"
-  sudo: yes
-  sudo_user: "{{ vagrant_user }}"
-  shell: sudo -iu {{ vagrant_user }} npm update -g {{ item.name }} --save-dev
-  with_items:
-  - "{{ npm_packages }}"
-  when: "item.name in installed_npm_packages.stdout"

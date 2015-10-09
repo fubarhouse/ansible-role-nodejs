@@ -2,33 +2,21 @@
 # file: roles/fubarhouse.npm/tasks/nodejs.yml
 
 - name: "NodeJS | Check"
-  shell: sudo -iu {{ vagrant_user }} nvm ls | grep {{ default_node_version }}
+  raw: . {{ nvm_usr_location }}/nvm.sh && nvm ls | grep {{ default_node_version }}
   register: node_install_result
-  ignore_errors: True
-  no_log: True
+  ignore_errors: yes
+  no_log: yes
 
 - name: "NodeJS | Get installed versions"
-  shell: nvm ls
+  raw: . {{ nvm_usr_location }}/nvm.sh && nvm ls
   register: node_versions
   ignore_errors: yes
   no_log: yes
 
-- name: "NodeJS | Prepare"
-  sudo: yes
-  sudo_user: "{{ vagrant_user }}"
-  lineinfile: >
-    dest=~/.profile
-    line="source /usr/local/.nvm/nvm.sh"
-  when: "'{{ default_node_version }}' not in node_versions.stdout"
-
 - name: "NodeJS | Install"
-  shell: sudo -iu {{ vagrant_user }} nvm install {{ default_node_version }}
+  raw: . {{ nvm_usr_location }}/nvm.sh && nvm install v{{ default_node_version }}
   when: "'{{ default_node_version }}' not in node_versions.stdout"
 
 - name: "NodeJS | Linking"
-  shell: sudo -iu {{ vagrant_user }} nvm alias default {{ default_node_version }}
-  when: "'{{ default_node_version }}' not in node_install_result.stdout"
-
-- name: "NodeJS | Configure"
-  shell: export PATH=~/node_modules/.bin:$PATH
+  raw: . {{ nvm_usr_location }}/nvm.sh && nvm alias default v{{ default_node_version }}
   when: "'{{ default_node_version }}' not in node_install_result.stdout"

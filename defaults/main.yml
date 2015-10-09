@@ -1,7 +1,7 @@
 ---
 
-# default user name
-vagrant_user: vagrant
+nvm_lib_location: /usr/local/.nvm
+nvm_usr_location: /home/{{ ansible_ssh_user }}/.nvm
 
 # default node application versions
 default_nvm_version: 0.26.1
