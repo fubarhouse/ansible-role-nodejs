@@ -2,6 +2,8 @@
 # file: roles/fubarhouse.npm/tasks/npm.yml
 
 - name: "NPM | Ensure installed and updated"
-  raw: . {{ nvm_usr_location }}/nvm.sh && npm install {{ item.name }}
+  become: yes
+  become_user: root
+  raw: bash  -c ". {{ nvm_usr_location }}/nvm.sh && npm install -g {{ item.name }}"
   with_items:
   - "{{ npm_packages }}"

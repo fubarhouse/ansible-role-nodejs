@@ -5,7 +5,7 @@ nvm_usr_location: /home/{{ ansible_ssh_user }}/.nvm
 
 # default node application versions
 default_nvm_version: 0.26.1
-default_node_version: 4.0.0
+default_node_version: 4.2.1
 default_io_version: 3.3.1
 
 # packages to install
