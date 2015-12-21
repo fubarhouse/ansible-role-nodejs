@@ -4,7 +4,8 @@
 - name: "NVM | Check"
   become: yes
   become_user: "{{ ansible_ssh_user }}"
-  stat: path={{ nvm_lib_location }}/nvm.sh
+  stat:
+    path: "{{ nvm_lib_location }}/nvm.sh"
   register: nvm_installed
 
 - name: "NVM | Install dependencies"
@@ -21,21 +22,23 @@
 - name: "NVM | Prepare"
   become: yes
   become_user: root
-  file: path={{ nvm_lib_location }}/
-        state=directory
-        mode=0777
-        recurse=yes
+  file:
+    path: "{{ nvm_lib_location }}"
+    state: directory
+    mode: 0777
+    recurse: yes
+  when: nvm_installed.stat.exists == false
 
 - name: "NVM | Clone"
   become: yes
   become_user: "{{ ansible_ssh_user }}"
-  git: repo=https://github.com/creationix/nvm.git
-       dest={{ nvm_lib_location }}
-       clone=yes
-       update=yes
-       force=yes
-       version=master
-  when: nvm_installed.stat.exists == false
+  git:
+    repo: "https://github.com/xtuple/nvm.git"
+    dest: "{{ nvm_lib_location }}"
+    clone: yes
+    update: yes
+    force: yes
+    version: master
 
 - name: "NVM | Install"
   become: yes

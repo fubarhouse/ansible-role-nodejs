@@ -3,7 +3,11 @@
 
 - name: "NPM | Ensure installed and updated"
   become: yes
-  become_user: root
-  raw: bash  -c ". {{ nvm_usr_location }}/nvm.sh && npm install -g {{ item.name }}"
+  become_user: "root"
+  npm:
+    name: "{{ item.name }}"
+    global: yes
+    executable: /usr/local/bin/npm
+    state: latest
   with_items:
   - "{{ npm_packages }}"
