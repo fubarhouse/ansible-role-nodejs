@@ -2,9 +2,13 @@
 # file: roles/fubarhouse.npm/tasks/main.yml
 
 - include: nvm.yml
+  when: fubarhouse_npm.install_nvm
 
 - include: nodejs.yml
+  when: fubarhouse_npm.install_nodejs
 
-# - include: iojs.yml
+- include: iojs.yml
+  when: fubarhouse_npm.install_iojs
 
 - include: npm.yml
+  when: fubarhouse_npm.install_npm

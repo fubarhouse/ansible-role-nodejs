@@ -1,17 +1,31 @@
 ---
 
-nvm_lib_location: /usr/local/.nvm
-nvm_install_location: /usr/local/nvm
-nvm_usr_location: /home/{{ ansible_ssh_user }}/.nvm
-
-# default node application versions
-default_nvm_version: 0.26.1
-default_node_version: 5.2.0
-default_io_version: 3.3.1
-
-# packages to install
-npm_packages:
-  - { name: backbone }
-  - { name: grunt }
-  - { name: underscore }
-  - { name: yosay }
+fubarhouse_npm:
+  # Clean install
+  clean_install: false
+  # Process controls
+  install_nvm: true
+  install_nodejs: true
+  install_iojs: false
+  install_npm: true
+  # Repositories
+  nvm_repo: "https://github.com/xtuple/nvm.git"
+  # Symlinks
+  nvm_symlink_exec: "/usr/local/bin/nvm"
+  # Install directories
+  nvm_install_dir: "~/.nvm"
+  # Install paths
+  nvm_install_path: ""
+  # Executables
+  nvm_install_exec: "nvm_bin.sh"
+  npm_install_exec: "/usr/local/bin/npm"
+  # Application versions
+  nvm_version: 0.31.0
+  node_version: 5.9.1
+  io_version: 3.3.1
+  # Packages
+  packages:
+    - { name: backbone }
+    - { name: grunt }
+    - { name: underscore }
+    - { name: yosay }

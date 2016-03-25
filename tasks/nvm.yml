@@ -1,47 +1,78 @@
 ---
 # file: roles/fubarhouse.npm/tasks/nvm.yml
 
+- name: "NVM | Clean-up (1/2)"
+  become: yes
+  become_user: "{{ ansible_ssh_user }}"
+  file:
+    path: "{{ fubarhouse_npm.nvm_install_dir }}"
+    state: absent
+  when: fubarhouse_npm.clean_install
+
+- name: "NVM | Clean-up (2/2)"
+  become: yes
+  become_user: "{{ ansible_ssh_user }}"
+  file:
+    path: "/usr/local/nvm/"
+    state: absent
+  when: fubarhouse_npm.clean_install
+
 - name: "NVM | Check"
   become: yes
   become_user: "{{ ansible_ssh_user }}"
   stat:
-    path: "{{ nvm_lib_location }}/nvm.sh"
-  register: nvm_installed
+    path: "{{ fubarhouse_npm.nvm_install_dir }}"
+  register: fubarhouse_npm_nvm_installed
 
 - name: "NVM | Install dependencies"
   become: yes
   become_user: "{{ ansible_ssh_user }}"
-  apt: name={{ item }} state=installed
+  apt:
+    name: "{{ item }}"
+    state: installed
   with_items:
     - git
     - curl
     - build-essential
     - libssl-dev
-  when: nvm_installed.stat.exists == false
+  when: fubarhouse_npm_nvm_installed.stat.exists == false
 
-- name: "NVM | Prepare"
+- name: "NVM | Ensure permissions are set"
   become: yes
-  become_user: root
+  become_user: "{{ ansible_ssh_user }}"
   file:
-    path: "{{ nvm_lib_location }}"
+    path: "{{ fubarhouse_npm.nvm_install_dir }}"
     state: directory
     mode: 0777
-    recurse: yes
-  when: nvm_installed.stat.exists == false
+    owner: "{{ ansible_ssh_user }}"
+    group: "{{ ansible_ssh_user }}"
+    recurse: no
 
-- name: "NVM | Clone"
+- name: "NVM | Clone/Update"
   become: yes
   become_user: "{{ ansible_ssh_user }}"
   git:
-    repo: "https://github.com/xtuple/nvm.git"
-    dest: "{{ nvm_lib_location }}"
+    repo: "{{ fubarhouse_npm.nvm_repo }}"
+    dest: "{{ fubarhouse_npm.nvm_install_dir }}"
     clone: yes
     update: yes
     force: yes
     version: master
+    recursive: false
 
 - name: "NVM | Install"
   become: yes
   become_user: "{{ ansible_ssh_user }}"
-  command: "{{ nvm_lib_location }}/install.sh"
-  when: nvm_installed.stat.exists == false
+  command: "{{ fubarhouse_npm.nvm_install_dir }}/install.sh"
+  when: fubarhouse_npm_nvm_installed.stat.exists == false
+
+- name: "NVM | Symlink"
+  become: yes
+  become_user: "{{ ansible_ssh_user }}"
+  file:
+    src: "{{ fubarhouse_npm.nvm_install_dir }}/{{ fubarhouse_npm.nvm_install_path }}/{{ fubarhouse_npm.nvm_install_exec }}"
+    dest: "{{ fubarhouse_npm.nvm_symlink_exec }}"
+    owner: "{{ ansible_ssh_user }}"
+    group: "{{ ansible_ssh_user }}"
+    state: link
+  when: fubarhouse_npm_nvm_installed.stat.exists == false

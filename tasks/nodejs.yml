@@ -4,19 +4,24 @@
 - name: "NodeJS | Check"
   become: yes
   become_user: "{{ ansible_ssh_user }}"
-  raw:  ". {{ nvm_lib_location }}/nvm.sh && nvm version | grep {{ default_node_version }}"
-  register: node_install_result
+  shell:  "{{ fubarhouse_npm.nvm_symlink_exec }} ls | grep {{ fubarhouse_npm.node_version }}"
+  register: fubarhouse_npm_node_install_result
   ignore_errors: yes
   no_log: yes
 
 - name: "NodeJS | Install"
   become: yes
-  become_user: root
-  raw:  ". {{ nvm_lib_location }}/nvm.sh && nvm install v{{ default_node_version }}"
-  when: "'{{ default_node_version }}' not in node_install_result.stdout"
+  become_user: "{{ ansible_ssh_user }}"
+  shell:  "{{ fubarhouse_npm.nvm_symlink_exec }} install v{{ fubarhouse_npm.node_version }}"
+  when: "'{{ fubarhouse_npm.node_version }}' not in fubarhouse_npm_node_install_result.stdout"
+
+- name: "NodeJS | Switching"
+  become: yes
+  become_user: "{{ ansible_ssh_user }}"
+  shell:  "{{ fubarhouse_npm.nvm_symlink_exec }} use v{{ fubarhouse_npm.node_version }}"
 
 - name: "NodeJS | Linking"
   become: yes
   become_user: "{{ ansible_ssh_user }}"
-  raw:  ". {{ nvm_lib_location }}/nvm.sh && nvm alias default v{{ default_node_version }}"
-  when: "'{{ default_node_version }}' not in node_install_result.stdout"
+  shell:  "{{ fubarhouse_npm.nvm_symlink_exec }} alias default v{{ fubarhouse_npm.node_version }}"
+  when: "'{{ fubarhouse_npm.node_version }}' not in fubarhouse_npm_node_install_result.stdout"
