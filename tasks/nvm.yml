@@ -1,19 +1,11 @@
 ---
 # file: roles/fubarhouse.npm/tasks/nvm.yml
 
-- name: "NVM | Clean-up (1/2)"
+- name: "NVM | Clean-up"
   become: yes
-  become_user: "{{ ansible_ssh_user }}"
+  become_user: "root"
   file:
     path: "{{ fubarhouse_npm.nvm_install_dir }}"
-    state: absent
-  when: fubarhouse_npm.clean_install
-
-- name: "NVM | Clean-up (2/2)"
-  become: yes
-  become_user: "{{ ansible_ssh_user }}"
-  file:
-    path: "/usr/local/nvm/"
     state: absent
   when: fubarhouse_npm.clean_install
 
@@ -39,14 +31,14 @@
 
 - name: "NVM | Ensure permissions are set"
   become: yes
-  become_user: "{{ ansible_ssh_user }}"
+  become_user: "root"
   file:
     path: "{{ fubarhouse_npm.nvm_install_dir }}"
     state: directory
     mode: 0777
     owner: "{{ ansible_ssh_user }}"
     group: "{{ ansible_ssh_user }}"
-    recurse: no
+    recurse: yes
 
 - name: "NVM | Clone/Update"
   become: yes
@@ -62,17 +54,17 @@
 
 - name: "NVM | Install"
   become: yes
-  become_user: "{{ ansible_ssh_user }}"
-  command: "{{ fubarhouse_npm.nvm_install_dir }}/install.sh"
+  become_user: "root"
+  shell: "{{ fubarhouse_npm.nvm_install_dir }}/install.sh"
   when: fubarhouse_npm_nvm_installed.stat.exists == false
 
-- name: "NVM | Symlink"
+- name: "NVM | Create an executable"
   become: yes
-  become_user: "{{ ansible_ssh_user }}"
-  file:
-    src: "{{ fubarhouse_npm.nvm_install_dir }}/{{ fubarhouse_npm.nvm_install_path }}/{{ fubarhouse_npm.nvm_install_exec }}"
-    dest: "{{ fubarhouse_npm.nvm_symlink_exec }}"
+  become_user: "root"
+  template:
+    src: "nvm.sh"
+    dest: "/usr/bin/nvm"
     owner: "{{ ansible_ssh_user }}"
     group: "{{ ansible_ssh_user }}"
-    state: link
+    mode: 0755
   when: fubarhouse_npm_nvm_installed.stat.exists == false

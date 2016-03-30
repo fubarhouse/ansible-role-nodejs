@@ -25,3 +25,15 @@
   become_user: "{{ ansible_ssh_user }}"
   shell:  "{{ fubarhouse_npm.nvm_symlink_exec }} alias default v{{ fubarhouse_npm.node_version }}"
   when: "'{{ fubarhouse_npm.node_version }}' not in fubarhouse_npm_node_install_result.stdout"
+
+- name: "NodeJS | Test for exports"
+  shell: "cat /home/{{ ansible_ssh_user }}/.bashrc | grep 'npm config --global get prefix'"
+  register: fubarhouse_npm_node_install_path
+  ignore_errors: yes
+  no_log: yes
+
+- name: "NodeJS | Import exports"
+  lineinfile:
+    dest: "/home/{{ ansible_ssh_user }}/.bashrc"
+    line: "export PATH=$PATH:$(npm config --global get prefix)/bin"
+  when: fubarhouse_npm_node_install_path

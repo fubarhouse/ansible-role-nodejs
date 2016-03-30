@@ -12,53 +12,40 @@
 
 ## Role Variables
 
-Available variables are listed below, along with default values (see `defaults/main.yml`):
+Copy the defaults/main.yml into the ansible system and add to the playbook, and change the variables accordingly.
 
-  ### Clean install
   ````
-  fubarhouse_npm.clean_install: false
-  ````
-  ### Process controls
-  ````
-  fubarhouse_npm.install_nvm: true
-  fubarhouse_npm.install_nodejs: true
-  fubarhouse_npm.install_iojs: false
-  fubarhouse_npm.install_npm: true
-  ````
-  ### Repositories
-  ````
-  fubarhouse_npm.nvm_repo: "https://github.com/xtuple/nvm.git"
-  ````
-  ### Symlinks
-  ````
-  fubarhouse_npm.nvm_symlink_exec: "/usr/local/bin/nvm"
-  ````
-  ### Install directories
-  ````
-  fubarhouse_npm.nvm_install_dir: "~/.nvm"
-  ````
-  ### Install paths
-  ````
-  fubarhouse_npm.nvm_install_path: ""
-  ````
-  ### Executables
-  ````
-  fubarhouse_npm.nvm_install_exec: "nvm_bin.sh"
-  fubarhouse_npm.npm_install_exec: "/usr/local/bin/npm"
-  ````
-  ### Application versions
-  ````
-  fubarhouse_npm.nvm_version: 0.31.0
-  fubarhouse_npm.node_version: 5.9.1
-  fubarhouse_npm.io_version: 3.3.1
-  ````
-  ### Packages
-  ````
-  fubarhouse_npm.packages:
+
+  fubarhouse_npm:
+  # Clean install
+  clean_install: false
+  # Process controls
+  install_nvm: true
+  install_nodejs: true
+  install_iojs: false
+  install_npm: true
+  # Repositories
+  nvm_repo: "https://github.com/xtuple/nvm.git"
+  # Symlinks
+  nvm_symlink_exec: "/usr/local/bin/nvm"
+  # Install directories
+  nvm_install_dir: "~/.nvm"
+  # Install paths
+  nvm_install_path: ""
+  # Executables
+  nvm_install_exec: "nvm_bin.sh"
+  npm_install_exec: "/usr/local/bin/npm"
+  # Application versions
+  nvm_version: 0.31.0
+  node_version: 5.9.1
+  io_version: 3.3.1
+  # Packages
+  packages:
     - { name: backbone }
     - { name: grunt }
     - { name: underscore }
     - { name: yosay }
+
   ````
 
 ## Dependencies

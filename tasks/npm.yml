@@ -10,7 +10,8 @@
   npm:
     name: "{{ item.name }}"
     executable: "{{ fubarhouse_npm.npm_install_exec }}"
+    path: "/home/{{ ansible_ssh_user }}/.npm/"
     state: latest
-    global: yes
+    global: no
   with_items:
     - "{{ fubarhouse_npm.packages }}"
