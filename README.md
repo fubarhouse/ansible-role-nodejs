@@ -17,8 +17,12 @@ Copy the defaults/main.yml into the ansible system and add to the playbook, and 
   ````
 
   fubarhouse_npm:
+  # Application versions
+  nvm_version: 0.31.0
+  node_version: 5.9.1
+  io_version: 3.3.1
   # Clean install
-  clean_install: false
+  clean_install: true
   # Process controls
   install_nvm: true
   install_nodejs: true
@@ -27,18 +31,15 @@ Copy the defaults/main.yml into the ansible system and add to the playbook, and 
   # Repositories
   nvm_repo: "https://github.com/xtuple/nvm.git"
   # Symlinks
-  nvm_symlink_exec: "/usr/local/bin/nvm"
+  nvm_symlink_exec: "/usr/bin/nvm"
   # Install directories
-  nvm_install_dir: "~/.nvm"
+  # nvm_install_dir: "/home/{{ ansible_ssh_user }}/.nvm"
+  nvm_install_dir: "/usr/local/nvm"
   # Install paths
   nvm_install_path: ""
   # Executables
   nvm_install_exec: "nvm_bin.sh"
   npm_install_exec: "/usr/local/bin/npm"
-  # Application versions
-  nvm_version: 0.31.0
-  node_version: 5.9.1
-  io_version: 3.3.1
   # Packages
   packages:
     - { name: backbone }
