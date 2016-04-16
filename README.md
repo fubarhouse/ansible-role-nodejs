@@ -21,6 +21,10 @@ Copy the defaults/main.yml into the ansible system and add to the playbook, and 
   nvm_version: 0.31.0
   node_version: 5.9.1
   io_version: 3.3.1
+  # Application versions (non-default)
+  all_node_versions:
+    - 5.9.1
+    - 5.10.1
   # Clean install
   clean_install: true
   # Process controls
