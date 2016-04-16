@@ -12,7 +12,8 @@
 - name: "NodeJS | Install"
   become: yes
   become_user: "{{ ansible_ssh_user }}"
-  shell:  "{{ fubarhouse_npm.nvm_symlink_exec }} install v{{ fubarhouse_npm.node_version }}"
+  shell:  "{{ fubarhouse_npm.nvm_symlink_exec }} install v{{ item }}"
+  with_items: "{{ fubarhouse_npm.all_node_versions }}"
   when: "'{{ fubarhouse_npm.node_version }}' not in fubarhouse_npm_node_install_result.stdout"
 
 - name: "NodeJS | Switching"
