@@ -17,6 +17,11 @@ Copy the defaults/main.yml into the ansible system and add to the playbook, and 
   ````
 
   fubarhouse_npm:
+  # Shell profiles
+  shell_profiles:
+    - { filename: shell }
+    - { filename: .bashrc }
+    - { filename: .bash_profile }
   # Application versions
   nvm_version: 0.31.0
   node_version: 5.9.1
