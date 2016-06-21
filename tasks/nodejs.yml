@@ -5,13 +5,13 @@
   become: yes
   become_user: "{{ fubarhouse_user }}"
   shell:  "{{ fubarhouse_npm.nvm_symlink_exec }} ls"
-  register: fubarhouse_npm_node_install_result
+  register: installed_nodejs_versions
 
 - name: "NodeJS | Install"
   become: yes
   become_user: "{{ fubarhouse_user }}"
   shell:  "{{ fubarhouse_npm.nvm_symlink_exec }} install {{ item }}"
-  when: item not in fubarhouse_npm_node_install_result.stdout_lines
+  when: item not in installed_nodejs_versions.stdout
   with_items: "{{ node_versions }}"
 
 - name: "NodeJS | Switching"
