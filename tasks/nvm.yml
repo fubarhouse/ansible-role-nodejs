@@ -75,7 +75,7 @@
   file:
     path: /home/{{ ansible_ssh_user }}/{{ item.filename }}
     state: touch
-  with_items: "{{ fubarhouse_python.shell_profiles }}"
+  with_items: "{{ fubarhouse_nvm.shell_profiles }}"
 
 - name: NVM | Ensure shell profiles are configured
   become: yes
@@ -85,5 +85,5 @@
     state: present
     regexp: '^export PATH=$PATH:$(npm config --global get prefix)/bin;'
     line: 'export PATH=$PATH:$(npm config --global get prefix)/bin;'
-  with_items: "{{ fubarhouse_python.shell_profiles }}"
+  with_items: "{{ fubarhouse_nvm.shell_profiles }}"
 
