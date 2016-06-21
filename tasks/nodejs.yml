@@ -1,38 +1,27 @@
 ---
 # file: roles/fubarhouse.npm/tasks/nodejs.yml
 
-- name: "NodeJS | Check"
-  become: yes
-  become_user: "{{ ansible_ssh_user }}"
-  shell:  "{{ fubarhouse_npm.nvm_symlink_exec }} ls | grep {{ fubarhouse_npm.node_version }} | cat"
-  register: fubarhouse_npm_node_install_result
-
 - name: "NodeJS | Install"
   become: yes
-  become_user: "{{ ansible_ssh_user }}"
-  shell:  "{{ fubarhouse_npm.nvm_symlink_exec }} install v{{ item }}"
-  with_items: "{{ fubarhouse_npm.all_node_versions }}"
-  when: "'{{ fubarhouse_npm.node_version }}' not in fubarhouse_npm_node_install_result.stdout"
+  become_user: "{{ fubarhouse_user }}"
+  shell:  "{{ fubarhouse_npm.nvm_symlink_exec }} install {{ item }}"
+  with_items: "{{ node_versions }}"
 
 - name: "NodeJS | Switching"
   become: yes
-  become_user: "{{ ansible_ssh_user }}"
-  shell:  "{{ fubarhouse_npm.nvm_symlink_exec }} use v{{ fubarhouse_npm.node_version }}"
+  become_user: "{{ fubarhouse_user }}"
+  shell:  "{{ fubarhouse_npm.nvm_symlink_exec }} use {{ node_version }}"
 
 - name: "NodeJS | Linking"
   become: yes
-  become_user: "{{ ansible_ssh_user }}"
-  shell:  "{{ fubarhouse_npm.nvm_symlink_exec }} alias default v{{ fubarhouse_npm.node_version }}"
-  when: "'{{ fubarhouse_npm.node_version }}' not in fubarhouse_npm_node_install_result.stdout"
-
-- name: "NodeJS | Test for exports"
-  shell: "cat /home/{{ ansible_ssh_user }}/.bashrc | grep 'npm config --global get prefix'"
-  register: fubarhouse_npm_node_install_path
-  ignore_errors: yes
-  no_log: yes
+  become_user: "{{ fubarhouse_user }}"
+  shell:  "{{ fubarhouse_npm.nvm_symlink_exec }} alias default {{ node_version }}"
 
 - name: "NodeJS | Import exports"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
   lineinfile:
-    dest: "/home/{{ ansible_ssh_user }}/.bashrc"
+    dest: "{{ fubarhouse_npm.user_dir }}/{{ item.filename }}"
     line: "export PATH=$PATH:$(npm config --global get prefix)/bin"
-  when: fubarhouse_npm_node_install_path
+    state: present
+  with_items: "{{ fubarhouse_npm.shell_profiles }}"

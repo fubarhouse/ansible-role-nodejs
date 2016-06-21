@@ -1,41 +1,13 @@
 ---
 
-fubarhouse_npm:
-  # Shell profiles
-  shell_profiles:
-    - { filename: shell }
-    - { filename: .bashrc }
-    - { filename: .bash_profile }
-  # Application versions
-  nvm_version: 0.31.0
-  node_version: 5.10.1
-  io_version: 3.3.1
-  # Application versions (non-default)
-  all_node_versions:
-    - 5.9.1
-    - 5.10.1
-  # Clean install
-  clean_install: true
-  # Process controls
-  install_nvm: true
-  install_nodejs: true
-  install_iojs: false
-  install_npm: true
-  # Repositories
-  nvm_repo: "https://github.com/xtuple/nvm.git"
-  # Symlinks
-  nvm_symlink_exec: "/usr/bin/nvm"
-  # Install directories
-  # nvm_install_dir: "/home/{{ ansible_ssh_user }}/.nvm"
-  nvm_install_dir: "/usr/local/nvm"
-  # Install paths
-  nvm_install_path: ""
-  # Executables
-  nvm_install_exec: "nvm_bin.sh"
-  npm_install_exec: "/usr/local/bin/npm"
-  # Packages
-  packages:
-    - { name: backbone }
-    - { name: grunt }
-    - { name: underscore }
-    - { name: yosay }
+node_version: 5.10.1
+node_versions:
+  - 5.9.1
+  - 5.10.1
+
+node_packages:
+  - backbone
+  - grunt
+  - replace
+  - underscore
+  - yosay

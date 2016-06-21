@@ -1,0 +1,10 @@
+---
+
+- name: "Installing dependencies"
+  become: yes
+  become_user: "root"
+  yum:
+    name: "{{ item }}"
+    state: installed
+  with_items:
+    - git

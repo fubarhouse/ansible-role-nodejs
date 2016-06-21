@@ -10,39 +10,37 @@
   when: fubarhouse_npm.clean_install
 
 - name: "NVM | Check"
-  become: yes
-  become_user: "{{ ansible_ssh_user }}"
   stat:
     path: "{{ fubarhouse_npm.nvm_install_dir }}"
   register: fubarhouse_npm_nvm_installed
 
-- name: "NVM | Install dependencies"
-  become: yes
-  become_user: root
-  apt:
-    name: "{{ item }}"
-    state: installed
-  with_items:
-    - git
-    - curl
-    - build-essential
-    - libssl-dev
-  when: fubarhouse_npm_nvm_installed.stat.exists == false
+#- name: "NVM | Install dependencies"
+#  become: yes
+#  become_user: root
+#  apt:
+#    name: "{{ item }}"
+#    state: installed
+#  with_items:
+#    - git
+#    - curl
+#    - build-essential
+#    - libssl-dev
+#  when: fubarhouse_npm_nvm_installed.stat.exists == false
 
 - name: "NVM | Ensure permissions are set"
   become: yes
   become_user: "root"
   file:
-    path: "{{ fubarhouse_npm.nvm_install_dir }}"
+    path: "{{ item.path }}"
     state: directory
     mode: 0777
-    owner: "{{ ansible_ssh_user }}"
-    group: "{{ ansible_ssh_user }}"
+    owner: "{{ fubarhouse_user }}"
     recurse: yes
+  with_items: "{{ fubarhouse_npm.folder_paths }}"
 
 - name: "NVM | Clone/Update"
   become: yes
-  become_user: "{{ ansible_ssh_user }}"
+  become_user: "{{ fubarhouse_user }}"
   git:
     repo: "{{ fubarhouse_npm.nvm_repo }}"
     dest: "{{ fubarhouse_npm.nvm_install_dir }}"
@@ -63,27 +61,25 @@
   become_user: "root"
   template:
     src: "nvm.sh"
-    dest: "/usr/bin/nvm"
-    owner: "{{ ansible_ssh_user }}"
-    group: "{{ ansible_ssh_user }}"
+    dest: "{{ fubarhouse_npm.nvm_symlink_exec }}"
+    owner: "{{ fubarhouse_user }}"
     mode: 0755
   when: fubarhouse_npm_nvm_installed.stat.exists == false
 
 - name: NVM | Ensure shell profiles are available
   become: yes
-  become_user: "{{ ansible_ssh_user }}"
+  become_user: "root"
   file:
-    path: /home/{{ ansible_ssh_user }}/{{ item.filename }}
+    path: "{{ fubarhouse_npm.user_dir }}/{{ item.filename }}"
     state: touch
-  with_items: "{{ fubarhouse_nvm.shell_profiles }}"
+  with_items: "{{ fubarhouse_npm.shell_profiles }}"
 
 - name: NVM | Ensure shell profiles are configured
   become: yes
-  become_user: "{{ ansible_ssh_user }}"
+  become_user: "root"
   lineinfile:
-    dest: "/home/{{ ansible_ssh_user }}/{{ item.filename }}"
+    dest: "{{ fubarhouse_npm.user_dir }}/{{ item.filename }}"
     state: present
-    regexp: '^export PATH=$PATH:$(npm config --global get prefix)/bin;'
-    line: 'export PATH=$PATH:$(npm config --global get prefix)/bin;'
-  with_items: "{{ fubarhouse_nvm.shell_profiles }}"
-
+    regexp: 'export PATH=$PATH:{{ fubarhouse_npm.user_dir }}/.nvm/v{{ node_version }}/bin;'
+    line: 'export PATH=$PATH:{{ fubarhouse_npm.user_dir }}/.nvm/v{{ node_version }}/bin;'
+  with_items: "{{ fubarhouse_npm.shell_profiles }}"

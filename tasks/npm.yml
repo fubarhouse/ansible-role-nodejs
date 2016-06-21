@@ -2,14 +2,16 @@
 # file: roles/fubarhouse.npm/tasks/npm.yml
 
 - name: "NPM | Configure"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
   shell: "{{ fubarhouse_npm.npm_install_exec }} config set prefix /usr/local"
 
 - name: "NPM | Ensure installed and updated"
   become: yes
-  become_user: "{{ ansible_ssh_user }}"
+  become_user: root
   npm:
-    name: "{{ item.name }}"
+    name: "{{ item }}"
     executable: "{{ fubarhouse_npm.npm_install_exec }}"
     global: yes
   with_items:
-    - "{{ fubarhouse_npm.packages }}"
+    - "{{ node_packages }}"

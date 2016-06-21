@@ -1,0 +1,10 @@
+---
+
+- name: "Installing dependencies"
+  become: yes
+  become_user: "root"
+  homebrew:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - git
