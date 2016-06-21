@@ -1,9 +1,10 @@
 ---
 
-node_version: 5.10.1
+node_version: 6.2.2
 node_versions:
   - 5.9.1
   - 5.10.1
+  - 6.2.2
 
 node_packages:
   - backbone
