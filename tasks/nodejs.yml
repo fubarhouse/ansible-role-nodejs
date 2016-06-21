@@ -4,10 +4,8 @@
 - name: "NodeJS | Check"
   become: yes
   become_user: "{{ ansible_ssh_user }}"
-  shell:  "{{ fubarhouse_npm.nvm_symlink_exec }} ls | grep {{ fubarhouse_npm.node_version }}"
+  shell:  "{{ fubarhouse_npm.nvm_symlink_exec }} ls | grep {{ fubarhouse_npm.node_version }} | cat"
   register: fubarhouse_npm_node_install_result
-  ignore_errors: yes
-  no_log: yes
 
 - name: "NodeJS | Install"
   become: yes
