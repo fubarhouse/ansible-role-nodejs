@@ -1,5 +1,7 @@
 # Ansible Role: NPM
 
+[![Build Status](https://travis-ci.org/fubarhouse/fubarhouse.npm.svg?branch=master)](https://travis-ci.org/fubarhouse/fubarhouse.npm)
+
 * Installs NVM (Node Version Manager)
 * Installs Node.js (Node Javascript Library)
 * Installs IOJS (Variant of Node.js)

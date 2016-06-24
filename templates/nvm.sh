@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-source ~/.nvm/nvm.sh && nvm $@;
+source {{ fubarhouse_npm.user_dir }}/.nvm/nvm.sh && nvm $@;
