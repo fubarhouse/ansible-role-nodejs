@@ -2,5 +2,7 @@
 
 - hosts: all
   sudo: true
+  vars:
+    ansible_ssh_user: vagrant
   roles:
     - { role: ../../fubarhouse.npm }
