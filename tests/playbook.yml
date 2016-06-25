@@ -3,7 +3,7 @@
 - hosts: all
   sudo: true
   vars:
-    ansible_ssh_user: root
+    ansible_ssh_user: travis
     node_version: 6.2.2
     node_versions: []
     node_packages:
