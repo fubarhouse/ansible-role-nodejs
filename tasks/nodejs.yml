@@ -7,7 +7,13 @@
   shell:  "{{ fubarhouse_npm.nvm_symlink_exec }} ls"
   register: installed_nodejs_versions
 
-- name: "NodeJS | Install"
+- name: "NodeJS | Install default version"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  shell:  "{{ fubarhouse_npm.nvm_symlink_exec }} install {{ node_version }}"
+  when: '"{{ node_version }}" not in "{{ node_versions }}" and "{{ node_version }}" not in "{{ installed_nodejs_versions.stdout }}"'
+
+- name: "NodeJS | Install all requested versions"
   become: yes
   become_user: "{{ fubarhouse_user }}"
   shell:  "{{ fubarhouse_npm.nvm_symlink_exec }} install {{ item }}"
