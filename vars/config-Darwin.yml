@@ -29,8 +29,8 @@ fubarhouse_npm:
   nvm_install_path: ""
   folder_paths:
      - { path: "/usr/local/lib/node_modules" }
-     - { path: "/Users/{{ fubarhouse_user }}.npm" }
-     - { path: "/Users/{{ fubarhouse_user }}.nvm" }
+     - { path: "/Users/{{ fubarhouse_user }}/.npm" }
+     - { path: "/Users/{{ fubarhouse_user }}/.nvm" }
   # Executables
   nvm_install_exec: "nvm_bin.sh"
   npm_install_exec: "/usr/local/bin/npm"

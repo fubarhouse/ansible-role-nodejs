@@ -28,8 +28,8 @@ fubarhouse_npm:
   folder_paths:
    - { path: "/usr/local/nvm" }
    - { path: "/usr/local/lib/node_modules" }
-   - { path: "/home/{{ fubarhouse_user }}.npm" }
-   - { path: "/home/{{ fubarhouse_user }}.nvm" }
+   - { path: "/home/{{ fubarhouse_user }}/.npm" }
+   - { path: "/home/{{ fubarhouse_user }}/.nvm" }
   # Install paths
   nvm_install_path: ""
   # Executables
