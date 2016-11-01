@@ -44,8 +44,6 @@
   when: fubarhouse_npm_nvm_installed.stat.exists == false
 
 - name: "NVM | Create an executable"
-  become: yes
-  become_user: "root"
   template:
     src: "nvm.sh"
     dest: "{{ fubarhouse_npm.nvm_symlink_exec }}"
@@ -62,7 +60,7 @@
   with_items: "{{ fubarhouse_npm.shell_profiles }}"
   ignore_errors: yes
 
-- name: NVM | Ensure shell profiles are configured
+- name: NVM | Ensure shell profiles are configured for default version
   become: yes
   become_user: "root"
   lineinfile:
@@ -70,5 +68,19 @@
     regexp: '.nvm/v{{ node_version }}/bin'
     line:  'export PATH=$PATH:{{ fubarhouse_npm.user_dir }}/.nvm/v{{ node_version }}/bin;'
     state: present
-  with_items: "{{ fubarhouse_npm.shell_profiles }}"
+  with_items:
+    - "{{ fubarhouse_npm.shell_profiles }}"
+  ignore_errors: yes
+
+- name: NVM | Ensure shell profiles are configured for other versions
+  become: yes
+  become_user: "root"
+  lineinfile:
+    dest: "{{ fubarhouse_npm.user_dir }}/{{ item[0].filename }}"
+    regexp: '.nvm/v{{ item[1] }}/bin'
+    line:  'export PATH=$PATH:{{ fubarhouse_npm.user_dir }}/.nvm/v{{ item[1] }}/bin;'
+    state: present
+  with_nested:
+    - "{{ fubarhouse_npm.shell_profiles }}"
+    - "{{ node_versions }}"
   ignore_errors: yes
