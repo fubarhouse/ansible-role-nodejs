@@ -1,5 +1,5 @@
 ---
-# file: roles/fubarhouse.npm/tasks/npm.yml
+# Tasks file for NPM
 
 - name: "NPM | Configure"
   become: yes

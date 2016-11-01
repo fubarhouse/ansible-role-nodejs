@@ -1,5 +1,5 @@
 ---
-# file: roles/fubarhouse.npm/tasks/main.yml
+# Main tasks file for fubarhouse.nodejs
 
 - name: "Define user variable for ssh use"
   set_fact:

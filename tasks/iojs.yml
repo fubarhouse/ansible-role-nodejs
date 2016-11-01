@@ -1,5 +1,11 @@
 ---
-# file: roles/fubarhouse.npm/tasks/iojs.yml
+#
+# IOJS Tasks
+#
+# IOJS is no longer available via NVM, but can be downloaded on the web.
+# IOJS was a NodeJS compatible platform based upon an earlier NodeJS release.
+# IOJS was merged into NodeJS in version 4, and is in every version this role installs.
+#
 
 - name: "IOJS | Check"
   become: yes

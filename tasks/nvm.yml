@@ -1,5 +1,5 @@
 ---
-# file: roles/fubarhouse.npm/tasks/nvm.yml
+# Tasks file for NVM
 
 - name: "NVM | Clean-up"
   become: yes
@@ -7,6 +7,43 @@
   file:
     path: "{{ fubarhouse_npm.nvm_install_dir }}"
     state: absent
+  when: fubarhouse_npm.clean_install
+
+- name: NVM | Clean-up default version from shell profiles
+  become: yes
+  become_user: "root"
+  lineinfile:
+    dest: "{{ fubarhouse_npm.user_dir }}/{{ item.filename }}"
+    regexp: '.nvm/v{{ node_version }}/bin'
+    line:  'export PATH=$PATH:{{ fubarhouse_npm.user_dir }}/.nvm/v{{ node_version }}/bin;'
+    state: absent
+  with_items:
+    - "{{ fubarhouse_npm.shell_profiles }}"
+  ignore_errors: yes
+  when: fubarhouse_npm.clean_install
+
+- name: NVM | Clean-up other versions from shell profiles
+  become: yes
+  become_user: "root"
+  lineinfile:
+    dest: "{{ fubarhouse_npm.user_dir }}/{{ item[0].filename }}"
+    regexp: '.nvm/v{{ item[1] }}/bin'
+    line:  'export PATH=$PATH:{{ fubarhouse_npm.user_dir }}/.nvm/v{{ item[1] }}/bin;'
+    state: absent
+  with_nested:
+    - "{{ fubarhouse_npm.shell_profiles }}"
+    - "{{ node_versions }}"
+  ignore_errors: yes
+  when: fubarhouse_npm.clean_install
+
+- name: "NodeJS | Remove imported exports not associated to specific versions"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  lineinfile:
+    dest: "{{ fubarhouse_npm.user_dir }}/{{ item.filename }}"
+    line: "export PATH=$PATH:$(npm config --global get prefix)/bin"
+    state: absent
+  with_items: "{{ fubarhouse_npm.shell_profiles }}"
   when: fubarhouse_npm.clean_install
 
 - name: "NVM | Check"

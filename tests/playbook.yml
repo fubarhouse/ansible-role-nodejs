@@ -10,4 +10,4 @@
     node_packages:
       - grunt
   roles:
-    - { role: ../../fubarhouse.npm }
+    - { role: ../../ansible-role-nodejs }
