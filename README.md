@@ -1,4 +1,4 @@
-# Ansible Role: NPM
+# Ansible Role: NodeJS
 
 [![Build Status](https://travis-ci.org/fubarhouse/ansible-role-nodejs.svg?branch=master)](https://travis-ci.org/fubarhouse/ansible-role-nodejs)
 
