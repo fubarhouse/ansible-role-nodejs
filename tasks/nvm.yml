@@ -14,19 +14,6 @@
     path: "{{ fubarhouse_npm.nvm_install_dir }}"
   register: fubarhouse_npm_nvm_installed
 
-#- name: "NVM | Install dependencies"
-#  become: yes
-#  become_user: root
-#  apt:
-#    name: "{{ item }}"
-#    state: installed
-#  with_items:
-#    - git
-#    - curl
-#    - build-essential
-#    - libssl-dev
-#  when: fubarhouse_npm_nvm_installed.stat.exists == false
-
 - name: "NVM | Ensure permissions are set"
   become: yes
   become_user: "root"
@@ -73,13 +60,15 @@
     path: "{{ fubarhouse_npm.user_dir }}/{{ item.filename }}"
     state: touch
   with_items: "{{ fubarhouse_npm.shell_profiles }}"
+  ignore_errors: yes
 
 - name: NVM | Ensure shell profiles are configured
   become: yes
   become_user: "root"
   lineinfile:
     dest: "{{ fubarhouse_npm.user_dir }}/{{ item.filename }}"
+    regexp: '.nvm/v{{ node_version }}/bin'
+    line:  'export PATH=$PATH:{{ fubarhouse_npm.user_dir }}/.nvm/v{{ node_version }}/bin;'
     state: present
-    regexp: 'export PATH=$PATH:{{ fubarhouse_npm.user_dir }}/.nvm/v{{ node_version }}/bin;'
-    line: 'export PATH=$PATH:{{ fubarhouse_npm.user_dir }}/.nvm/v{{ node_version }}/bin;'
   with_items: "{{ fubarhouse_npm.shell_profiles }}"
+  ignore_errors: yes

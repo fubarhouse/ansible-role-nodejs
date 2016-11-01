@@ -1,10 +1,10 @@
 ---
 
-- hosts: all
+- hosts: localhost
   sudo: true
   vars:
     ansible_ssh_user: root
-    node_version: 6.2.2
+    node_version: 7.0.0
     node_versions: []
     node_packages:
       - grunt
