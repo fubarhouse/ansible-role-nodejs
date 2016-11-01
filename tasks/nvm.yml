@@ -75,8 +75,6 @@
     recursive: false
 
 - name: "NVM | Install"
-  become: yes
-  become_user: "root"
   shell: "{{ fubarhouse_npm.nvm_install_dir }}/install.sh"
   when: fubarhouse_npm_nvm_installed.stat.exists == false
 
