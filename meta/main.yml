@@ -13,6 +13,15 @@ galaxy_info:
   - name: Debian
     versions:
     - all
+  - name: MacOSX
+    versions:
+    - all
+    - 10.10
+    - 10.11
+    - 10.12
+    - 10.7
+    - 10.8
+    - 10.9
   categories:
     - system
     - database

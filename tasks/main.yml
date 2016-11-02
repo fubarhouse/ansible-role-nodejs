@@ -4,12 +4,12 @@
 - name: "Define user variable for ssh use"
   set_fact:
     fubarhouse_user: "{{ ansible_ssh_user }}"
-  when: ansible_ssh_user is defined
+  when: ansible_ssh_user is defined and fubarhouse_user is undefined
 
 - name: "Define user variable for non-ssh use"
   set_fact:
     fubarhouse_user: "{{ ansible_user_id }}"
-  when: ansible_ssh_user is not defined
+  when: ansible_ssh_user is not defined and fubarhouse_user is undefined
 
 - name: "Define OS-specific variables"
   include_vars: "config-{{ ansible_os_family }}.yml"
