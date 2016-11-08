@@ -8,7 +8,7 @@ env:
   - distro: ubuntu:16.04
     init: /lib/systemd/systemd
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-  - distro: geerlingguy/docker-ubuntu1404-ansible:latest
+  - distro: ubuntu:14.04
     init: /sbin/init
     run_opts: ""
   - distro: ubuntu:12.04
@@ -27,6 +27,7 @@ script:
   - 'docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} ${distro} "${init}" > "${container_id}"'
 
   # Install dependencies.
+  - 'sude docker exec --tty "$(cat ${container_id})" env TERM=xterm pip install ansible'
   - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-galaxy install shrikeh.curl'
   - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-galaxy install geerlingguy.git'
 
