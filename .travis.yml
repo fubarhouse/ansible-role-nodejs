@@ -18,6 +18,8 @@ env:
 before_install:
   # Pull container.
   - 'docker pull geerlingguy/docker-${distro}-ansible:latest'
+  - sudo apt-get -qq update
+  - sudo apt-get install -y git
 
 script:
   - container_id=$(mktemp)
