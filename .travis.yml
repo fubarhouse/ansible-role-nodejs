@@ -18,7 +18,7 @@ env:
 before_install:
 
   # Pull container.
-  - 'docker pull ${distro}'
+  - 'docker pull geerlingguy/docker-${distro}-ansible:latest'
 
 script:
 
