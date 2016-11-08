@@ -10,6 +10,6 @@
     node_packages:
       - grunt
   roles:
-    - shrikeh.curl
+    - andrewrothstein.curl
     - geerlingguy.git
     - role_under_test
