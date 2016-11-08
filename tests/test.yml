@@ -10,4 +10,5 @@
     node_packages:
       - grunt
   roles:
+    - geerlingguy.git
     - role_under_test
