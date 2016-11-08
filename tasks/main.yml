@@ -15,8 +15,6 @@
   include_vars: "config-{{ ansible_os_family }}.yml"
   when: fubarhouse_npm is not defined
 
-- include: "dependencies-{{ ansible_os_family}}.yml"
-
 - include: nvm.yml
   when: fubarhouse_npm.install_nvm
 
