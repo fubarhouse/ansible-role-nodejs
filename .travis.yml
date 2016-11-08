@@ -19,6 +19,8 @@ before_install:
 
   # Pull container.
   - 'docker pull geerlingguy/docker-${distro}-ansible:latest'
+  - sudo apt-get update
+  - sudo apt-get install -y git curl
 
 script:
 
