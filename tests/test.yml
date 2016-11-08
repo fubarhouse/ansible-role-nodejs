@@ -1,13 +1,12 @@
 ---
 
-- hosts: localhost
+- hosts: all
   sudo: true
   vars:
-    ansible_ssh_user: root
     node_version: 7.0.0
     node_versions:
       - 6.0.0
     node_packages:
       - grunt
   roles:
-    - { role: ../../ansible-role-nodejs }
+    - role_under_test
