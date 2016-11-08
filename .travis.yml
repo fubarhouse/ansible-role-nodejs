@@ -33,7 +33,8 @@ script:
   - 'docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} ${distro} "${init}" > "${container_id}"'
 
   # Install dependencies.
-  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm curl https://gist.githubusercontent.com/trinitronx/bdfd3cbb338767e58299/raw/18d8d94b5e34bda7133e3a568ba2552171757930/ansible_install.sh | bash'
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm sudo yum install ansible | cat'
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm sudo apt-get install ansible | cat'
   - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-galaxy install shrikeh.curl'
   - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-galaxy install geerlingguy.git'
 
