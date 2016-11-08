@@ -5,26 +5,20 @@ env:
   - distro: geerlingguy/docker-centos7-ansible:latest
     init: /usr/lib/systemd/systemd
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-  - distro: geerlingguy/docker-ubuntu1604-ansible:latest
+  - distro: ubuntu:16.04
     init: /lib/systemd/systemd
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
   - distro: geerlingguy/docker-ubuntu1404-ansible:latest
     init: /sbin/init
     run_opts: ""
-  - distro: geerlingguy/docker-ubuntu1204-ansible:latest
+  - distro: ubuntu:12.04
     init: /sbin/init
-    run_opts: ""
-  - distro: ventosus/universal-apple-darwin
-    init: ""
     run_opts: ""
 
 before_install:
 
   # Pull container.
   - 'docker pull ${distro}'
-  - sudo apt-get update
-  - sudo apt-get install ansible
-  - sudo apt-get install -y git curl
 
 script:
 
