@@ -22,7 +22,7 @@ before_install:
 script:
 
   # Install dependencies.
-  - 'sudo docker exec "$(cat ${container_id})" ansible-galaxy install -r geerlingguy.git'
+  - 'sudo docker exec "$(cat ${container_id})" ansible-galaxy install geerlingguy.git;'
 
   - container_id=$(mktemp)
   # Run container in detached state.
