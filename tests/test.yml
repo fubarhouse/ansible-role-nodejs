@@ -3,7 +3,7 @@
 - hosts: all
   sudo: true
   vars:
-    ansible_ssh_user: root
+    curl_version: 7.50.0
     node_version: 7.0.0
     node_versions:
       - 6.0.0
