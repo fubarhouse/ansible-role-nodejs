@@ -40,7 +40,7 @@
     force: yes
   with_items:
     - node
-    - npm
+#    - npm
 
 - name: "NodeJS | Import exports"
   become: yes
