@@ -1,11 +1,11 @@
 ---
 # Tasks file for NPM
 
-- name: "NPM | Configure"
-  become: yes
-  become_user: "{{ fubarhouse_user }}"
-  shell: "npm config set prefix /usr/local"
-  when: 'ansible_ssh_user is defined and ansible_ssh_user != "travis"'
+#- name: "NPM | Configure"
+#  become: yes
+#  become_user: "{{ fubarhouse_user }}"
+#  shell: "npm config set prefix /usr/local"
+#  when: 'ansible_ssh_user is defined and ansible_ssh_user != "travis"'
 
 - name: "NPM | Ensure installed and updated"
   become: yes
