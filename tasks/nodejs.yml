@@ -43,7 +43,7 @@
     dest: "/usr/local/bin/{{ item }}"
     state: link
     force: yes
-  with_items: []
+  with_items:
     - node
     - npm
 
