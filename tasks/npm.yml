@@ -4,14 +4,15 @@
 - name: "NPM | Configure"
   become: yes
   become_user: "{{ fubarhouse_user }}"
-  shell: "{{ fubarhouse_npm.npm_install_exec }} config set prefix /usr/local"
+  shell: "{{ fubarhouse_npm.user_dir }}/.nvm/v{{ node_version }}/bin/npm config set prefix /usr/local"
+  when: 'fubarhouse_user != "travis"'
 
 - name: "NPM | Ensure installed and updated"
   become: yes
   become_user: root
   npm:
     name: "{{ item }}"
-    executable: "{{ fubarhouse_npm.npm_install_exec }}"
+    executable: "{{ fubarhouse_npm.user_dir }}/.nvm/v{{ node_version }}/bin/npm"
     global: yes
   with_items:
     - "{{ node_packages }}"
