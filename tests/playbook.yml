@@ -9,4 +9,6 @@
     node_packages:
       - grunt
   roles:
-    - { role: ../../ansible-role-nodejs }
+    - geerlingguy.git
+    - fubarhouse.curl
+    - role_under_test
