@@ -32,6 +32,16 @@
   become_user: "{{ fubarhouse_user }}"
   shell:  "{{ fubarhouse_npm.nvm_symlink_exec }} alias default {{ node_version }}"
 
+- name: "NodeJS | Linking binaries"
+  file:
+    src: "{{ fubarhouse_npm.user_dir }}/.nvm/v{{ node_version }}/bin/npm"
+    dest: "/usr/local/bin/{{ item }}"
+    state: link
+    force: yes
+  with_items:
+    - node
+    - npm
+
 - name: "NodeJS | Import exports"
   become: yes
   become_user: "{{ fubarhouse_user }}"
