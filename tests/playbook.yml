@@ -8,5 +8,11 @@
       - 6.0.0
     node_packages:
       - grunt
+  tasks:
+    - name: remove nvm
+      file:
+        path:  /home/travis/.nvm
+        state: absent
+        force: yes
   roles:
     - { role: ../../ansible-role-nodejs }
