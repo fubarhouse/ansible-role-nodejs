@@ -5,7 +5,7 @@
   become: yes
   become_user: "{{ fubarhouse_user }}"
   shell: "{{ fubarhouse_npm.user_dir }}/.nvm/v{{ node_version }}/bin/npm config set prefix /usr/local"
-  when: 'fubarhouse_user != "travis"'
+  when: 'ansible_ssh_user is defined and ansible_ssh_user != "travis"'
 
 - name: "NPM | Ensure installed and updated"
   become: yes

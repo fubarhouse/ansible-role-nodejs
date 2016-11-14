@@ -3,25 +3,22 @@ dependencies: []
 
 galaxy_info:
   author: fubarhouse
-  description: Provisions Node.js and a collection of NPM packages via NVM.
+  description: Installs NVM, NodeJS and NPM packages.
   license: "license (BSD, MIT)"
-  min_ansible_version: 1.9.2
+  min_ansible_version: 2.1.0.0
   platforms:
   - name: Ubuntu
     versions:
-    - all
+    - precise
+    - trusty
+    - xenial
   - name: Debian
     versions:
     - all
-  - name: MacOSX
+  - name: EL
     versions:
-    - all
-    - 10.10
-    - 10.11
-    - 10.12
-    - 10.7
-    - 10.8
-    - 10.9
+    - 6
+    - 7
   categories:
     - system
     - database

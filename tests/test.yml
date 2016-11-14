@@ -1,6 +1,6 @@
 ---
 
-- hosts: localhost
+- hosts: all
   sudo: true
   vars:
     node_version: 7.0.0
