@@ -1,0 +1,45 @@
+---
+
+- name: "IVM | Ensure folder requirements are met"
+  become: yes
+  become_user: root
+  file:
+    path: /usr/local/ivm
+    state: directory
+    mode: 0777
+    owner: root
+
+- name: "IVM | Clone/Update"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  git:
+    repo: "https://github.com/demohi/ivm.git"
+    dest: "{{ fubarhouse_npm.user_dir }}/.ivm"
+    clone: yes
+    update: yes
+    force: yes
+    version: master
+    recursive: false
+  changed_when: false
+
+- name: "IVM | Linking"
+  become: yes
+  become_user: root
+  file:
+    src: "{{ fubarhouse_npm.user_dir }}/.ivm/bin/ivm"
+    dest: "/usr/local/bin/ivm"
+    state: link
+    force: yes
+  changed_when: false
+
+- name: "IVM | Ensure shell profiles are configured"
+  become: yes
+  become_user: "root"
+  lineinfile:
+    dest: "{{ fubarhouse_npm.user_dir }}/{{ item.filename }}"
+    regexp: 'export NVM_IOJS_ORG_MIRROR=https://iojs.org/dist'
+    line:  'export NVM_IOJS_ORG_MIRROR=https://iojs.org/dist;'
+    state: present
+  with_items:
+    - "{{ fubarhouse_npm.shell_profiles }}"
+  ignore_errors: yes

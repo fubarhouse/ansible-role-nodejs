@@ -61,6 +61,7 @@
     owner: "{{ fubarhouse_user }}"
     recurse: yes
   with_items: "{{ fubarhouse_npm.folder_paths }}"
+  changed_when: false
 
 - name: "NVM | Clone/Update"
   become: yes
@@ -73,6 +74,7 @@
     force: yes
     version: master
     recursive: false
+  changed_when: false
 
 - name: "NVM | Install"
   shell: "{{ fubarhouse_npm.nvm_install_dir }}/install.sh"
@@ -86,6 +88,13 @@
     mode: 0755
   when: fubarhouse_npm_nvm_installed.stat.exists == false
 
+- name: "NVM | Get versions"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  shell: "{{ fubarhouse_npm.nvm_symlink_exec }} ls-remote"
+  register: nodejs_available_versions
+  changed_when: false
+
 - name: NVM | Ensure shell profiles are available
   become: yes
   become_user: "root"
@@ -94,6 +103,7 @@
     state: touch
   with_items: "{{ fubarhouse_npm.shell_profiles }}"
   ignore_errors: yes
+  changed_when: false
 
 - name: NVM | Ensure shell profiles are configured for default version
   become: yes
@@ -105,6 +115,7 @@
     state: present
   with_items:
     - "{{ fubarhouse_npm.shell_profiles }}"
+  when: '"{{ node_version }}" in nodejs_available_versions.stdout'
   ignore_errors: yes
 
 - name: NVM | Ensure shell profiles are configured for other versions
@@ -115,6 +126,7 @@
     regexp: '.nvm/v{{ item[1] }}/bin'
     line:  'export PATH=$PATH:{{ fubarhouse_npm.user_dir }}/.nvm/v{{ item[1] }}/bin;'
     state: present
+  when: '"{{ item[1] }}" in nodejs_available_versions.stdout'
   with_nested:
     - "{{ fubarhouse_npm.shell_profiles }}"
     - "{{ node_versions }}"
