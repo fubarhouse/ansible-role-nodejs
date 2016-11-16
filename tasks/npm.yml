@@ -1,18 +1,28 @@
 ---
 # Tasks file for NPM
 
+- name: "NPM | Make sure NPM can be found"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  shell: which npm | cat
+  changed_when: false
+  register: which_npm
+  failed_when: 'which_npm.stdout.find("npm") == -1'
+
 - name: "NPM | Configure"
   become: yes
   become_user: "{{ fubarhouse_user }}"
-  shell: "{{ fubarhouse_npm.user_dir }}/.nvm/v{{ node_version }}/bin/npm config set prefix /usr/local"
-  when: 'ansible_ssh_user is defined and ansible_ssh_user != "travis"'
+  shell: "{{ which_npm.stdout }} config set prefix /usr/local"
+  when: '"npm" in "{{ which_npm.stdout }}" and ansible_ssh_user is defined and ansible_ssh_user != "travis"'
+  changed_when: false
 
 - name: "NPM | Ensure installed and updated"
   become: yes
   become_user: root
   npm:
     name: "{{ item }}"
-    executable: "{{ fubarhouse_npm.user_dir }}/.nvm/v{{ node_version }}/bin/npm"
+    executable: "{{ which_npm.stdout }}"
     global: yes
   with_items:
     - "{{ node_packages }}"
+  when: '"npm" in "{{ which_npm.stdout }}"'
