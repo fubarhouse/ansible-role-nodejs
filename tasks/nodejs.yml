@@ -12,13 +12,13 @@
   become: yes
   become_user: "{{ fubarhouse_user }}"
   shell:  "{{ fubarhouse_npm.nvm_symlink_exec }} install {{ node_version }}"
-  when: '"{{ node_version }}" not in "{{ node_versions }}" and "{{ node_version }}" not in "{{ installed_nodejs_versions.stdout }}"'
+  when: '"{{ node_version }}" in nodejs_available_versions.stdout and "{{ node_version }}" not in "{{ node_versions }}" and "{{ node_version }}" not in "{{ installed_nodejs_versions.stdout }}"'
 
 - name: "NodeJS | Install all requested versions"
   become: yes
   become_user: "{{ fubarhouse_user }}"
   shell:  "{{ fubarhouse_npm.nvm_symlink_exec }} install {{ item }}"
-  when: item not in installed_nodejs_versions.stdout
+  when: '"{{ item }}" in nodejs_available_versions.stdout and item not in installed_nodejs_versions.stdout'
   with_items: "{{ node_versions }}"
 
 - name: "NodeJS | Switching"
@@ -26,17 +26,15 @@
   become_user: "{{ fubarhouse_user }}"
   shell:  "{{ fubarhouse_npm.nvm_symlink_exec }} use {{ node_version }}"
   register: fubarhouse_npm_switch
-  changed_when: fubarhouse_npm_switch.stdout.find('Now using node v{{ node_version }}') != -1
+  changed_when: false
+  when: '"{{ node_version }}" in nodejs_available_versions.stdout'
 
 - name: "NodeJS | Linking"
   become: yes
   become_user: "{{ fubarhouse_user }}"
-  shell:  "{{ fubarhouse_npm.nvm_symlink_exec }} alias default {{ node_version }}"
-
-#- name: "NodeJS | Looking for binaries"
-#  stat:
-#    path:
-
+  shell: "{{ fubarhouse_npm.nvm_symlink_exec }} alias default {{ node_version }}"
+  changed_when: false
+  when: '"{{ node_version }}" in nodejs_available_versions.stdout'
 
 - name: "NodeJS | Linking binaries"
   file:
@@ -47,6 +45,7 @@
   with_items:
     - node
     - npm
+  when: '"{{ node_version }}" in nodejs_available_versions.stdout'
 
 - name: "NodeJS | Import exports"
   become: yes
@@ -56,3 +55,4 @@
     line: "export PATH=$PATH:$(npm config --global get prefix)/bin"
     state: present
   with_items: "{{ fubarhouse_npm.shell_profiles }}"
+  when: '"{{ node_version }}" in nodejs_available_versions.stdout'
