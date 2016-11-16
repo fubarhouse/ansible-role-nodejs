@@ -61,6 +61,7 @@
     owner: "{{ fubarhouse_user }}"
     recurse: yes
   with_items: "{{ fubarhouse_npm.folder_paths }}"
+  changed_when: false
 
 - name: "NVM | Clone/Update"
   become: yes
@@ -73,6 +74,7 @@
     force: yes
     version: master
     recursive: false
+  changed_when: false
 
 - name: "NVM | Install"
   shell: "{{ fubarhouse_npm.nvm_install_dir }}/install.sh"
@@ -101,6 +103,7 @@
     state: touch
   with_items: "{{ fubarhouse_npm.shell_profiles }}"
   ignore_errors: yes
+  changed_when: false
 
 - name: NVM | Ensure shell profiles are configured for default version
   become: yes
