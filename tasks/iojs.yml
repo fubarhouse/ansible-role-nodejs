@@ -7,16 +7,64 @@
 # IOJS was merged into NodeJS in version 4, and is in every version this role installs.
 #
 
-- name: "IOJS | Check"
+- name: "IOJS | Get versions"
   become: yes
   become_user: "{{ fubarhouse_user }}"
-  shell:  "{{ fubarhouse_npm.nvm_symlink_exec }} ls | grep 'iojs-v{{ fubarhouse_npm.io_version }}'"
-  register: fubarhouse_npm_io_install_result
-  ignore_errors: yes
-  no_log: yes
+  shell: "ivm ls"
+  register: iojs_available_versions
+  changed_when: false
 
-- name: IOJS | Install
+- name: "IOJS | Check for local default install"
   become: yes
   become_user: "{{ fubarhouse_user }}"
-  shell:  "{{ fubarhouse_npm.nvm_symlink_exec }} install iojs-v{{ fubarhouse_npm.io_version }}"
-  when: "'{{ fubarhouse_npm.io_version }}' not in fubarhouse_npm_io_install_result.stdout"
+  stat:
+    path: "/usr/local/ivm/versions/{{ node_version }}"
+  register: fubarhouse_npm_io_install_result
+  changed_when: false
+  failed_when: false
+  when: '"{{ node_version }}" in iojs_available_versions.stdout'
+
+- name: "IOJS | Check for all local installs"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  stat:
+    path: "/usr/local/ivm/versions/{{ item }}"
+  register: fubarhouse_npm_io_install_results
+  changed_when: false
+  failed_when: false
+  when: '"{{ item }}" in iojs_available_versions.stdout'
+  with_items: "{{ node_versions }}"
+
+- name: "IOJS | Install default"
+  become: yes
+  become_user: root
+  shell:  "/usr/local/bin/ivm {{ node_version }}"
+  when: 'fubarhouse_npm_io_install_result is defined and not fubarhouse_npm_io_install_result.stat.exists and "{{ node_version }}" in iojs_available_versions.stdout'
+  changed_when: false
+
+- name: "IOJS | Install all"
+  become: yes
+  become_user: root
+  shell:  "/usr/local/bin/ivm {{ item }}"
+  when: 'iojs_available_versions is defined and "{{ item }}" in iojs_available_versions.stdout'
+  with_items:
+   - "{{ node_versions }}"
+  changed_when: false
+
+- name: "IOJS | Unalias default NVM alias"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  shell: "{{ fubarhouse_npm.nvm_symlink_exec }} unalias default"
+  changed_when: false
+  failed_when: false
+  when: '"{{ node_version }}" in iojs_available_versions.stdout'
+
+- name: "IOJS | Switch"
+  become: yes
+  become_user: root
+  file:
+    src: "/usr/local/ivm/versions/{{ node_version }}/bin/node"
+    dest: "/usr/local/bin/iojs"
+    state: link
+    force: yes
+  when: '"{{ node_version }}" in iojs_available_versions.stdout'
