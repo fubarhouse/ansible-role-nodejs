@@ -9,13 +9,28 @@
     mode: 0777
     owner: root
 
-- name: "IVM | Ensure installed and updated"
+- name: "IVM | Clone/Update"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  git:
+    repo: "https://github.com/demohi/ivm.git"
+    dest: "{{ fubarhouse_npm.user_dir }}/.ivm"
+    clone: yes
+    update: yes
+    force: yes
+    version: master
+    recursive: false
+  changed_when: false
+
+- name: "IOJS | Switch"
   become: yes
   become_user: root
-  npm:
-    name: "ivm"
-    executable: "/usr/local/bin/npm"
-    path: "/usr/local/lib"
+  file:
+    src: "{{ fubarhouse_npm.user_dir }}/.ivm/bin/ivm"
+    dest: "/usr/local/bin/ivm"
+    state: link
+    force: yes
+  changed_when: false
 
 - name: "IVM | Create an executable"
   become: yes
