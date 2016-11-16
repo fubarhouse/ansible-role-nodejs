@@ -32,17 +32,6 @@
     force: yes
   changed_when: false
 
-- name: "IVM | Create an executable"
-  become: yes
-  become_user: root
-  file:
-    src: "/usr/local/lib/node_modules/ivm/bin/ivm"
-    dest: "/usr/local/bin/ivm"
-    state: link
-    force: yes
-    owner: "{{ fubarhouse_user }}"
-    mode: 0755
-
 - name: "IVM | Ensure shell profiles are configured"
   become: yes
   become_user: "root"
