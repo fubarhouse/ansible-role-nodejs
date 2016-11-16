@@ -10,7 +10,7 @@
 - name: "IOJS | Get versions"
   become: yes
   become_user: "{{ fubarhouse_user }}"
-  shell: "ivm ls"
+  shell: "/usr/local/bin/ivm ls"
   register: iojs_available_versions
   changed_when: false
 
