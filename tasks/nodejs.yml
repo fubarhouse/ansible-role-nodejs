@@ -4,8 +4,9 @@
 - name: "NodeJS | Check"
   become: yes
   become_user: "{{ fubarhouse_user }}"
-  shell:  "{{ fubarhouse_npm.nvm_symlink_exec }} ls"
+  shell:  "{{ fubarhouse_npm.nvm_symlink_exec }} ls | cat"
   register: installed_nodejs_versions
+  changed_when: false
 
 - name: "NodeJS | Install default version"
   become: yes
