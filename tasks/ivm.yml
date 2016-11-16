@@ -22,7 +22,7 @@
     recursive: false
   changed_when: false
 
-- name: "IOJS | Switch"
+- name: "IVM | Linking"
   become: yes
   become_user: root
   file:
