@@ -1,5 +1,8 @@
 ---
 
+install_ivm: false
+install_iojs: false
+
 node_version: 7.1.0
 node_versions:
   - 4.6.1
