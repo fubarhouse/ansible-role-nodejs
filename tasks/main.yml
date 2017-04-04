@@ -16,7 +16,7 @@
   when: fubarhouse_npm is not defined
 
 - include: nvm.yml
-  when: fubarhouse_npm.install_nvm
+  when: install_nvm
 
 - include: ivm.yml
   when:
@@ -24,7 +24,7 @@
     - '"{{ ansible_os_family }}" != "Darwin"'
 
 - include: nodejs.yml
-  when: fubarhouse_npm.install_nodejs
+  when: install_nodejs == true
 
 - include: iojs.yml
   when:
@@ -32,10 +32,4 @@
     - '"{{ ansible_os_family }}" != "Darwin"'
 
 - include: npm.yml
-  when: fubarhouse_npm.install_npm
-
-- name: "Verify Node/IOJS version in use"
-  shell: "{{ fubarhouse_npm.nvm_symlink_exec }} ls | grep current | cat"
-  register: node_current_version
-  changed_when: false
-  failed_when: 'node_current_version.stdout.find("{{ node_version }}") == -1'
+  when: install_npm == true

@@ -1,9 +1,12 @@
 ---
 
+install_nvm: true
+install_nodejs: true
 install_ivm: false
 install_iojs: false
+install_npm: true
 
-node_version: 7.1.0
+node_version: 7.8.0
 node_versions:
   - 4.6.1
   - 5.12.0
