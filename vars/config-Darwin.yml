@@ -13,12 +13,6 @@ fubarhouse_npm:
   nvm_version: 0.31.0
   # Clean install
   clean_install: false
-  # Process controls
-  install_nvm: true
-  install_ivm: true
-  install_nodejs: true
-  install_iojs: true
-  install_npm: true
   # Repositories
   nvm_repo: "https://github.com/xtuple/nvm.git"
   # Symlinks
