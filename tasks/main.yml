@@ -19,13 +19,17 @@
   when: fubarhouse_npm.install_nvm
 
 - include: ivm.yml
-  when: 'fubarhouse_npm.install_ivm and "{{ ansible_os_family }}" != "Darwin"'
+  when:
+    - install_ivm == true
+    - '"{{ ansible_os_family }}" != "Darwin"'
 
 - include: nodejs.yml
   when: fubarhouse_npm.install_nodejs
 
 - include: iojs.yml
-  when: 'fubarhouse_npm.install_iojs and "{{ ansible_os_family }}" != "Darwin"'
+  when:
+    - install_iojs == true
+    - '"{{ ansible_os_family }}" != "Darwin"'
 
 - include: npm.yml
   when: fubarhouse_npm.install_npm
