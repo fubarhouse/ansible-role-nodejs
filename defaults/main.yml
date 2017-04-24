@@ -1,6 +1,8 @@
 ---
 
 fubarhouse_npm:
+shell_profiles:
+  - .bash_profile
 nodejs_clean_install: false
 nvm_repo: "https://github.com/xtuple/nvm.git"
 ivm_repo: "https://github.com/demohi/ivm.git"

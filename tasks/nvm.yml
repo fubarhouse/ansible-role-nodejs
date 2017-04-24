@@ -13,12 +13,12 @@
   become: yes
   become_user: "root"
   lineinfile:
-    dest: "{{ fubarhouse_npm.user_dir }}/{{ item.filename }}"
+    dest: "{{ fubarhouse_npm.user_dir }}/{{ item }}"
     regexp: '.nvm/v{{ node_version }}/bin'
     line:  'export PATH=$PATH:{{ fubarhouse_npm.user_dir }}/.nvm/v{{ node_version }}/bin;'
     state: absent
   with_items:
-    - "{{ fubarhouse_npm.shell_profiles }}"
+    - "{{ shell_profiles }}"
   ignore_errors: yes
   when: nodejs_clean_install|bool == true
 
@@ -26,12 +26,12 @@
   become: yes
   become_user: "root"
   lineinfile:
-    dest: "{{ fubarhouse_npm.user_dir }}/{{ item[0].filename }}"
+    dest: "{{ fubarhouse_npm.user_dir }}/{{ item[0] }}"
     regexp: '.nvm/v{{ item[1] }}/bin'
     line:  'export PATH=$PATH:{{ fubarhouse_npm.user_dir }}/.nvm/v{{ item[1] }}/bin;'
     state: absent
   with_nested:
-    - "{{ fubarhouse_npm.shell_profiles }}"
+    - "{{ shell_profiles }}"
     - "{{ node_versions }}"
   ignore_errors: yes
   when: nodejs_clean_install|bool == true
@@ -40,10 +40,10 @@
   become: yes
   become_user: "{{ fubarhouse_user }}"
   lineinfile:
-    dest: "{{ fubarhouse_npm.user_dir }}/{{ item.filename }}"
+    dest: "{{ fubarhouse_npm.user_dir }}/{{ item }}"
     line: "export PATH=$PATH:$(npm config --global get prefix)/bin"
     state: absent
-  with_items: "{{ fubarhouse_npm.shell_profiles }}"
+  with_items: "{{ shell_profiles }}"
   when: nodejs_clean_install|bool == true
 
 - name: "NVM | Check"
@@ -97,15 +97,15 @@
   become: yes
   become_user: "root"
   stat:
-    path: "{{ fubarhouse_npm.user_dir }}/{{ item.filename }}"
+    path: "{{ fubarhouse_npm.user_dir }}/{{ item }}"
   register: available_shell_profiles
-  with_items: "{{ fubarhouse_npm.shell_profiles }}"
+  with_items: "{{ shell_profiles }}"
 
 - name: NVM | Ensure shell profiles are configured for default version
   become: yes
   become_user: "root"
   lineinfile:
-    dest: "{{ fubarhouse_npm.user_dir }}/{{ item.item.filename }}"
+    dest: "{{ fubarhouse_npm.user_dir }}/{{ item.item }}"
     regexp: '.nvm/v{{ node_version }}/bin'
     line:  'export PATH=$PATH:{{ fubarhouse_npm.user_dir }}/.nvm/v{{ node_version }}/bin;'
     state: present

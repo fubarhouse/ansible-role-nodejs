@@ -47,10 +47,10 @@
   become: yes
   become_user: "{{ fubarhouse_user }}"
   lineinfile:
-    dest: "{{ fubarhouse_npm.user_dir }}/{{ item.filename }}"
+    dest: "{{ fubarhouse_npm.user_dir }}/{{ item }}"
     line: "export PATH=$PATH:$(npm config --global get prefix)/bin"
     state: present
-  with_items: "{{ fubarhouse_npm.shell_profiles }}"
+  with_items: "{{ shell_profiles }}"
   when: '"{{ node_version }}" in nodejs_available_versions.stdout'
 
 - name: "NodeJS | Verify version in use"

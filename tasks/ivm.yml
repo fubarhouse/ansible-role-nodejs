@@ -36,10 +36,10 @@
   become: yes
   become_user: "root"
   lineinfile:
-    dest: "{{ fubarhouse_npm.user_dir }}/{{ item.filename }}"
+    dest: "{{ fubarhouse_npm.user_dir }}/{{ item }}"
     regexp: 'export NVM_IOJS_ORG_MIRROR=https://iojs.org/dist'
     line:  'export NVM_IOJS_ORG_MIRROR=https://iojs.org/dist;'
     state: present
   with_items:
-    - "{{ fubarhouse_npm.shell_profiles }}"
+    - "{{ shell_profiles }}"
   ignore_errors: yes
