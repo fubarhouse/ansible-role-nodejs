@@ -3,7 +3,9 @@
 - hosts: all
   sudo: true
   vars:
-    node_version: 7.1.0
+    install_ivm: true
+    install_iojs: true
+    node_version: 7.9.0
     node_versions:
       - 1.0.0
       - 2.0.0
