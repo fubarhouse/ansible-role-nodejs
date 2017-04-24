@@ -1,6 +1,7 @@
 ---
 
 fubarhouse_npm:
+nodejs_clean_install: false
 nvm_repo: "https://github.com/xtuple/nvm.git"
 ivm_repo: "https://github.com/demohi/ivm.git"
 

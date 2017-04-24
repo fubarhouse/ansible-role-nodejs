@@ -7,7 +7,7 @@
   file:
     path: "{{ fubarhouse_npm.nvm_install_dir }}"
     state: absent
-  when: fubarhouse_npm.clean_install
+  when: nodejs_clean_install|bool == true
 
 - name: NVM | Clean-up default version from shell profiles
   become: yes
@@ -20,7 +20,7 @@
   with_items:
     - "{{ fubarhouse_npm.shell_profiles }}"
   ignore_errors: yes
-  when: fubarhouse_npm.clean_install
+  when: nodejs_clean_install|bool == true
 
 - name: NVM | Clean-up other versions from shell profiles
   become: yes
@@ -34,7 +34,7 @@
     - "{{ fubarhouse_npm.shell_profiles }}"
     - "{{ node_versions }}"
   ignore_errors: yes
-  when: fubarhouse_npm.clean_install
+  when: nodejs_clean_install|bool == true
 
 - name: "NodeJS | Remove imported exports not associated to specific versions"
   become: yes
@@ -44,7 +44,7 @@
     line: "export PATH=$PATH:$(npm config --global get prefix)/bin"
     state: absent
   with_items: "{{ fubarhouse_npm.shell_profiles }}"
-  when: fubarhouse_npm.clean_install
+  when: nodejs_clean_install|bool == true
 
 - name: "NVM | Check"
   stat:
