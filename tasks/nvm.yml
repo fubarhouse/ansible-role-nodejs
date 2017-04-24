@@ -1,6 +1,13 @@
 ---
 # Tasks file for NVM
 
+- name: "NVM | Looking at shell profiles"
+  stat:
+    path: "{{ item }}"
+  register: available_shell_profiles
+  with_items:
+  - "{{ shell_profiles }}"
+
 - name: "NVM | Clean-up"
   become: yes
   become_user: "root"
@@ -18,33 +25,37 @@
     line:  'export PATH=$PATH:{{ nvm_install_dir }}/v{{ node_version }}/bin;'
     state: absent
   with_items:
-    - "{{ shell_profiles }}"
+    - "{{ available_shell_profiles.results }}"
   ignore_errors: yes
-  when: nodejs_clean_install|bool == true
+  when: item.stat.exists|bool == true
 
 - name: NVM | Clean-up other versions from shell profiles
   become: yes
   become_user: "root"
   lineinfile:
-    dest: "{{ fubarhouse_user_dir }}/{{ item[0] }}"
+    dest: "{{ fubarhouse_user_dir }}/{{ item[0].item }}"
     regexp: '.nvm/v{{ item[1] }}/bin'
     line:  'export PATH=$PATH:{{ nvm_install_dir }}/v{{ item[1] }}/bin;'
     state: absent
   with_nested:
-    - "{{ shell_profiles }}"
+    - "{{ available_shell_profiles.results }}"
     - "{{ node_versions }}"
   ignore_errors: yes
-  when: nodejs_clean_install|bool == true
+  when:
+  - nodejs_clean_install|bool == true
+  - item[0].stat.exists|bool == true
 
 - name: "NodeJS | Remove imported exports not associated to specific versions"
   become: yes
   become_user: "{{ fubarhouse_user }}"
   lineinfile:
-    dest: "{{ fubarhouse_user_dir }}/{{ item }}"
+    dest: "{{ fubarhouse_user_dir }}/{{ item.item }}"
     line: "export PATH=$PATH:$(npm config --global get prefix)/bin"
     state: absent
-  with_items: "{{ shell_profiles }}"
-  when: nodejs_clean_install|bool == true
+  with_items: "{{ available_shell_profiles.stdout }}"
+  when:
+  - nodejs_clean_install|bool == true
+  - item.stat.exists|bool == true
 
 - name: "NVM | Check"
   stat:
@@ -99,29 +110,30 @@
   stat:
     path: "{{ fubarhouse_user_dir }}/{{ item }}"
   register: available_shell_profiles
-  with_items: "{{ shell_profiles }}"
+  with_items: "{{ available_shell_profiles.results }}"
+  failed_when: false
 
 - name: NVM | Ensure shell profiles are configured for default version
   become: yes
   become_user: "root"
   lineinfile:
-    dest: "{{ fubarhouse_user_dir }}/{{ item.item }}"
-    regexp: '.nvm/v{{ node_version }}/bin'
-    line:  'export PATH=$PATH:{{ fubarhouse_user_dir }}/.nvm/v{{ node_version }}/bin;'
+    dest: "{{ fubarhouse_user_dir }}/{{ item.item.item }}"
+    regexp: '{{ nvm_install_dir }}/v{{ node_version }}/bin'
+    line:  'export PATH=$PATH:{{ nvm_install_dir }}/v{{ node_version }}/bin;'
     state: present
   with_items:
     - "{{ available_shell_profiles.results }}"
-  ignore_errors: yes
+  when: item.item.stat.exists|bool == true
 
 - name: NVM | Ensure shell profiles are configured for other versions
   become: yes
   become_user: "root"
   lineinfile:
-    dest: "{{ fubarhouse_user_dir }}/{{ item[0].item }}"
+    dest: "{{ fubarhouse_user_dir }}/{{ item[0].item.item }}"
     regexp: '.nvm/v{{ item[1] }}/bin'
-    line:  'export PATH=$PATH:{{ nvm_install_dir }}/v{{ item[1] }}/bin;'
+    line:  'export PATH=$PATH:{{ nvm_install_dir }}/v{{ item[1]. }}/bin;'
     state: present
   with_nested:
     - "{{ available_shell_profiles.results }}"
     - "{{ node_versions }}"
-  ignore_errors: yes
+  when: item[0].item.stat.exists|bool == true
