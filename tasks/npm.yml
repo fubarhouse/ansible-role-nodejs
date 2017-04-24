@@ -5,9 +5,9 @@
   become: yes
   become_user: "{{ fubarhouse_user }}"
   shell: which npm | cat
+  failed_when: false
   changed_when: false
   register: which_npm
-  failed_when: 'which_npm.stdout.find("npm") == -1'
 
 - name: "NPM | Configure"
   become: yes
@@ -16,6 +16,7 @@
   when: '"npm" in "{{ which_npm.stdout }}"'
   changed_when: false
   failed_when: false
+  when: '"npm" in which_npm.stdout'
 
 - name: "NPM | Ensure installed and updated"
   become: yes
@@ -26,4 +27,4 @@
     global: yes
   with_items:
     - "{{ node_packages }}"
-  when: '"npm" in "{{ which_npm.stdout }}"'
+  when: '"npm" in which_npm.stdout'
