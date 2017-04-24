@@ -67,7 +67,7 @@
   become: yes
   become_user: "{{ fubarhouse_user }}"
   git:
-    repo: "{{ fubarhouse_npm.nvm_repo }}"
+    repo: "{{ nvm_repo }}"
     dest: "{{ fubarhouse_npm.nvm_install_dir }}"
     clone: yes
     update: yes
