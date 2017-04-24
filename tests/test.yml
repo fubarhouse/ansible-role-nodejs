@@ -56,5 +56,5 @@
       failed_when: false
   roles:
     - geerlingguy.git
-    - fubarhouse.curl
+#    - fubarhouse.curl
     - role_under_test
