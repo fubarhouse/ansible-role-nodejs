@@ -81,7 +81,7 @@
 - name: "NVM | Create an executable"
   template:
     src: "nvm.sh"
-    dest: "{{ fubarhouse_npm.nvm_symlink_exec }}"
+    dest: "{{ nvm_symlink_exec }}"
     owner: "{{ fubarhouse_user }}"
     mode: 0755
   when: fubarhouse_npm_nvm_installed.stat.exists == false
@@ -89,7 +89,7 @@
 - name: "NVM | Get versions"
   become: yes
   become_user: "{{ fubarhouse_user }}"
-  shell: "{{ fubarhouse_npm.nvm_symlink_exec }} ls-remote"
+  shell: "{{ nvm_symlink_exec }} ls-remote"
   register: nodejs_available_versions
   changed_when: false
 

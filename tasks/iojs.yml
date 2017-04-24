@@ -57,7 +57,7 @@
 - name: "IOJS | Unalias default NVM alias"
   become: yes
   become_user: "{{ fubarhouse_user }}"
-  shell: "{{ fubarhouse_npm.nvm_symlink_exec }} unalias default"
+  shell: "{{ nvm_symlink_exec }} unalias default"
   changed_when: false
   failed_when: false
   when: '"{{ node_version }}" in iojs_available_versions.stdout'

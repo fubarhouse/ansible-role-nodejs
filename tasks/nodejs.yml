@@ -4,14 +4,14 @@
 - name: "NodeJS | Check"
   become: yes
   become_user: "{{ fubarhouse_user }}"
-  shell:  "{{ fubarhouse_npm.nvm_symlink_exec }} ls | cat"
+  shell:  "{{ nvm_symlink_exec }} ls | cat"
   register: installed_nodejs_versions
   changed_when: false
 
 - name: "NodeJS | Install all requested versions"
   become: yes
   become_user: "{{ fubarhouse_user }}"
-  shell:  "{{ fubarhouse_npm.nvm_symlink_exec }} install {{ item }}"
+  shell:  "{{ nvm_symlink_exec }} install {{ item }}"
   when: '"{{ item }}" in nodejs_available_versions.stdout and item not in installed_nodejs_versions.stdout'
   with_items:
   - "{{ node_version }}"
@@ -20,7 +20,7 @@
 - name: "NodeJS | Switching"
   become: yes
   become_user: "{{ fubarhouse_user }}"
-  shell:  "{{ fubarhouse_npm.nvm_symlink_exec }} use {{ node_version }}"
+  shell:  "{{ nvm_symlink_exec }} use {{ node_version }}"
   register: fubarhouse_npm_switch
   changed_when: false
   when: '"{{ node_version }}" in nodejs_available_versions.stdout'
@@ -28,7 +28,7 @@
 - name: "NodeJS | Linking"
   become: yes
   become_user: "{{ fubarhouse_user }}"
-  shell: "{{ fubarhouse_npm.nvm_symlink_exec }} alias default {{ node_version }}"
+  shell: "{{ nvm_symlink_exec }} alias default {{ node_version }}"
   changed_when: false
   when: '"{{ node_version }}" in nodejs_available_versions.stdout'
 
@@ -54,7 +54,7 @@
   when: '"{{ node_version }}" in nodejs_available_versions.stdout'
 
 - name: "NodeJS | Verify version in use"
-  shell: "{{ fubarhouse_npm.nvm_symlink_exec }} ls | grep current | cat"
+  shell: "{{ nvm_symlink_exec }} ls | grep current | cat"
   register: node_current_version
   changed_when: false
   failed_when: 'node_current_version.stdout.find("{{ node_version }}") == -1'
