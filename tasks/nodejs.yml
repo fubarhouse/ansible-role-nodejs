@@ -34,7 +34,7 @@
 
 - name: "NodeJS | Linking binaries"
   file:
-    src: "{{ fubarhouse_npm.user_dir }}/.nvm/v{{ node_version }}/bin/{{ item }}"
+    src: "{{ nvm_install_dir }}/v{{ node_version }}/bin/{{ item }}"
     dest: "/usr/local/bin/{{ item }}"
     state: link
     force: yes
@@ -47,7 +47,7 @@
   become: yes
   become_user: "{{ fubarhouse_user }}"
   lineinfile:
-    dest: "{{ fubarhouse_npm.user_dir }}/{{ item }}"
+    dest: "{{ fubarhouse_user_dir }}/{{ item }}"
     line: "export PATH=$PATH:$(npm config --global get prefix)/bin"
     state: present
   with_items: "{{ shell_profiles }}"

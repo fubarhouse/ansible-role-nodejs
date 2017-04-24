@@ -14,7 +14,7 @@
   become_user: "{{ fubarhouse_user }}"
   git:
     repo: "{{ ivm_repo }}"
-    dest: "{{ fubarhouse_npm.user_dir }}/.ivm"
+    dest: "{{ fubarhouse_user_dir }}/.ivm"
     clone: yes
     update: yes
     force: yes
@@ -26,7 +26,7 @@
   become: yes
   become_user: root
   file:
-    src: "{{ fubarhouse_npm.user_dir }}/.ivm/bin/ivm"
+    src: "{{ fubarhouse_user_dir }}/.ivm/bin/ivm"
     dest: "/usr/local/bin/ivm"
     state: link
     force: yes
@@ -36,7 +36,7 @@
   become: yes
   become_user: "root"
   lineinfile:
-    dest: "{{ fubarhouse_npm.user_dir }}/{{ item }}"
+    dest: "{{ fubarhouse_user_dir }}/{{ item }}"
     regexp: 'export NVM_IOJS_ORG_MIRROR=https://iojs.org/dist'
     line:  'export NVM_IOJS_ORG_MIRROR=https://iojs.org/dist;'
     state: present

@@ -5,7 +5,7 @@
   become: yes
   become_user: "root"
   file:
-    path: "{{ fubarhouse_npm.nvm_install_dir }}"
+    path: "{{ nvm_install_dir }}"
     state: absent
   when: nodejs_clean_install|bool == true
 
@@ -13,9 +13,9 @@
   become: yes
   become_user: "root"
   lineinfile:
-    dest: "{{ fubarhouse_npm.user_dir }}/{{ item }}"
+    dest: "{{ fubarhouse_user_dir }}/{{ item }}"
     regexp: '.nvm/v{{ node_version }}/bin'
-    line:  'export PATH=$PATH:{{ fubarhouse_npm.user_dir }}/.nvm/v{{ node_version }}/bin;'
+    line:  'export PATH=$PATH:{{ nvm_install_dir }}/v{{ node_version }}/bin;'
     state: absent
   with_items:
     - "{{ shell_profiles }}"
@@ -26,9 +26,9 @@
   become: yes
   become_user: "root"
   lineinfile:
-    dest: "{{ fubarhouse_npm.user_dir }}/{{ item[0] }}"
+    dest: "{{ fubarhouse_user_dir }}/{{ item[0] }}"
     regexp: '.nvm/v{{ item[1] }}/bin'
-    line:  'export PATH=$PATH:{{ fubarhouse_npm.user_dir }}/.nvm/v{{ item[1] }}/bin;'
+    line:  'export PATH=$PATH:{{ nvm_install_dir }}/v{{ item[1] }}/bin;'
     state: absent
   with_nested:
     - "{{ shell_profiles }}"
@@ -40,7 +40,7 @@
   become: yes
   become_user: "{{ fubarhouse_user }}"
   lineinfile:
-    dest: "{{ fubarhouse_npm.user_dir }}/{{ item }}"
+    dest: "{{ fubarhouse_user_dir }}/{{ item }}"
     line: "export PATH=$PATH:$(npm config --global get prefix)/bin"
     state: absent
   with_items: "{{ shell_profiles }}"
@@ -48,7 +48,7 @@
 
 - name: "NVM | Check"
   stat:
-    path: "{{ fubarhouse_npm.nvm_install_dir }}"
+    path: "{{ nvm_install_dir }}"
   register: fubarhouse_npm_nvm_installed
 
 - name: "NVM | Ensure permissions are set"
@@ -68,14 +68,14 @@
   become_user: "{{ fubarhouse_user }}"
   git:
     repo: "{{ nvm_repo }}"
-    dest: "{{ fubarhouse_npm.nvm_install_dir }}"
+    dest: "{{ nvm_install_dir }}"
     clone: yes
     update: no
     version: master
     recursive: false
 
 - name: "NVM | Install"
-  shell: "{{ fubarhouse_npm.nvm_install_dir }}/install.sh"
+  shell: "{{ nvm_install_dir }}/install.sh"
   when: fubarhouse_npm_nvm_installed.stat.exists == false
 
 - name: "NVM | Create an executable"
@@ -97,7 +97,7 @@
   become: yes
   become_user: "root"
   stat:
-    path: "{{ fubarhouse_npm.user_dir }}/{{ item }}"
+    path: "{{ fubarhouse_user_dir }}/{{ item }}"
   register: available_shell_profiles
   with_items: "{{ shell_profiles }}"
 
@@ -105,9 +105,9 @@
   become: yes
   become_user: "root"
   lineinfile:
-    dest: "{{ fubarhouse_npm.user_dir }}/{{ item.item }}"
+    dest: "{{ fubarhouse_user_dir }}/{{ item.item }}"
     regexp: '.nvm/v{{ node_version }}/bin'
-    line:  'export PATH=$PATH:{{ fubarhouse_npm.user_dir }}/.nvm/v{{ node_version }}/bin;'
+    line:  'export PATH=$PATH:{{ fubarhouse_user_dir }}/.nvm/v{{ node_version }}/bin;'
     state: present
   with_items:
     - "{{ available_shell_profiles.results }}"
@@ -119,7 +119,7 @@
   lineinfile:
     dest: "{{ fubarhouse_user_dir }}/{{ item[0].item }}"
     regexp: '.nvm/v{{ item[1] }}/bin'
-    line:  'export PATH=$PATH:{{ fubarhouse_npm.user_dir }}/.nvm/v{{ item[1] }}/bin;'
+    line:  'export PATH=$PATH:{{ nvm_install_dir }}/v{{ item[1] }}/bin;'
     state: present
   with_nested:
     - "{{ available_shell_profiles.results }}"
