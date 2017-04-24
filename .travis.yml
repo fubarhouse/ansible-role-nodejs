@@ -6,6 +6,7 @@ env:
     init: /sbin/init
     run_opts: "--privileged"
     playbook: test.yml
+    playbook_indepotence: test-idempotence.yml
   - distro: ubuntu1404
     init: /sbin/init
     run_opts: "--privileged"
@@ -14,22 +15,27 @@ env:
     init: /sbin/init
     run_opts: "--privileged"
     playbook: test.yml
+    playbook_indepotence: test-idempotence.yml
   - distro: centos6
     init: "/sbin/init"
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
     playbook: test.yml
+    playbook_indepotence: test-idempotence.yml
   - distro: centos7
     init: /usr/lib/systemd/systemd
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
     playbook: test.yml
+    playbook_indepotence: test-idempotence.yml
   - distro: debian8
     init: /lib/systemd/systemd
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
     playbook: test.yml
+    playbook_indepotence: test-idempotence.yml
   # - distro: fedora24
   #   init: /usr/lib/systemd/systemd
   #   run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
   #   playbook: test.yml
+  #   playbook_indepotence: test-idempotence.yml
 
 before_install:
 
@@ -56,7 +62,7 @@ script:
   - idempotence=$(mktemp)
   - >
     docker exec "$(cat ${container_id})"
-    ansible-playbook /etc/ansible/roles/role_under_test/tests/${playbook} --sudo -vvvv
+    ansible-playbook /etc/ansible/roles/role_under_test/tests/${playbook_indepotence} --sudo -vvvv
     | tee -a ${idempotence}
   - >
     tail ${idempotence}
