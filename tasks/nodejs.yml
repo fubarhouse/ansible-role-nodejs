@@ -47,11 +47,12 @@
   become: yes
   become_user: "{{ fubarhouse_user }}"
   lineinfile:
-    dest: "{{ fubarhouse_user_dir }}/{{ item }}"
+    dest: "{{ fubarhouse_user_dir }}/{{ item.item.item }}"
     line: "export PATH=$PATH:$(npm config --global get prefix)/bin"
     state: present
-  with_items: "{{ shell_profiles }}"
-  when: '"{{ node_version }}" in nodejs_available_versions.stdout'
+  with_items:
+    - "{{ available_shell_profiles.results }}"
+  when: item.item.stat.exists|bool == true
 
 - name: "NodeJS | Verify version in use"
   shell: "{{ nvm_symlink_exec }} ls | grep current | cat"
