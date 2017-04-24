@@ -60,7 +60,7 @@
     mode: 0777
     owner: "{{ fubarhouse_user }}"
     recurse: yes
-  with_items: "{{ fubarhouse_npm.folder_paths }}"
+  with_items: "{{ nodejs_folder_paths }}"
   changed_when: false
 
 - name: "NVM | Clone/Update"
