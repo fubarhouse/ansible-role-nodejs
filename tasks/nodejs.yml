@@ -42,6 +42,7 @@
     - node
     - npm
   when: '"{{ node_version }}" in nodejs_available_versions.stdout'
+  changed_when: false
 
 - name: "NodeJS | Import exports"
   become: yes
