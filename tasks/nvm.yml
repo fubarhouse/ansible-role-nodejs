@@ -70,11 +70,9 @@
     repo: "{{ nvm_repo }}"
     dest: "{{ fubarhouse_npm.nvm_install_dir }}"
     clone: yes
-    update: yes
-    force: yes
+    update: no
     version: master
     recursive: false
-  changed_when: false
 
 - name: "NVM | Install"
   shell: "{{ fubarhouse_npm.nvm_install_dir }}/install.sh"
