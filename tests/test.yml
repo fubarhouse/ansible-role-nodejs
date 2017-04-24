@@ -3,6 +3,9 @@
 - hosts: all
   sudo: true
   vars:
+    curl_configure_flags:
+      - disable-shared
+      - with-ssl
     install_ivm: true
     install_iojs: true
     node_version: 7.9.0
