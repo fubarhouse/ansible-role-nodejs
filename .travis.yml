@@ -11,6 +11,7 @@ env:
     init: /sbin/init
     run_opts: "--privileged"
     playbook: test.yml
+    playbook_indepotence: test-idempotence.yml
   - distro: ubuntu1204
     init: /sbin/init
     run_opts: "--privileged"
