@@ -1,5 +1,8 @@
 ---
 
+fubarhouse_npm:
+ivm_repo: "https://github.com/demohi/ivm.git"
+
 install_nvm: true
 install_nodejs: true
 install_ivm: false

@@ -13,7 +13,7 @@
   become: yes
   become_user: "{{ fubarhouse_user }}"
   git:
-    repo: "https://github.com/demohi/ivm.git"
+    repo: "{{ ivm_repo }}"
     dest: "{{ fubarhouse_npm.user_dir }}/.ivm"
     clone: yes
     update: yes
