@@ -23,13 +23,14 @@
   set_fact:
     fubarhouse_user_dir: "{{ shell_home_dir.stdout }}"
   when: fubarhouse_user_dir is not defined
-- include: nvm.yml
-  when: install_nvm
 
 - name: "Set default installation directory"
   set_fact:
     nvm_install_dir: "{{ fubarhouse_user_dir }}/.nvm"
   when: nvm_install_dir is not defined
+
+- include: nvm.yml
+  when: install_nvm
 
 - include: ivm.yml
   when:
