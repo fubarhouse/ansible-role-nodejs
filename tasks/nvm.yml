@@ -117,7 +117,7 @@
   become: yes
   become_user: "root"
   lineinfile:
-    dest: "{{ fubarhouse_npm.user_dir }}/{{ item[0].item.filename }}"
+    dest: "{{ fubarhouse_user_dir }}/{{ item[0].item }}"
     regexp: '.nvm/v{{ item[1] }}/bin'
     line:  'export PATH=$PATH:{{ fubarhouse_npm.user_dir }}/.nvm/v{{ item[1] }}/bin;'
     state: present
