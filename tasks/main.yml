@@ -24,10 +24,19 @@
     fubarhouse_user_dir: "{{ shell_home_dir.stdout }}"
   when: fubarhouse_user_dir is not defined
 
-- name: "Set default installation directory"
+- name: "Set default ivm installation directory"
+  set_fact:
+    nvm_install_dir: "{{ fubarhouse_user_dir }}/.ivm"
+  when:
+  - ivm_install_dir is not defined
+  - install_ivm|bool == true
+
+- name: "Set default nvm installation directory"
   set_fact:
     nvm_install_dir: "{{ fubarhouse_user_dir }}/.nvm"
-  when: nvm_install_dir is not defined
+  when:
+  - nvm_install_dir is not defined
+  - install_nvm|bool == true
 
 - include: nvm.yml
   when: install_nvm
