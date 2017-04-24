@@ -8,18 +8,14 @@
   register: installed_nodejs_versions
   changed_when: false
 
-- name: "NodeJS | Install default version"
-  become: yes
-  become_user: "{{ fubarhouse_user }}"
-  shell:  "{{ fubarhouse_npm.nvm_symlink_exec }} install {{ node_version }}"
-  when: '"{{ node_version }}" in nodejs_available_versions.stdout and "{{ node_version }}" not in "{{ node_versions }}" and "{{ node_version }}" not in "{{ installed_nodejs_versions.stdout }}"'
-
 - name: "NodeJS | Install all requested versions"
   become: yes
   become_user: "{{ fubarhouse_user }}"
   shell:  "{{ fubarhouse_npm.nvm_symlink_exec }} install {{ item }}"
   when: '"{{ item }}" in nodejs_available_versions.stdout and item not in installed_nodejs_versions.stdout'
-  with_items: "{{ node_versions }}"
+  with_items:
+  - "{{ node_version }}"
+  - "{{ node_versions }}"
 
 - name: "NodeJS | Switching"
   become: yes
