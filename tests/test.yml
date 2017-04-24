@@ -25,6 +25,7 @@
         name:: "{{ item }}"
         state: installed
       with_items:
+        - curl
         - git
         - git-svn
         - rsync
