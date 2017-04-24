@@ -26,6 +26,11 @@
 - include: nvm.yml
   when: install_nvm
 
+- name: "Set default installation directory"
+  set_fact:
+    nvm_install_dir: "{{ fubarhouse_user_dir }}/.nvm"
+  when: nvm_install_dir is not defined
+
 - include: ivm.yml
   when:
     - install_ivm == true
