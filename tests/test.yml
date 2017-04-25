@@ -30,6 +30,8 @@
       when: ansible_os_family == 'Debian'
       changed_when: false
       failed_when: false
+    - shell: dnf clean all --enablerepo=\*
+      failed_when: false
   tasks:
     - name: Install dependencies.
       package:
