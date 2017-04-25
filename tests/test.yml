@@ -22,6 +22,14 @@
       - 7.0.0
     node_packages:
       - grunt
+  pre_tasks:
+    - name: Update apt cache.
+      apt:
+        update_cache: yes
+        cache_valid_time: 600
+      when: ansible_os_family == 'Debian'
+      changed_when: false
+      failed_when: false
   tasks:
     - name: Install dependencies.
       package:
