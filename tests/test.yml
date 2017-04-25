@@ -58,6 +58,6 @@
         - sudo
       failed_when: false
   roles:
-    - geerlingguy.git
+#    - geerlingguy.git
     - fubarhouse.curl
     - role_under_test

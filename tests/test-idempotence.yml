@@ -21,7 +21,11 @@
       package:
         name:: "{{ item }}"
         state: installed
-      with_items: []
+      with_items:
+        - curl
+        - git
+        - git-svn
+        - sudo
       failed_when: false
   roles:
     - role_under_test
