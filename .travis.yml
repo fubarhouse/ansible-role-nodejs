@@ -12,11 +12,11 @@ env:
     run_opts: "--privileged"
     playbook: test.yml
     playbook_indepotence: test-idempotence.yml
-#  - distro: ubuntu1204
-#    init: /sbin/init
-#    run_opts: "--privileged"
-#    playbook: test.yml
-#    playbook_indepotence: test-idempotence.yml
+  - distro: ubuntu1204
+    init: /sbin/init
+    run_opts: "--privileged"
+    playbook: test.yml
+    playbook_indepotence: test-idempotence.yml
   - distro: centos6
     init: "/sbin/init"
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
