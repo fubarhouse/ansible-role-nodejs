@@ -4,34 +4,55 @@
 - name: "Define user variable for ssh use"
   set_fact:
     fubarhouse_user: "{{ ansible_ssh_user }}"
-  when: ansible_ssh_user is defined and fubarhouse_user is undefined
+  when: ansible_ssh_user is defined and fubarhouse_user is not defined
 
 - name: "Define user variable for non-ssh use"
   set_fact:
     fubarhouse_user: "{{ ansible_user_id }}"
-  when: ansible_ssh_user is not defined and fubarhouse_user is undefined
+  when: ansible_ssh_user is not defined and fubarhouse_user is not defined
 
-- name: "Define OS-specific variables"
-  include_vars: "config-{{ ansible_os_family }}.yml"
-  when: fubarhouse_npm is not defined
+- name: "Get $HOME"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  shell: "echo $HOME"
+  register: shell_home_dir
+  changed_when: false
+  when: fubarhouse_user_dir is not defined
+
+- name: "Set $HOME"
+  set_fact:
+    fubarhouse_user_dir: "{{ shell_home_dir.stdout }}"
+  when: fubarhouse_user_dir is not defined
+
+- name: "Set default ivm installation directory"
+  set_fact:
+    ivm_install_dir: "{{ fubarhouse_user_dir }}/.ivm"
+  when:
+  - ivm_install_dir is not defined
+  - install_ivm|bool == true
+
+- name: "Set default nvm installation directory"
+  set_fact:
+    nvm_install_dir: "{{ fubarhouse_user_dir }}/.nvm"
+  when:
+  - nvm_install_dir is not defined
+  - install_nvm|bool == true
 
 - include: nvm.yml
-  when: fubarhouse_npm.install_nvm
+  when: install_nvm
 
 - include: ivm.yml
-  when: 'fubarhouse_npm.install_ivm and "{{ ansible_os_family }}" != "Darwin"'
+  when:
+    - install_ivm == true
+    - '"{{ ansible_os_family }}" != "Darwin"'
 
 - include: nodejs.yml
-  when: fubarhouse_npm.install_nodejs
+  when: install_nodejs == true
 
 - include: iojs.yml
-  when: 'fubarhouse_npm.install_iojs and "{{ ansible_os_family }}" != "Darwin"'
+  when:
+    - install_iojs == true
+    - '"{{ ansible_os_family }}" != "Darwin"'
 
 - include: npm.yml
-  when: fubarhouse_npm.install_npm
-
-- name: "Verify Node/IOJS version in use"
-  shell: "{{ fubarhouse_npm.nvm_symlink_exec }} ls | grep current | cat"
-  register: node_current_version
-  changed_when: false
-  failed_when: 'node_current_version.stdout.find("{{ node_version }}") == -1'
+  when: install_npm == true

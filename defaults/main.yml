@@ -1,11 +1,25 @@
 ---
 
-node_version: 7.1.0
+shell_profiles:
+  - .bash_profile
+nodejs_clean_install: false
+nvm_symlink_exec: /usr/local/bin/nvm
+
+nvm_repo: "https://github.com/xtuple/nvm.git"
+ivm_repo: "https://github.com/demohi/ivm.git"
+
+install_nvm: true
+install_nodejs: true
+install_ivm: false
+install_iojs: false
+install_npm: true
+
+node_version: 7.9.0
 node_versions:
-  - 4.6.1
+  - 4.8.2
   - 5.12.0
-  - 6.9.1
-  - 7.1.0
+  - 6.10.2
+  - 7.9.0
 
 node_packages:
   - backbone
@@ -13,3 +27,8 @@ node_packages:
   - replace
   - underscore
   - yosay
+
+nodejs_folder_paths:
+  - path: "/usr/local/lib/node_modules"
+  - path: "/Users/{{ fubarhouse_user }}/.npm"
+  - path: "/Users/{{ fubarhouse_user }}/.nvm"

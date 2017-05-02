@@ -2,21 +2,41 @@
 services: docker
 
 env:
-  - distro: centos6
+  - distro: ubuntu1604
     init: /sbin/init
-    run_opts: ""
+    run_opts: "--privileged"
+    playbook: test.yml
+    playbook_indepotence: test-idempotence.yml
+  - distro: ubuntu1404
+    init: /sbin/init
+    run_opts: "--privileged"
+    playbook: test.yml
+    playbook_indepotence: test-idempotence.yml
+  - distro: ubuntu1204
+    init: /sbin/init
+    run_opts: "--privileged"
+    playbook: test.yml
+    playbook_indepotence: test-idempotence.yml
+  - distro: centos6
+    init: "/sbin/init"
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    playbook: test.yml
+    playbook_indepotence: test-idempotence.yml
   - distro: centos7
     init: /usr/lib/systemd/systemd
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-  - distro: ubuntu1204
-    init: /sbin/init
-    run_opts: ""
-  - distro: ubuntu1404
-    init: /sbin/init
-    run_opts: ""
-  - distro: ubuntu1604
+    playbook: test.yml
+    playbook_indepotence: test-idempotence.yml
+  - distro: debian8
     init: /lib/systemd/systemd
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    playbook: test.yml
+    playbook_indepotence: test-idempotence.yml
+#  - distro: fedora24
+#    init: /usr/lib/systemd/systemd
+#    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+#    playbook: test.yml
+#    playbook_indepotence: test-idempotence.yml
 
 before_install:
 
@@ -40,13 +60,16 @@ script:
   - 'docker exec "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml'
 
   # Test role idempotence.
-  # - idempotence=$(mktemp)
-  # - docker exec "$(cat ${container_id})" ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml | tee -a ${idempotence}
-  # - >
-  #   tail ${idempotence}
-  #   | grep -q 'changed=0.*failed=0'
-  #   && (echo 'Idempotence test: pass' && exit 0)
-  #   || (echo 'Idempotence test: fail' && exit 1)
+  - idempotence=$(mktemp)
+  - >
+    docker exec "$(cat ${container_id})"
+    ansible-playbook /etc/ansible/roles/role_under_test/tests/${playbook_indepotence} --sudo -vvvv
+    | tee -a ${idempotence}
+  - >
+    tail ${idempotence}
+    | grep -q 'changed=0.*failed=0'
+    && (echo 'Idempotence test: pass' && exit 0)
+    || (echo 'Idempotence test: fail' && exit 1)
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/

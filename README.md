@@ -3,10 +3,9 @@
 [![Build Status](https://travis-ci.org/fubarhouse/ansible-role-nodejs.svg?branch=master)](https://travis-ci.org/fubarhouse/ansible-role-nodejs)
 
 * Installs NVM (Node Version Manager)
-* Installs IVM (IOJS Version Manager)
-* Does not install IOJS versions unless specified (uses IVM)
+* Installs IVM (IOJS Version Manager) when configured
 * Installs Node.js v4, v5, v6 and v7 (uses NVM - Node Javascript Library)
-* Installs IOJS where applicable (Variant of Node.js)
+* Installs IOJS when configured
 * Installs NPM packages (Node Package Manager)
 
 ## Requirements
@@ -15,21 +14,20 @@
 
 ## Role Variables
 
-Note: In order to install legacy IOJS versions, please specify the version number (example: `1.0.0`) in either the node_version as a string or in node_versions as a new array item.
-
 Default Node version
 ````
-node_version: 7.1.0
+node_version: 7.9.0
 ````
 
 All Node versions to install
 ````
 node_versions:
-  - 4.6.1
+  - 4.8.2
   - 5.12.0
-  - 6.9.1
-  - 7.1.0
+  - 6.10.2
+  - 7.9.0
 ````
+
 Node packages to download
 ````
 node_packages:
@@ -37,6 +35,17 @@ node_packages:
   - { name: grunt }
   - { name: underscore }
   - { name: yosay }
+````
+
+Note: In order to install IOJS versions via IVM, configure both IVM and IOJS tasks to execute as follows:
+````
+install_ivm: true
+install_iojs: true
+node_version: 3.0.0
+node_versions:
+- 1.0.0
+- 2.0.0
+
 ````
 ## Dependencies
 

@@ -4,27 +4,23 @@
 - name: "NodeJS | Check"
   become: yes
   become_user: "{{ fubarhouse_user }}"
-  shell:  "{{ fubarhouse_npm.nvm_symlink_exec }} ls | cat"
+  shell:  "{{ nvm_symlink_exec }} ls | cat"
   register: installed_nodejs_versions
   changed_when: false
-
-- name: "NodeJS | Install default version"
-  become: yes
-  become_user: "{{ fubarhouse_user }}"
-  shell:  "{{ fubarhouse_npm.nvm_symlink_exec }} install {{ node_version }}"
-  when: '"{{ node_version }}" in nodejs_available_versions.stdout and "{{ node_version }}" not in "{{ node_versions }}" and "{{ node_version }}" not in "{{ installed_nodejs_versions.stdout }}"'
 
 - name: "NodeJS | Install all requested versions"
   become: yes
   become_user: "{{ fubarhouse_user }}"
-  shell:  "{{ fubarhouse_npm.nvm_symlink_exec }} install {{ item }}"
+  shell:  "{{ nvm_symlink_exec }} install {{ item }}"
   when: '"{{ item }}" in nodejs_available_versions.stdout and item not in installed_nodejs_versions.stdout'
-  with_items: "{{ node_versions }}"
+  with_items:
+  - "{{ node_version }}"
+  - "{{ node_versions }}"
 
 - name: "NodeJS | Switching"
   become: yes
   become_user: "{{ fubarhouse_user }}"
-  shell:  "{{ fubarhouse_npm.nvm_symlink_exec }} use {{ node_version }}"
+  shell:  "{{ nvm_symlink_exec }} use {{ node_version }}"
   register: fubarhouse_npm_switch
   changed_when: false
   when: '"{{ node_version }}" in nodejs_available_versions.stdout'
@@ -32,13 +28,13 @@
 - name: "NodeJS | Linking"
   become: yes
   become_user: "{{ fubarhouse_user }}"
-  shell: "{{ fubarhouse_npm.nvm_symlink_exec }} alias default {{ node_version }}"
+  shell: "{{ nvm_symlink_exec }} alias default {{ node_version }}"
   changed_when: false
   when: '"{{ node_version }}" in nodejs_available_versions.stdout'
 
 - name: "NodeJS | Linking binaries"
   file:
-    src: "{{ fubarhouse_npm.user_dir }}/.nvm/v{{ node_version }}/bin/{{ item }}"
+    src: "{{ nvm_install_dir }}/v{{ node_version }}/bin/{{ item }}"
     dest: "/usr/local/bin/{{ item }}"
     state: link
     force: yes
@@ -46,13 +42,22 @@
     - node
     - npm
   when: '"{{ node_version }}" in nodejs_available_versions.stdout'
+  changed_when: false
 
 - name: "NodeJS | Import exports"
   become: yes
   become_user: "{{ fubarhouse_user }}"
   lineinfile:
-    dest: "{{ fubarhouse_npm.user_dir }}/{{ item.filename }}"
+    dest: "{{ fubarhouse_user_dir }}/{{ item.item.item }}"
     line: "export PATH=$PATH:$(npm config --global get prefix)/bin"
     state: present
-  with_items: "{{ fubarhouse_npm.shell_profiles }}"
+  with_items:
+    - "{{ available_shell_profiles.results }}"
+  when: item.item.stat.exists|bool == true
+
+- name: "NodeJS | Verify version in use"
+  shell: "{{ nvm_symlink_exec }} ls | grep current | cat"
+  register: node_current_version
+  changed_when: false
+  failed_when: 'node_current_version.stdout.find("{{ node_version }}") == -1'
   when: '"{{ node_version }}" in nodejs_available_versions.stdout'
