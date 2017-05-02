@@ -130,8 +130,8 @@
   become_user: "root"
   lineinfile:
     dest: "{{ fubarhouse_user_dir }}/{{ item[0].item.item }}"
-    regexp: '.nvm/v{{ item[1] }}/bin'
-    line:  'export PATH=$PATH:{{ nvm_install_dir }}/v{{ item[1]. }}/bin;'
+    regexp: '{{ nvm_install_dir }}/v{{ item[1] }}/bin'
+    line:  'export PATH=$PATH:{{ nvm_install_dir }}/v{{ item[1] }}/bin;'
     state: present
   with_nested:
     - "{{ available_shell_profiles.results }}"
