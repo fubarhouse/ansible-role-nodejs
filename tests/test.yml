@@ -32,13 +32,13 @@
       failed_when: false
     - shell: dnf clean all --enablerepo=\*
       failed_when: false
-  tasks:
     - name: Install dependencies.
       package:
         name:: "{{ item }}"
         state: installed
       with_items:
         - curl
+        - find
         - git
         - git-svn
         - rsync
