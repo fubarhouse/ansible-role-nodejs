@@ -38,7 +38,7 @@
         state: installed
       with_items:
         - curl
-        - find
+        - findutils
         - git
         - git-svn
         - rsync
