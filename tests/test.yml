@@ -59,6 +59,7 @@
         - openssl-devel
         - subversion-perl
         - make
+        - libdevel
         - libcurl4-gnutls-dev
         - libexpat1-dev
         - gettext
