@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 
-source {{ nvm_install_dir }}/nvm.sh && nvm $@;
+export NVM_NODEJS_ORG_MIRROR=http://nodejs.org/dist;
+source {{ nvm_install_dir }}/nvm.sh && nvm "$@";
