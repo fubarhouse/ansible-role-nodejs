@@ -93,6 +93,15 @@
     path: "/tmp/nvm-{{ nvm_version }}"
   when: fubarhouse_npm_nvm_installed.stat.exists == false
 
+- name: "NVM | Create pernament extraction directory"
+  become: yes
+  become_user: root
+  file:
+    state: directory
+    mode: 0777
+    path: "{{ nvm_install_dir }}"
+  when: fubarhouse_npm_nvm_installed.stat.exists == false
+
 - name: "NVM | Unpack distribution"
   become: yes
   become_user: "{{ fubarhouse_user }}"
@@ -102,7 +111,7 @@
     copy: "no"
   when: fubarhouse_npm_nvm_installed.stat.exists == false
 
-- name: "Go-Lang | Moving to installation directory"
+- name: "NVM | Moving to installation directory"
   become: yes
   become_user: "{{ fubarhouse_user }}"
   synchronize:
@@ -115,7 +124,7 @@
     - ansible_ssh_user is undefined
     - fubarhouse_npm_nvm_installed.stat.exists == false
 
-- name: "Go-Lang | Moving to installation directory"
+- name: "NVM | Moving to installation directory"
   become: yes
   become_user: "{{ fubarhouse_user }}"
   shell: "cp -rf /tmp/nvm-{{ nvm_version }}/nvm-{{ nvm_version }}/* {{ nvm_install_dir }}/"
