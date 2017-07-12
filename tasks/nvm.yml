@@ -82,7 +82,7 @@
     dest: "{{ nvm_install_dir }}"
     clone: yes
     update: no
-    version: master
+    version: "{{ nvm_version }}"
     recursive: false
 
 - name: "NVM | Install"
