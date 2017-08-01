@@ -39,6 +39,7 @@
       failed_when: false
     # RedHat
     - shell: dnf clean all --enablerepo=\*
+      changed_when: false
       failed_when: false
     # Install dependencies
     - name: Install dependencies.
@@ -69,7 +70,6 @@
         - subversion-perl
         - make
         - libdevel
-        - libcurl4-gnutls-dev
         - libexpat1-dev
         - gettext
         - libssl-dev
