@@ -116,6 +116,12 @@ env:
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
     playbook: test.yml
     playbook_indepotence: test-idempotence.yml
+  - docker_user: fubarhouse
+    distro: fedora26
+    init: /usr/lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    playbook: test.yml
+    playbook_indepotence: test-idempotence.yml
 
 before_install:
 
