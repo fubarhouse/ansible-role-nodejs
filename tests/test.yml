@@ -71,6 +71,7 @@
         - make
         - libdevel
         - libcurl4-openssl-dev
+        - libcurl4-gnutls-dev
         - libexpat1-dev
         - gettext
         - libssl-dev
@@ -78,16 +79,6 @@
         - zip
         - xz-utils
         - sudo
-      failed_when: false
-      changed_when: false
-      # Curl post-execution role to be migrated
-      # into fubarhouse.curl at a later date.
-    - name: Remove needless packages.
-      package:
-        name:: "{{ item }}"
-        state: installed
-      with_items:
-        - libcurl4-gnutls-dev
       failed_when: false
       changed_when: false
 
