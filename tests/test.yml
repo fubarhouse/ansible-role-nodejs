@@ -12,7 +12,6 @@
     # fubarhouse.curl
     curl_configure_flags:
       - disable-shared
-      - with-ssl
     # fubarhouse.nodejs
     install_ivm: true
     install_iojs: true
