@@ -80,6 +80,16 @@
         - sudo
       failed_when: false
       changed_when: false
+      # Curl post-execution role to be migrated
+      # into fubarhouse.curl at a later date.
+    - name: Remove needless packages.
+      package:
+        name:: "{{ item }}"
+        state: installed
+      with_items:
+        - libcurl3-gnutls
+      failed_when: false
+      changed_when: false
 
   roles:
     - fubarhouse.curl
