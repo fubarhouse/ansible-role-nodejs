@@ -87,7 +87,7 @@
         name:: "{{ item }}"
         state: installed
       with_items:
-        - libcurl3-gnutls
+        - libcurl4-gnutls-dev
       failed_when: false
       changed_when: false
 
