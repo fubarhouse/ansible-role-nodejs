@@ -7,7 +7,7 @@
   vars:
     # geerlingguy.git
     git_install_from_source: true
-    git_install_from_source_force_update: true
+    git_install_from_source_force_update: false
     git_version: 2.9.3
     # fubarhouse.curl
     curl_configure_flags:
@@ -71,7 +71,6 @@
         - make
         - libdevel
         - libcurl4-openssl-dev
-        - libcurl4-gnutls-dev
         - libexpat1-dev
         - gettext
         - libssl-dev
