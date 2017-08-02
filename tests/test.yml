@@ -76,6 +76,7 @@
         - libssl-dev
         - build-essential
         - zip
+        - xz-utils
         - sudo
       failed_when: false
       changed_when: false
