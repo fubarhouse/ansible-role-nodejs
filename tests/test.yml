@@ -6,7 +6,7 @@
 
   vars:
     # geerlingguy.git
-    git_install_from_source: true
+    git_install_from_source: false
     git_install_from_source_force_update: false
     git_version: 2.9.3
     # fubarhouse.curl
