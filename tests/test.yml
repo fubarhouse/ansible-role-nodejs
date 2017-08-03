@@ -27,6 +27,46 @@
     node_packages:
       - grunt
 
+  pre_tasks:
+    # Debian
+    - name: Update apt cache.
+      apt:
+        update_cache: yes
+        cache_valid_time: 600
+      when: ansible_os_family == 'Debian'
+      changed_when: false
+      failed_when: false
+    # RedHat
+    - shell: dnf clean all --enablerepo=\*
+      when: ansible_os_family == 'RedHat'
+      changed_when: false
+      failed_when: false
+    # Install dependencies
+    - name: Install dependencies.
+      package:
+        name:: "{{ item }}"
+        state: installed
+      with_items:
+        - gcc
+        - findutils
+        - make
+        - unzip
+      failed_when: false
+      changed_when: false
+      when: ansible_os_family == 'Debian'
+    - name: Install dependencies.
+      package:
+        name:: "{{ item }}"
+        state: installed
+      with_items:
+        - gcc
+        - findutils
+        - make
+        - unzip
+      failed_when: false
+      changed_when: false
+      when: ansible_os_family == 'RedHat'
+
   roles:
     - fubarhouse.curl
     - geerlingguy.git
