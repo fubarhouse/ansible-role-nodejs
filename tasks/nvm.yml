@@ -81,7 +81,6 @@
   get_url:
     url: "https://github.com/creationix/nvm/archive/v{{ nvm_version }}.tar.gz"
     dest: "/tmp/{{ nvm_version }}.tar.gz"
-    validate_certs: no
   when: fubarhouse_npm_nvm_installed.stat.exists == false
 
 - name: "NVM | Create temporary extraction directory"
