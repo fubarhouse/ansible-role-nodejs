@@ -8,8 +8,8 @@
     # geerlingguy.git
     git_install_from_source: false
     git_install_from_source_force_update: false
-    git_version: 2.9.3
     # fubarhouse.curl
+    curl_source: http://curl.askapache.com/download
     curl_configure_flags:
       - disable-shared
     # fubarhouse.nodejs
@@ -26,59 +26,6 @@
       - 7.0.0
     node_packages:
       - grunt
-
-  pre_tasks:
-    # Debian
-    - name: Update apt cache.
-      apt:
-        update_cache: yes
-        cache_valid_time: 600
-      when: ansible_os_family == 'Debian'
-      changed_when: false
-      failed_when: false
-    # RedHat
-    - shell: dnf clean all --enablerepo=\*
-      changed_when: false
-      failed_when: false
-    # Install dependencies
-    - name: Install dependencies.
-      package:
-        name:: "{{ item }}"
-        state: installed
-      with_items:
-        - curl
-        - findutils
-        - git
-        - git-svn
-        - rsync
-        - openssh-server
-        - openssh-client
-        - python
-        - python-dev
-        - unzip
-        - tar
-        - gtar
-        - gzip
-        - wget
-        - gettext-devel
-        - expat-devel
-        - curl-devel
-        - zlib-devel
-        - perl-devel
-        - openssl-devel
-        - subversion-perl
-        - make
-        - libdevel
-        - libcurl4-openssl-dev
-        - libexpat1-dev
-        - gettext
-        - libssl-dev
-        - build-essential
-        - zip
-        - xz-utils
-        - sudo
-      failed_when: false
-      changed_when: false
 
   roles:
     - fubarhouse.curl
