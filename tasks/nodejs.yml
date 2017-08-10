@@ -20,7 +20,7 @@
 - name: "NodeJS | Switching"
   become: yes
   become_user: "{{ fubarhouse_user }}"
-  shell:  "{{ nvm_symlink_exec }} use {{ node_version }}"
+  shell:  "{{ nvm_symlink_exec }} use --delete-prefix {{ node_version }}"
   register: fubarhouse_npm_switch
   changed_when: false
   when: '"{{ node_version }}" in nodejs_available_versions.stdout'
