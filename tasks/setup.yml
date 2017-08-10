@@ -27,6 +27,7 @@
     - findutils
     - make
     - rsync
+    - ssh
     - unzip
   when: ansible_os_family == "Debian"
 
