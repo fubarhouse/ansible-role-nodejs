@@ -42,17 +42,13 @@
   when: install_nvm
 
 - include: ivm.yml
-  when:
-    - install_ivm == true
-    - '"{{ ansible_os_family }}" != "Darwin"'
+  when: install_ivm|bool == true
 
 - include: nodejs.yml
-  when: install_nodejs == true
+  when: install_nodejs|bool == true
 
 - include: iojs.yml
-  when:
-    - install_iojs == true
-    - '"{{ ansible_os_family }}" != "Darwin"'
+  when: install_iojs|bool == true
 
 - include: npm.yml
-  when: install_npm == true
+  when: install_npm|bool == true
