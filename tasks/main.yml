@@ -1,6 +1,8 @@
 ---
 # Main tasks file for fubarhouse.nodejs
 
+- include: setup.yml
+
 - name: "Define user variable for ssh use"
   set_fact:
     fubarhouse_user: "{{ ansible_ssh_user }}"

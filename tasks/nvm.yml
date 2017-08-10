@@ -81,7 +81,7 @@
   get_url:
     url: "https://github.com/creationix/nvm/archive/v{{ nvm_version }}.tar.gz"
     dest: "/tmp/{{ nvm_version }}.tar.gz"
-  when: fubarhouse_npm_nvm_installed.stat.exists == false
+  when: fubarhouse_npm_nvm_installed.stat.exists|bool == false
 
 - name: "NVM | Create temporary extraction directory"
   become: yes
@@ -90,7 +90,7 @@
     state: directory
     mode: 0777
     path: "/tmp/nvm-{{ nvm_version }}"
-  when: fubarhouse_npm_nvm_installed.stat.exists == false
+  when: fubarhouse_npm_nvm_installed.stat.exists|bool == false
 
 - name: "NVM | Create pernament extraction directory"
   become: yes
@@ -99,7 +99,7 @@
     state: directory
     mode: 0777
     path: "{{ nvm_install_dir }}"
-  when: fubarhouse_npm_nvm_installed.stat.exists == false
+  when: fubarhouse_npm_nvm_installed.stat.exists|bool == false
 
 - name: "NVM | Unpack distribution"
   become: yes
@@ -108,7 +108,7 @@
     src: "/tmp/{{ nvm_version }}.tar.gz"
     dest: "/tmp/nvm-{{ nvm_version }}"
     copy: "no"
-  when: fubarhouse_npm_nvm_installed.stat.exists == false
+  when: fubarhouse_npm_nvm_installed.stat.exists|bool == false
 
 - name: "NVM | Moving to installation directory"
   become: yes
@@ -121,7 +121,7 @@
   delegate_to: "{{ inventory_hostname }}"
   when:
     - ansible_ssh_user is undefined
-    - fubarhouse_npm_nvm_installed.stat.exists == false
+    - fubarhouse_npm_nvm_installed.stat.exists|bool == false
 
 - name: "NVM | Moving to installation directory"
   become: yes
@@ -129,7 +129,7 @@
   shell: "cp -rf /tmp/nvm-{{ nvm_version }}/nvm-{{ nvm_version }}/* {{ nvm_install_dir }}/"
   when:
     - ansible_ssh_user is defined
-    - fubarhouse_npm_nvm_installed.stat.exists == false
+    - fubarhouse_npm_nvm_installed.stat.exists|bool == false
 
 - name: "NVM | Remove temporary data"
   become: yes
@@ -140,11 +140,11 @@
   with_items:
   - "/tmp/{{ nvm_version }}.tar.gz"
   - "tmp/nvm-{{ nvm_version }}"
-  when: fubarhouse_npm_nvm_installed.stat.exists == false
+  when: fubarhouse_npm_nvm_installed.stat.exists|bool == false
 
 - name: "NVM | Install"
   shell: "{{ nvm_install_dir }}/install.sh"
-  when: fubarhouse_npm_nvm_installed.stat.exists == false
+  when: fubarhouse_npm_nvm_installed.stat.exists|bool == false
 
 - name: "NVM | Ensure permissions are set"
   become: yes
@@ -163,7 +163,7 @@
     dest: "{{ nvm_symlink_exec }}"
     owner: "{{ fubarhouse_user }}"
     mode: 0755
-  when: fubarhouse_npm_nvm_installed.stat.exists == false
+  when: fubarhouse_npm_nvm_installed.stat.exists|bool == false
 
 - name: "NVM | Get versions"
   become: yes

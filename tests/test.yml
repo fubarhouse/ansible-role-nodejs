@@ -1,18 +1,10 @@
 ---
 
 - hosts: localhost
-
   become: true
 
   vars:
-    # geerlingguy.git
-    git_install_from_source: false
-    git_install_from_source_force_update: false
-    # fubarhouse.curl
-    curl_source: http://curl.askapache.com/download
-    curl_configure_flags:
-      - disable-shared
-    # fubarhouse.nodejs
+    nvm_install_dir: /home/travis/nvm_install_test
     install_ivm: true
     install_iojs: true
     node_version: 7.9.0
@@ -28,6 +20,7 @@
       - grunt
 
   pre_tasks:
+
     # Debian
     - name: Update apt cache.
       apt:
@@ -36,38 +29,12 @@
       when: ansible_os_family == 'Debian'
       changed_when: false
       failed_when: false
+
     # RedHat
     - shell: dnf clean all --enablerepo=\*
       when: ansible_os_family == 'RedHat'
       changed_when: false
       failed_when: false
-    # Install dependencies
-    - name: Install dependencies.
-      package:
-        name:: "{{ item }}"
-        state: installed
-      with_items:
-        - gcc
-        - findutils
-        - make
-        - unzip
-      failed_when: false
-      changed_when: false
-      when: ansible_os_family == 'Debian'
-    - name: Install dependencies.
-      package:
-        name:: "{{ item }}"
-        state: installed
-      with_items:
-        - gcc
-        - findutils
-        - make
-        - unzip
-      failed_when: false
-      changed_when: false
-      when: ansible_os_family == 'RedHat'
 
   roles:
-    - fubarhouse.curl
-    - geerlingguy.git
     - role_under_test
