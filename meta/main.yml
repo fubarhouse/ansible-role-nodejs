@@ -9,32 +9,32 @@ galaxy_info:
   platforms:
   - name: Debian
     versions:
-    - wheezy
-    - jessie
-    - stretch
+      - wheezy
+      - jessie
+      - stretch
   - name: EL
     versions:
-    - 6
-    - 7
+      - 6
+      - 7
   - name: Fedora
     versions:
-    - 24
-    - 25
-    - 26
+      - 24
+      - 25
+      - 26
   - name: Ubuntu
     versions:
-    - artful
-    - zesty
-    - yakkety
-    - xenial
-    - vivid
-    - wily
-    # - utopic
-    - trusty
-    - saucy
-    - raring
-    - quantal
-    - precise
+      - artful
+      - zesty
+      - yakkety
+      - xenial
+      - vivid
+      - wily
+      - utopic
+      - trusty
+      - saucy
+      - raring
+      - quantal
+      - precise
   categories:
     - system
     - database
