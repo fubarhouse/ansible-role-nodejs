@@ -7,7 +7,7 @@
     nvm_install_dir: /home/travis/nvm_install_test
     install_ivm: true
     install_iojs: true
-    node_version: 7.9.0
+    node_version: 8.0.0
     node_versions:
       - 1.0.0
       - 2.0.0
@@ -16,6 +16,7 @@
       - 5.0.0
       - 6.0.0
       - 7.0.0
+      - 8.0.0
     node_packages:
       - grunt
 
