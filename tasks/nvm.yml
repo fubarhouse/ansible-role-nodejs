@@ -92,14 +92,14 @@
     path: "/tmp/nvm-{{ nvm_version }}"
   when: fubarhouse_npm_nvm_installed.stat.exists|bool == false
 
-- name: "NVM | Create pernament extraction directory"
-  become: yes
-  become_user: root
-  file:
-    state: directory
-    mode: 0777
-    path: "{{ nvm_install_dir }}"
-  when: fubarhouse_npm_nvm_installed.stat.exists|bool == false
+#- name: "NVM | Create pernament extraction directory"
+#  become: yes
+#  become_user: root
+#  file:
+#    state: directory
+#    mode: 0777
+#    path: "{{ nvm_install_dir }}"
+#  when: fubarhouse_npm_nvm_installed.stat.exists|bool == false
 
 - name: "NVM | Unpack distribution"
   become: yes
