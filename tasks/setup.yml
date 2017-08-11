@@ -11,7 +11,7 @@
     - findutils
     - make
     - rsync
-    - unzip
+    - tar
   when:
     - ansible_os_family == "RedHat"
     - ansible_distribution == "CentOS"
@@ -28,7 +28,7 @@
     - make
     - rsync
     - ssh
-    - unzip
+    - tar
   when: ansible_os_family == "Debian"
 
 - name: "NodeJS | Install dependencies (RedHat)"
@@ -42,7 +42,7 @@
     - findutils
     - make
     - rsync
-    - unzip
+    - tar
   when:
     - ansible_os_family == "RedHat"
     - ansible_distribution != "CentOS"
