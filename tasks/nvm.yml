@@ -118,7 +118,6 @@
     dest: "{{ nvm_install_dir }}"
     delete: yes
     recursive: yes
-  delegate_to: "{{ inventory_hostname }}"
   when:
     - ansible_ssh_user is undefined
     - fubarhouse_npm_nvm_installed.stat.exists|bool == false
