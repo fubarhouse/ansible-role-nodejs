@@ -10,6 +10,7 @@ nvm_version: 0.33.1
 ivm_repo: "https://github.com/demohi/ivm.git"
 
 install_nvm: true
+install_nvm_git: false
 install_nodejs: true
 install_ivm: false
 install_iojs: false

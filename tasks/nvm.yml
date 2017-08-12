@@ -71,7 +71,7 @@
     state: directory
     mode: 0777
     owner: "{{ fubarhouse_user }}"
-    recurse: yes
+    recurse: no
   with_items: "{{ nodejs_folder_paths }}"
   changed_when: false
 
@@ -81,7 +81,9 @@
   get_url:
     url: "https://github.com/creationix/nvm/archive/v{{ nvm_version }}.tar.gz"
     dest: "/tmp/{{ nvm_version }}.tar.gz"
-  when: fubarhouse_npm_nvm_installed.stat.exists|bool == false
+  when:
+    - fubarhouse_npm_nvm_installed.stat.exists|bool == false
+    - install_nvm_git|bool == false
 
 - name: "NVM | Create temporary extraction directory"
   become: yes
@@ -90,7 +92,9 @@
     state: directory
     mode: 0777
     path: "/tmp/nvm-{{ nvm_version }}"
-  when: fubarhouse_npm_nvm_installed.stat.exists|bool == false
+  when:
+    - fubarhouse_npm_nvm_installed.stat.exists|bool == false
+    - install_nvm_git|bool == false
 
 - name: "NVM | Create pernament extraction directory"
   become: yes
@@ -99,7 +103,9 @@
     state: directory
     mode: 0777
     path: "{{ nvm_install_dir }}"
-  when: fubarhouse_npm_nvm_installed.stat.exists|bool == false
+  when:
+    - fubarhouse_npm_nvm_installed.stat.exists|bool == false
+    - install_nvm_git|bool == false
 
 - name: "NVM | Unpack distribution"
   become: yes
@@ -108,7 +114,9 @@
     src: "/tmp/{{ nvm_version }}.tar.gz"
     dest: "/tmp/nvm-{{ nvm_version }}"
     copy: "no"
-  when: fubarhouse_npm_nvm_installed.stat.exists|bool == false
+  when:
+    - fubarhouse_npm_nvm_installed.stat.exists|bool == false
+    - install_nvm_git|bool == false
 
 - name: "NVM | Moving to installation directory"
   become: yes
@@ -121,6 +129,7 @@
   when:
     - ansible_ssh_user is undefined
     - fubarhouse_npm_nvm_installed.stat.exists|bool == false
+    - install_nvm_git|bool == false
 
 - name: "NVM | Moving to installation directory"
   become: yes
@@ -129,6 +138,7 @@
   when:
     - ansible_ssh_user is defined
     - fubarhouse_npm_nvm_installed.stat.exists|bool == false
+    - install_nvm_git|bool == false
 
 - name: "NVM | Remove temporary data"
   become: yes
@@ -139,7 +149,17 @@
   with_items:
   - "/tmp/{{ nvm_version }}.tar.gz"
   - "/tmp/nvm-{{ nvm_version }}"
-  when: fubarhouse_npm_nvm_installed.stat.exists|bool == false
+  when:
+    - fubarhouse_npm_nvm_installed.stat.exists|bool == false
+    - install_nvm_git|bool == false
+
+- name: "NVM | Clone"
+  git:
+    repo: "https://github.com/creationix/nvm.git"
+    dest: "{{ nvm_install_dir }}"
+    clone: yes
+    update: no
+  when: install_nvm_git|bool == true
 
 - name: "NVM | Install"
   shell: "{{ nvm_install_dir }}/install.sh"
