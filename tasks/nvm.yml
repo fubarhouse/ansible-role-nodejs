@@ -159,6 +159,7 @@
     dest: "{{ nvm_install_dir }}"
     clone: yes
     update: no
+    version: "{{ nvm_version }}"
   when: install_nvm_git|bool == true
 
 - name: "NVM | Install"
