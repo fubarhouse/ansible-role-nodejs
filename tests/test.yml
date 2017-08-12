@@ -5,8 +5,6 @@
 
   vars:
     nvm_install_dir: /home/travis/nvm_install_test
-    install_nvm_git: true
-    nvm_version: v0.33.2
     install_ivm: true
     install_iojs: true
     node_version: 8.0.0
