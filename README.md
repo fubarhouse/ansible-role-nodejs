@@ -45,8 +45,8 @@ node_version: 3.0.0
 node_versions:
 - 1.0.0
 - 2.0.0
-
 ````
+
 ## Dependencies
 
   None.

@@ -1,17 +1,13 @@
 ---
 
-- hosts: all
-  sudo: true
+- hosts: localhost
+  become: true
+
   vars:
-    git_install_from_source: true
-    git_install_from_source_force_update: true
-    git_version: 2.9.3
-    curl_configure_flags:
-      - disable-shared
-      - with-ssl
+    nvm_install_dir: /home/travis/nvm_install_test
     install_ivm: true
     install_iojs: true
-    node_version: 7.9.0
+    node_version: 8.0.0
     node_versions:
       - 1.0.0
       - 2.0.0
@@ -20,9 +16,13 @@
       - 5.0.0
       - 6.0.0
       - 7.0.0
+      - 8.0.0
     node_packages:
       - grunt
+
   pre_tasks:
+
+    # Debian
     - name: Update apt cache.
       apt:
         update_cache: yes
@@ -30,44 +30,12 @@
       when: ansible_os_family == 'Debian'
       changed_when: false
       failed_when: false
+
+    # RedHat
     - shell: dnf clean all --enablerepo=\*
+      when: ansible_os_family == 'RedHat'
+      changed_when: false
       failed_when: false
-  tasks:
-    - name: Install dependencies.
-      package:
-        name:: "{{ item }}"
-        state: installed
-      with_items:
-        - curl
-        - git
-        - git-svn
-        - rsync
-        - openssh-server
-        - openssh-client
-        - python
-        - python-dev
-        - unzip
-        - tar
-        - gtar
-        - gzip
-        - wget
-        - gettext-devel
-        - expat-devel
-        - curl-devel
-        - zlib-devel
-        - perl-devel
-        - openssl-devel
-        - subversion-perl
-        - make
-        - libcurl4-gnutls-dev
-        - libexpat1-dev
-        - gettext
-        - libssl-dev
-        - build-essential
-        - zip
-        - sudo
-      failed_when: false
+
   roles:
-    - geerlingguy.git
-    - fubarhouse.curl
     - role_under_test

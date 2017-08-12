@@ -1,0 +1,47 @@
+---
+
+- name: "NodeJS | Install dependencies (CentOS)"
+  yum:
+    name: "{{ item }}"
+    state: installed
+  with_items:
+    - curl
+    - gcc
+    - git
+    - findutils
+    - make
+    - rsync
+    - tar
+  when:
+    - ansible_os_family == "RedHat"
+    - ansible_distribution == "CentOS"
+
+- name: "NodeJS | Install dependencies (Debian)"
+  apt:
+    name: "{{ item }}"
+    state: installed
+  with_items:
+    - curl
+    - gcc
+    - git
+    - findutils
+    - make
+    - rsync
+    - tar
+  when: ansible_os_family == "Debian"
+
+- name: "NodeJS | Install dependencies (RedHat)"
+  dnf:
+    name: "{{ item }}"
+    state: installed
+  with_items:
+    - curl
+    - gcc
+    - git
+    - findutils
+    - make
+    - rsync
+    - tar
+  when:
+    - ansible_os_family == "RedHat"
+    - ansible_distribution != "CentOS"
