@@ -183,7 +183,6 @@
     dest: "{{ nvm_symlink_exec }}"
     owner: "{{ fubarhouse_user }}"
     mode: 0755
-  when: fubarhouse_npm_nvm_installed.stat.exists|bool == false
 
 - name: "NVM | Get versions"
   become: yes
