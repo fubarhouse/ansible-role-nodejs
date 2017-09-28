@@ -2,16 +2,12 @@
 # Tasks file for NPM
 
 - name: "NPM | Make sure NPM can be found"
-  become: yes
-  become_user: "{{ fubarhouse_user }}"
   shell: which npm | cat
   failed_when: false
   changed_when: false
   register: which_npm
 
 - name: "NPM | Ensure installed and updated"
-  become: yes
-  become_user: root
   npm:
     name: "{{ item }}"
     executable: "{{ which_npm.stdout }}"

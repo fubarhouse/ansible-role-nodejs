@@ -14,8 +14,6 @@
   when: ansible_ssh_user is not defined and fubarhouse_user is not defined
 
 - name: "Get $HOME"
-  become: yes
-  become_user: "{{ fubarhouse_user }}"
   shell: "echo $HOME"
   register: shell_home_dir
   changed_when: false
