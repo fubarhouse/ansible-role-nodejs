@@ -2,15 +2,11 @@
 # Tasks file for NodeJS
 
 - name: "NodeJS | Check"
-  become: yes
-  become_user: "{{ fubarhouse_user }}"
   shell:  "{{ nvm_symlink_exec }} ls | cat"
   register: installed_nodejs_versions
   changed_when: false
 
 - name: "NodeJS | Install all requested versions"
-  become: yes
-  become_user: "{{ fubarhouse_user }}"
   shell:  "{{ nvm_symlink_exec }} install {{ item }}"
   when: '"{{ item }}" in nodejs_available_versions.stdout and item not in installed_nodejs_versions.stdout'
   with_items:
@@ -18,16 +14,12 @@
   - "{{ node_versions }}"
 
 - name: "NodeJS | Switching"
-  become: yes
-  become_user: "{{ fubarhouse_user }}"
   shell:  "{{ nvm_symlink_exec }} use --delete-prefix {{ node_version }}"
   register: fubarhouse_npm_switch
   changed_when: false
   when: '"{{ node_version }}" in nodejs_available_versions.stdout'
 
 - name: "NodeJS | Linking"
-  become: yes
-  become_user: "{{ fubarhouse_user }}"
   shell: "{{ nvm_symlink_exec }} alias default {{ node_version }}"
   changed_when: false
   when: '"{{ node_version }}" in nodejs_available_versions.stdout'
@@ -45,8 +37,6 @@
   changed_when: false
 
 - name: "NodeJS | Import exports"
-  become: yes
-  become_user: "{{ fubarhouse_user }}"
   lineinfile:
     dest: "{{ fubarhouse_user_dir }}/{{ item.item.item }}"
     line: "export PATH=$PATH:$(npm config --global get prefix)/bin"

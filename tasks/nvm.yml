@@ -9,16 +9,12 @@
   - "{{ shell_profiles }}"
 
 - name: "NVM | Clean-up"
-  become: yes
-  become_user: "root"
   file:
     path: "{{ nvm_install_dir }}"
     state: absent
   when: nodejs_clean_install|bool == true
 
 - name: NVM | Clean-up default version from shell profiles
-  become: yes
-  become_user: "root"
   lineinfile:
     dest: "{{ fubarhouse_user_dir }}/{{ item }}"
     regexp: '.nvm/v{{ node_version }}/bin'
@@ -30,8 +26,6 @@
   when: item.stat.exists|bool == true
 
 - name: NVM | Clean-up other versions from shell profiles
-  become: yes
-  become_user: "root"
   lineinfile:
     dest: "{{ fubarhouse_user_dir }}/{{ item[0].item }}"
     regexp: '.nvm/v{{ item[1] }}/bin'
@@ -46,8 +40,6 @@
   - item[0].stat.exists|bool == true
 
 - name: "NodeJS | Remove imported exports not associated to specific versions"
-  become: yes
-  become_user: "{{ fubarhouse_user }}"
   lineinfile:
     dest: "{{ fubarhouse_user_dir }}/{{ item.item }}"
     line: "export PATH=$PATH:$(npm config --global get prefix)/bin"
@@ -64,8 +56,6 @@
   register: fubarhouse_npm_nvm_installed
 
 - name: "NVM | Ensure permissions are set"
-  become: yes
-  become_user: "root"
   file:
     path: "{{ item.path }}"
     state: directory
@@ -76,8 +66,6 @@
   changed_when: false
 
 - name: "NVM | Get distribution"
-  become: yes
-  become_user: root
   get_url:
     url: "https://github.com/creationix/nvm/archive/v{{ nvm_version }}.tar.gz"
     dest: "/tmp/{{ nvm_version }}.tar.gz"
@@ -86,8 +74,6 @@
     - install_nvm_git|bool == false
 
 - name: "NVM | Create temporary extraction directory"
-  become: yes
-  become_user: root
   file:
     state: directory
     mode: 0777
@@ -97,8 +83,6 @@
     - install_nvm_git|bool == false
 
 - name: "NVM | Create pernament extraction directory"
-  become: yes
-  become_user: root
   file:
     state: directory
     mode: 0777
@@ -108,8 +92,6 @@
     - install_nvm_git|bool == false
 
 - name: "NVM | Unpack distribution"
-  become: yes
-  become_user: "{{ fubarhouse_user }}"
   unarchive:
     src: "/tmp/{{ nvm_version }}.tar.gz"
     dest: "/tmp/nvm-{{ nvm_version }}"
@@ -119,8 +101,6 @@
     - install_nvm_git|bool == false
 
 - name: "NVM | Moving to installation directory"
-  become: yes
-  become_user: "{{ fubarhouse_user }}"
   synchronize:
     src: "/tmp/nvm-{{ nvm_version }}/nvm-{{ nvm_version }}"
     dest: "{{ nvm_install_dir }}"
@@ -132,8 +112,6 @@
     - install_nvm_git|bool == false
 
 - name: "NVM | Moving to installation directory"
-  become: yes
-  become_user: "{{ fubarhouse_user }}"
   shell: "cp -rf /tmp/nvm-{{ nvm_version }}/nvm-{{ nvm_version }}/* {{ nvm_install_dir }}/"
   when:
     - ansible_ssh_user is defined
@@ -141,8 +119,6 @@
     - install_nvm_git|bool == false
 
 - name: "NVM | Remove temporary data"
-  become: yes
-  become_user: root
   file:
     path: "{{ item }}"
     state: absent
@@ -167,8 +143,6 @@
   when: fubarhouse_npm_nvm_installed.stat.exists|bool == false
 
 - name: "NVM | Ensure permissions are set"
-  become: yes
-  become_user: "root"
   file:
     path: "{{ nvm_install_dir }}"
     state: directory
@@ -183,18 +157,13 @@
     dest: "{{ nvm_symlink_exec }}"
     owner: "{{ fubarhouse_user }}"
     mode: 0755
-  when: fubarhouse_npm_nvm_installed.stat.exists|bool == false
 
 - name: "NVM | Get versions"
-  become: yes
-  become_user: "{{ fubarhouse_user }}"
   shell: "{{ nvm_symlink_exec }} ls-remote"
   register: nodejs_available_versions
   changed_when: false
 
 - name: NVM | Ensure shell profiles are available
-  become: yes
-  become_user: "root"
   stat:
     path: "{{ fubarhouse_user_dir }}/{{ item }}"
   register: available_shell_profiles
@@ -202,8 +171,6 @@
   failed_when: false
 
 - name: NVM | Ensure shell profiles are configured for default version
-  become: yes
-  become_user: "root"
   lineinfile:
     dest: "{{ fubarhouse_user_dir }}/{{ item.item.item }}"
     regexp: '{{ nvm_install_dir }}/v{{ node_version }}/bin'
@@ -214,8 +181,6 @@
   when: item.item.stat.exists|bool == true
 
 - name: NVM | Ensure shell profiles are configured for other versions
-  become: yes
-  become_user: "root"
   lineinfile:
     dest: "{{ fubarhouse_user_dir }}/{{ item[0].item.item }}"
     regexp: '{{ nvm_install_dir }}/v{{ item[1] }}/bin'
