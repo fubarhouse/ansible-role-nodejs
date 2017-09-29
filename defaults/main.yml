@@ -32,5 +32,5 @@ node_packages:
 
 nodejs_folder_paths:
   - path: "/usr/local/lib/node_modules"
-  - path: "/Users/{{ fubarhouse_user }}/.npm"
-  - path: "/Users/{{ fubarhouse_user }}/.nvm"
+  - path: "{{ fubarhouse_user_dir }}/.npm"
+  - path: "{{ fubarhouse_user_dir }}/.nvm"
