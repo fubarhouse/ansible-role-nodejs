@@ -18,7 +18,7 @@
   register: fubarhouse_npm_io_install_result
   changed_when: false
   failed_when: false
-  when: '"{{ node_version }}" in iojs_available_versions.stdout_lines'
+  when: 'node_version in iojs_available_versions.stdout_lines'
 
 - name: "IOJS | Check for all local installs"
   stat:
@@ -26,7 +26,7 @@
   register: fubarhouse_npm_io_install_results
   changed_when: false
   failed_when: false
-  when: '"{{ item }}" in iojs_available_versions.stdout'
+  when: 'item in iojs_available_versions.stdout'
   with_items: "{{ node_versions }}"
 
 - name: "IOJS | Install default"
@@ -48,7 +48,7 @@
   shell: "{{ nvm_symlink_exec }} unalias default"
   changed_when: false
   failed_when: false
-  when: '"{{ node_version }}" in iojs_available_versions.stdout'
+  when: 'node_version in iojs_available_versions.stdout'
 
 - name: "IOJS | Switch"
   file:
@@ -56,11 +56,11 @@
     dest: "/usr/local/bin/iojs"
     state: link
     force: yes
-  when: '"{{ node_version }}" in iojs_available_versions.stdout'
+  when: 'node_version in iojs_available_versions.stdout'
 
 - name: "IOJS | Verify version in use"
   shell: "/usr/local/bin/ivm ls | grep ο | cat"
   register: iojs_current_version
   changed_when: false
   failed_when: 'iojs_current_version.stdout.find("{{ node_version }}") == -1'
-  when: '"{{ node_version }}" in iojs_available_versions.stdout'
+  when: 'node_version in iojs_available_versions.stdout'

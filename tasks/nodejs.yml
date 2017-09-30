@@ -8,7 +8,7 @@
 
 - name: "NodeJS | Install all requested versions"
   shell:  "{{ nvm_symlink_exec }} install {{ item }}"
-  when: '"{{ item }}" in nodejs_available_versions.stdout and item not in installed_nodejs_versions.stdout'
+  when: 'item in nodejs_available_versions.stdout and item not in installed_nodejs_versions.stdout'
   with_items:
   - "{{ node_version }}"
   - "{{ node_versions }}"
@@ -17,12 +17,12 @@
   shell:  "{{ nvm_symlink_exec }} use --delete-prefix {{ node_version }}"
   register: fubarhouse_npm_switch
   changed_when: false
-  when: '"{{ node_version }}" in nodejs_available_versions.stdout'
+  when: 'node_version in nodejs_available_versions.stdout'
 
 - name: "NodeJS | Linking"
   shell: "{{ nvm_symlink_exec }} alias default {{ node_version }}"
   changed_when: false
-  when: '"{{ node_version }}" in nodejs_available_versions.stdout'
+  when: 'node_version in nodejs_available_versions.stdout'
 
 - name: "NodeJS | Linking binaries"
   file:
@@ -33,7 +33,7 @@
   with_items:
     - node
     - npm
-  when: '"{{ node_version }}" in nodejs_available_versions.stdout'
+  when: 'node_version in nodejs_available_versions.stdout'
   changed_when: false
 
 - name: "NodeJS | Import exports"
@@ -50,4 +50,4 @@
   register: node_current_version
   changed_when: false
   failed_when: 'node_current_version.stdout.find("{{ node_version }}") == -1'
-  when: '"{{ node_version }}" in nodejs_available_versions.stdout'
+  when: 'node_version in nodejs_available_versions.stdout'

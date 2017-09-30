@@ -57,12 +57,15 @@
 
 - name: "NVM | Ensure permissions are set"
   file:
-    path: "{{ item.path }}"
+    path: "{{ item }}"
     state: directory
     mode: 0777
     owner: "{{ fubarhouse_user }}"
     recurse: no
-  with_items: "{{ nodejs_folder_paths }}"
+  with_items:
+    - "/usr/local/lib/node_modules"
+    - "{{ fubarhouse_user_dir }}/.npm"
+    - "{{ fubarhouse_user_dir }}/.nvm"
   changed_when: false
 
 - name: "NVM | Get distribution"
