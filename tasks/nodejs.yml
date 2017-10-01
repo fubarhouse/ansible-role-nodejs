@@ -49,5 +49,5 @@
   shell: "{{ nvm_symlink_exec }} current"
   register: node_current_version
   changed_when: false
-  failed_when: 'node_current_version.stdout.find("{{ node_version }}") == -1'
+  failed_when: 'node_current_version.stdout.find(node_version) == -1'
   when: 'node_version in nodejs_available_versions.stdout'
