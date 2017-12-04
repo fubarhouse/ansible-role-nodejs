@@ -1,6 +1,8 @@
 # Ansible Role: NodeJS
 
 [![Build Status](https://travis-ci.org/fubarhouse/ansible-role-nodejs.svg?branch=master)](https://travis-ci.org/fubarhouse/ansible-role-nodejs)
+[![Ansible Rust](https://img.shields.io/ansible/role/4921.svg)](https://galaxy.ansible.com/fubarhouse/nodejs)
+[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/fubarhouse/ansible-role-nodejs/master/LICENSE)
 
 * Installs NVM (Node Version Manager)
 * Installs IVM (IOJS Version Manager) when configured
@@ -16,7 +18,7 @@
 
 Default Node version
 ````
-node_version: 7.9.0
+node_version: 9.2.0
 ````
 
 All Node versions to install
@@ -26,6 +28,7 @@ node_versions:
   - 5.12.0
   - 6.10.2
   - 7.9.0
+  = 8.9.1
 ````
 
 Node packages to download
