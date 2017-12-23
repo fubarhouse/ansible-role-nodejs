@@ -26,7 +26,7 @@
 
 - name: "NodeJS | Linking binaries"
   file:
-    src: "{{ nvm_install_dir }}/v{{ node_version }}/bin/{{ item }}"
+    src: "{{ nvm_install_dir }}/versions/node/v{{ node_version }}/bin/{{ item }}"
     dest: "/usr/local/bin/{{ item }}"
     state: link
     force: yes
