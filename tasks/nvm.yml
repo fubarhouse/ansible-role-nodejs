@@ -56,8 +56,6 @@
   register: fubarhouse_npm_nvm_installed
 
 - name: "NVM | Ensure permissions are set"
-  become: yes
-  become_user: "{{ fubarhouse_user }}"
   file:
     path: "{{ item }}"
     state: directory
