@@ -132,15 +132,6 @@
   shell: "{{ nvm_install_dir }}/install.sh"
   when: fubarhouse_npm_nvm_installed.stat.exists|bool == false
 
-- name: "NVM | Ensure permissions are set"
-  file:
-    path: "{{ nvm_install_dir }}"
-    state: directory
-    mode: 0777
-    owner: "{{ fubarhouse_user }}"
-    recurse: yes
-  changed_when: false
-
 - name: "NVM | Create an executable"
   template:
     src: "nvm.sh"
