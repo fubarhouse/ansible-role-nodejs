@@ -61,7 +61,7 @@ nvm_symlink_exec: /usr/local/bin/nvm
   None.
 
 ## Example Playbook
-````
+````yaml
 - hosts: localhost
   roles:
     - fubarhouse.nodejs
