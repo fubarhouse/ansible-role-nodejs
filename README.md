@@ -7,7 +7,7 @@
 
 * Installs NVM (Node Version Manager)
 * Installs IVM (IOJS Version Manager) when configured
-* Installs Node.js v4, v5, v6 and v7 (uses NVM - Node Javascript Library)
+* Installs Node.js v4, v5, v6, v7, v8 and v9 (uses NVM - Node Javascript Library)
 * Installs IOJS when configured
 * Installs NPM packages (Node Package Manager)
 
