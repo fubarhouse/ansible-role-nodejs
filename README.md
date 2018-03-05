@@ -18,12 +18,12 @@
 ## Role Variables
 
 Default Node version
-````
+````yaml
 node_version: 9.2.0
 ````
 
 All Node versions to install
-````
+````yaml
 node_versions:
   - 4.8.2
   - 5.12.0
@@ -33,7 +33,7 @@ node_versions:
 ````
 
 Node packages to download
-````
+````yaml
 node_packages:
   - { name: backbone }
   - { name: grunt }
@@ -42,7 +42,7 @@ node_packages:
 ````
 
 Note: In order to install IOJS versions via IVM, configure both IVM and IOJS tasks to execute as follows:
-````
+````yaml
 install_ivm: true
 install_iojs: true
 node_version: 3.0.0
