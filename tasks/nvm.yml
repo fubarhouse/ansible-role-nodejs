@@ -133,6 +133,8 @@
   when: fubarhouse_npm_nvm_installed.stat.exists|bool == false
 
 - name: "NVM | Create an executable"
+  become: yes
+  become_user: root
   template:
     src: "nvm.sh"
     dest: "{{ nvm_symlink_exec }}"
