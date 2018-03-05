@@ -51,7 +51,7 @@ node_versions:
 - 2.0.0
 ````
 
-Note: In order for this role to do what it does, it uses a script which includes the nvm script to make the function available. This is stored as a file which is then executed from the $PATH. You may configure where this binary is installed, however the task associated to this is executed by the `root` user.
+Note: In order for this role to do what it does, it uses a script which includes the nvm script to make the function available. This is stored as a file which is then executed from the $PATH. You may configure where the file is stored for execution, however the task associated to this is executed by the `root` user.
 ````yaml
 nvm_symlink_exec: /usr/local/bin/nvm
 ````
