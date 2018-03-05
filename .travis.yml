@@ -1,130 +1,127 @@
 ---
+
+python:
+  - 2.7
+
 services: docker
 
 env:
-  - docker_user: geerlingguy
-    distro: ubuntu1204
+
+  - distro: precise
     init: /sbin/init
-    run_opts: "--privileged"
-    playbook: test.yml
-  - docker_user: fubarhouse
-    distro: ubuntu1210
+    run_opts: --privileged
+    playbook: playbook.yml
+  - distro: quantal
     init: /sbin/init
-    run_opts: "--privileged"
-    playbook: test.yml
-  - docker_user: fubarhouse
-    distro: ubuntu1304
+    run_opts: --privileged
+    playbook: playbook.yml
+  - distro: raring
     init: /sbin/init
-    run_opts: "--privileged"
-    playbook: test.yml
-  - docker_user: fubarhouse
-    distro: ubuntu1310
+    run_opts: --privileged
+    playbook: playbook.yml
+  - distro: saucy
     init: /sbin/init
-    run_opts: "--privileged"
-    playbook: test.yml
-  - docker_user: geerlingguy
-    distro: ubuntu1404
+    run_opts: --privileged
+    playbook: playbook.yml
+  - distro: trusty
     init: /sbin/init
-    run_opts: "--privileged"
-    playbook: test.yml
-  - docker_user: fubarhouse
-    distro: ubuntu1410
+    run_opts: --privileged
+    playbook: playbook.yml
+  - distro: utopic
     init: /sbin/init
-    run_opts: "--privileged"
-    playbook: test.yml
-  - docker_user: fubarhouse
-    distro: ubuntu1504
+    run_opts: --privileged
+    playbook: playbook.yml
+  - distro: vivid
     init: /sbin/init
-    run_opts: "--privileged"
-    playbook: test.yml
-  - docker_user: fubarhouse
-    distro: ubuntu1510
+    run_opts: --privileged
+    playbook: playbook.yml
+  - distro: wily
     init: /sbin/init
-    run_opts: "--privileged"
-    playbook: test.yml
-  - docker_user: geerlingguy
-    distro: ubuntu1604
+    run_opts: --privileged
+    playbook: playbook.yml
+  - distro: xenial
     init: /sbin/init
-    run_opts: "--privileged"
-    playbook: test.yml
-  - docker_user: fubarhouse
-    distro: ubuntu1610
+    run_opts: --privileged
+    playbook: playbook.yml
+#  - distro: yakkety
+#    init: /sbin/init
+#    run_opts: --privileged
+#    playbook: playbook.yml
+  - distro: zesty
     init: /sbin/init
-    run_opts: "--privileged"
-    playbook: test.yml
-  - docker_user: fubarhouse
-    distro: ubuntu1704
+    run_opts: --privileged
+    playbook: playbook.yml
+  - distro: artful
     init: /sbin/init
-    run_opts: "--privileged"
-    playbook: test.yml
-  - docker_user: fubarhouse
-    distro: ubuntu1710
+    run_opts: --privileged
+    playbook: playbook.yml
+  - distro: bionic
     init: /sbin/init
-    run_opts: "--privileged"
-    playbook: test.yml
-  - docker_user: geerlingguy
-    distro: centos6
-    init: "/sbin/init"
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-    playbook: test.yml
-  - docker_user: geerlingguy
-    distro: centos7
+    run_opts: --privileged
+    playbook: playbook.yml
+  - distro: centos-6
+    init: /sbin/init
+    run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
+    playbook: playbook.yml
+  - distro: centos-7
     init: /usr/lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-    playbook: test.yml
-  - docker_user: fubarhouse
-    distro: debian7
+    run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
+    playbook: playbook.yml
+  - distro: wheezy
+    init: /bin/systemd
+    run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
+    playbook: playbook.yml
+  - distro: jessie
     init: /lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-    playbook: test.yml
-  - docker_user: geerlingguy
-    distro: debian8
-    init: /lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-    playbook: test.yml
-  - docker_user: fubarhouse
-    distro: debian9
-    init: /lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-    playbook: test.yml
-  - docker_user: fubarhouse
-    distro: fedora24
+    run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
+    playbook: playbook.yml
+  - distro: stretch
+    init: /bin/systemd
+    run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
+    playbook: playbook.yml
+  - distro: buster
+    init: /bin/systemd
+    run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
+    playbook: playbook.yml
+  - distro: fedora-24
     init: /usr/lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-    playbook: test.yml
-  - docker_user: fubarhouse
-    distro: fedora25
+    run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
+    playbook: playbook.yml
+  - distro: fedora-25
     init: /usr/lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-    playbook: test.yml
-  - docker_user: fubarhouse
-    distro: fedora26
+    run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
+    playbook: playbook.yml
+  - distro: fedora-26
     init: /usr/lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-    playbook: test.yml
+    run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
+    playbook: playbook.yml
+  - distro: fedora-27
+    init: /usr/lib/systemd/systemd
+    run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
+    playbook: playbook.yml
 
 before_install:
 
   # Pull container.
-  - 'docker pull ${docker_user}/docker-${distro}-ansible:latest'
+  - 'docker pull fubarhouse/docker-ansible:${distro}'
 
 script:
 
   - container_id=$(mktemp)
+
   # Run container in detached state.
-  - 'docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} ${docker_user}/docker-${distro}-ansible:latest "${init}" > "${container_id}"'
+  - 'docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} fubarhouse/docker-ansible:${distro} "${init}" > "${container_id}"'
 
   # Ansible syntax check.
   - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/${playbook} --syntax-check'
 
   # Test role.
-  - 'docker exec "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/${playbook}'
+  - 'travis_wait 30 docker exec "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/${playbook} --sudo'
 
-  # Test role idempotence.
   - idempotence=$(mktemp)
   - >
     docker exec "$(cat ${container_id})"
-    ansible-playbook /etc/ansible/roles/role_under_test/tests/${playbook} --sudo
+    ansible-playbook /etc/ansible/roles/role_under_test/tests/${playbook} --sudo -vvvv
     | tee -a ${idempotence}
   - >
     tail ${idempotence}
