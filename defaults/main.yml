@@ -16,7 +16,7 @@ install_ivm: false
 install_iojs: false
 install_npm: true
 
-node_version: 9.2.0
+node_version: 9.7.1
 node_versions:
   - 4.8.2
   - 5.12.0

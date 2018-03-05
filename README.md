@@ -19,7 +19,7 @@
 
 Default Node version
 ````yaml
-node_version: 9.2.0
+node_version: 9.7.1
 ````
 
 All Node versions to install
