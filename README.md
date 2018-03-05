@@ -1,8 +1,9 @@
 # Ansible Role: NodeJS
 
-[![Build Status](https://travis-ci.org/fubarhouse/ansible-role-nodejs.svg?branch=master)](https://travis-ci.org/fubarhouse/ansible-role-nodejs)
-[![Ansible Rust](https://img.shields.io/ansible/role/4921.svg)](https://galaxy.ansible.com/fubarhouse/nodejs)
-[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/fubarhouse/ansible-role-nodejs/master/LICENSE)
+[![Build Status](https://img.shields.io/travis/fubarhouse/ansible-role-nodejs/master.svg?style=for-the-badge)](https://travis-ci.org/fubarhouse/ansible-role-nodejs)
+[![stability-stable](https://img.shields.io/badge/stability-stable-green.svg?style=for-the-badge)](https://github.com/orangemug/stability-badges)
+[![Ansible Nodejs](https://img.shields.io/ansible/role/4921.svg?style=for-the-badge)](https://galaxy.ansible.com/fubarhouse/nodejs)
+[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge)](https://raw.githubusercontent.com/fubarhouse/ansible-role-nodejs/master/LICENSE)
 
 * Installs NVM (Node Version Manager)
 * Installs IVM (IOJS Version Manager) when configured
