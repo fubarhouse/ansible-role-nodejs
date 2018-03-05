@@ -5,7 +5,6 @@
     path: /usr/local/ivm
     state: directory
     mode: 0777
-    owner: root
 
 - name: "IVM | Clone/Update"
   git:
