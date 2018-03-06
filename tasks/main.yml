@@ -3,25 +3,14 @@
 
 - include: setup.yml
 
-- name: "Define user variable for ssh use"
+- name: "Identify $USER"
   set_fact:
-    fubarhouse_user: "{{ ansible_ssh_user }}"
-  when: ansible_ssh_user is defined and fubarhouse_user is not defined
+    fubarhouse_user: "{{ lookup('env','USER') }}"
+  when: fubarhouse_user is not defined
 
-- name: "Define user variable for non-ssh use"
+- name: "Identify $HOME"
   set_fact:
-    fubarhouse_user: "{{ ansible_user_id }}"
-  when: ansible_ssh_user is not defined and fubarhouse_user is not defined
-
-- name: "Get $HOME"
-  shell: "echo $HOME"
-  register: shell_home_dir
-  changed_when: false
-  when: fubarhouse_user_dir is not defined
-
-- name: "Set $HOME"
-  set_fact:
-    fubarhouse_user_dir: "{{ shell_home_dir.stdout }}"
+    fubarhouse_user_dir: "{{ lookup('env','HOME') }}"
   when: fubarhouse_user_dir is not defined
 
 - name: "Set default ivm installation directory"
