@@ -16,7 +16,7 @@
 
 - name: NVM | Clean-up default version from shell profiles
   lineinfile:
-    dest: "{{ fubarhouse_user_dir }}/{{ item }}"
+    dest: "~/{{ item }}"
     regexp: '.nvm/v{{ node_version }}/bin'
     line:  'export PATH=$PATH:{{ nvm_install_dir }}/v{{ node_version }}/bin;'
     state: absent
@@ -27,7 +27,7 @@
 
 - name: NVM | Clean-up other versions from shell profiles
   lineinfile:
-    dest: "{{ fubarhouse_user_dir }}/{{ item[0].item }}"
+    dest: "~/{{ item[0].item }}"
     regexp: '.nvm/v{{ item[1] }}/bin'
     line:  'export PATH=$PATH:{{ nvm_install_dir }}/v{{ item[1] }}/bin;'
     state: absent
@@ -41,7 +41,7 @@
 
 - name: "NodeJS | Remove imported exports not associated to specific versions"
   lineinfile:
-    dest: "{{ fubarhouse_user_dir }}/{{ item.item }}"
+    dest: "~/{{ item.item }}"
     line: "export PATH=$PATH:$(npm config --global get prefix)/bin"
     state: absent
   with_items: "{{ available_shell_profiles.stdout }}"
@@ -138,7 +138,6 @@
   template:
     src: "nvm.sh"
     dest: "{{ nvm_symlink_exec }}"
-    owner: "{{ fubarhouse_user }}"
     mode: 0755
 
 - name: "NVM | Get versions"
@@ -148,14 +147,14 @@
 
 - name: NVM | Ensure shell profiles are available
   stat:
-    path: "{{ fubarhouse_user_dir }}/{{ item }}"
+    path: "~/{{ item }}"
   register: available_shell_profiles
   with_items: "{{ available_shell_profiles.results }}"
   failed_when: false
 
 - name: NVM | Ensure shell profiles are configured for default version
   lineinfile:
-    dest: "{{ fubarhouse_user_dir }}/{{ item.item.item }}"
+    dest: "~/{{ item.item.item }}"
     regexp: '{{ nvm_install_dir }}/v{{ node_version }}/bin'
     line:  'export PATH=$PATH:{{ nvm_install_dir }}/v{{ node_version }}/bin;'
     state: present
@@ -165,7 +164,7 @@
 
 - name: NVM | Ensure shell profiles are configured for other versions
   lineinfile:
-    dest: "{{ fubarhouse_user_dir }}/{{ item[0].item.item }}"
+    dest: "~/{{ item[0].item.item }}"
     regexp: '{{ nvm_install_dir }}/v{{ item[1] }}/bin'
     line:  'export PATH=$PATH:{{ nvm_install_dir }}/v{{ item[1] }}/bin;'
     state: present

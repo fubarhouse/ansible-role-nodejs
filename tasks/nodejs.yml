@@ -38,7 +38,7 @@
 
 - name: "NodeJS | Import exports"
   lineinfile:
-    dest: "{{ fubarhouse_user_dir }}/{{ item.item.item }}"
+    dest: "~/{{ item.item.item }}"
     line: "export PATH=$PATH:$(npm config --global get prefix)/bin"
     state: present
   with_items:

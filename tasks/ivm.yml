@@ -9,7 +9,7 @@
 - name: "IVM | Clone/Update"
   git:
     repo: "{{ ivm_repo }}"
-    dest: "{{ fubarhouse_user_dir }}/.ivm"
+    dest: "~/.ivm"
     clone: yes
     update: yes
     force: yes
@@ -19,7 +19,7 @@
 
 - name: "IVM | Linking"
   file:
-    src: "{{ fubarhouse_user_dir }}/.ivm/bin/ivm"
+    src: "~/.ivm/bin/ivm"
     dest: "/usr/local/bin/ivm"
     state: link
     force: yes
@@ -27,7 +27,7 @@
 
 - name: "IVM | Ensure shell profiles are configured"
   lineinfile:
-    dest: "{{ fubarhouse_user_dir }}/{{ item.item.item }}"
+    dest: "~/{{ item.item.item }}"
     regexp: 'export NVM_IOJS_ORG_MIRROR=https://iojs.org/dist'
     line:  'export NVM_IOJS_ORG_MIRROR=https://iojs.org/dist;'
     state: present
