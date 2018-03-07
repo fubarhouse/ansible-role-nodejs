@@ -7,7 +7,6 @@
   changed_when: false
 
 - name: "NodeJS | Install all requested versions"
-  become_user: "{{ fubarhouse_user }}"
   shell:  "{{ nvm_symlink_exec }} install {{ item }}"
   when: 'item in nodejs_available_versions.stdout and item not in installed_nodejs_versions.stdout'
   with_items:
@@ -39,7 +38,7 @@
 
 - name: "NodeJS | Import exports"
   lineinfile:
-    dest: "{{ fubarhouse_user_dir }}/{{ item.item.item }}"
+    dest: "~/{{ item.item.item }}"
     line: "export PATH=$PATH:$(npm config --global get prefix)/bin"
     state: present
   with_items:

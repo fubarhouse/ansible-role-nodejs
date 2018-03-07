@@ -8,7 +8,6 @@
   register: which_npm
 
 - name: "NPM | Ensure installed and updated"
-  become_user: "{{ fubarhouse_user }}"
   npm:
     name: "{{ item }}"
     executable: "{{ which_npm.stdout }}"
