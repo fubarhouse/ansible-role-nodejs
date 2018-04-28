@@ -29,5 +29,5 @@
 - include_tasks: iojs.yml
   when: install_iojs|bool == true
 
-- include_tasls: npm.yml
+- include_tasks: npm.yml
   when: install_npm|bool == true
