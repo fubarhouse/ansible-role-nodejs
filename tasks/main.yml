@@ -1,7 +1,7 @@
 ---
 # Main tasks file for fubarhouse.nodejs
 
-- include: setup.yml
+- include_tasks: setup.yml
 
 - name: "Set default ivm installation directory"
   set_fact:
@@ -17,17 +17,17 @@
   - nvm_install_dir is not defined
   - install_nvm|bool == true
 
-- include: nvm.yml
+- include_tasks: nvm.yml
   when: install_nvm
 
-- include: ivm.yml
+- include_tasks: ivm.yml
   when: install_ivm|bool == true
 
-- include: nodejs.yml
+- include_tasks: nodejs.yml
   when: install_nodejs|bool == true
 
-- include: iojs.yml
+- include_tasks: iojs.yml
   when: install_iojs|bool == true
 
-- include: npm.yml
+- include_tasks: npm.yml
   when: install_npm|bool == true
