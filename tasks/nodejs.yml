@@ -8,7 +8,7 @@
 
 - name: "NodeJS | Install all requested versions"
   shell:  "{{ nvm_symlink_exec }} install {{ item }}"
-  when: 'item in nodejs_available_versions.stdout and item not in installed_nodejs_versions.stdout'
+  changed_when: false
   with_items:
   - "{{ node_version }}"
   - "{{ node_versions }}"
