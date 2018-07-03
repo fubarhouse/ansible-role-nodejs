@@ -27,7 +27,7 @@ All Node versions to install
 node_versions:
   - 4.8.2
   - 5.12.0
-  - 6.10.2
+  - 6.14.3
   - 7.9.0
   - 8.9.1
   - 9.7.1
