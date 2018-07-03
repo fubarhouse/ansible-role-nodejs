@@ -39,6 +39,7 @@ galaxy_info:
         - zesty
         - artful
         - bionic
+        - cuttlefish
   categories:
     - system
     - database
