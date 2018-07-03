@@ -30,7 +30,7 @@ node_versions:
   - 6.10.2
   - 7.9.0
   - 8.9.1
-  - 9.7.1
+  - 9.11.2
 ````
 
 Node packages to download
