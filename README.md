@@ -25,7 +25,7 @@ node_version: 10.0.0
 All Node versions to install
 ````yaml
 node_versions:
-  - 4.8.2
+  - 4.9.1
   - 5.12.0
   - 6.10.2
   - 7.9.0
