@@ -25,6 +25,8 @@
   when: 'node_version in nodejs_available_versions.stdout'
 
 - name: "NodeJS | Linking binaries"
+  become: yes
+  become_user: root
   file:
     src: "{{ nvm_install_dir }}/versions/node/v{{ node_version }}/bin/{{ item }}"
     dest: "/usr/local/bin/{{ item }}"
