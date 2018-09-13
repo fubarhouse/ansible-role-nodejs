@@ -133,15 +133,13 @@
   when: fubarhouse_npm_nvm_installed.stat.exists|bool == false
 
 - name: "NVM | Create an executable"
-  become: yes
-  become_user: root
   template:
     src: "nvm.sh"
-    dest: "{{ nvm_symlink_exec }}"
+    dest: "{{ nvm_symlink_dir }}/nvm"
     mode: 0755
 
 - name: "NVM | Get versions"
-  shell: "{{ nvm_symlink_exec }} ls-remote"
+  shell: "{{ nvm_symlink_dir }}/nvm ls-remote"
   register: nodejs_available_versions
   changed_when: false
 

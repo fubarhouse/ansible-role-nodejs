@@ -1,11 +1,5 @@
 ---
 
-- name: "IVM | Ensure folder requirements are met"
-  file:
-    path: /usr/local/ivm
-    state: directory
-    mode: 0777
-
 - name: "IVM | Clone/Update"
   git:
     repo: "{{ ivm_repo }}"
@@ -20,7 +14,7 @@
 - name: "IVM | Linking"
   file:
     src: "~/.ivm/bin/ivm"
-    dest: "/usr/local/bin/ivm"
+    dest: "{{ nvm_symlink_dir }}/ivm"
     state: link
     force: yes
   changed_when: false

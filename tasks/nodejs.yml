@@ -2,32 +2,32 @@
 # Tasks file for NodeJS
 
 - name: "NodeJS | Check"
-  shell:  "{{ nvm_symlink_exec }} ls | cat"
+  shell: "{{ nvm_symlink_dir }}/nvm ls | cat"
   register: installed_nodejs_versions
   changed_when: false
 
 - name: "NodeJS | Install all requested versions"
-  shell:  "{{ nvm_symlink_exec }} install {{ item }}"
+  shell: "{{ nvm_symlink_dir }}/nvm install {{ item }}"
   changed_when: false
   with_items:
   - "{{ node_version }}"
   - "{{ node_versions }}"
 
 - name: "NodeJS | Switching"
-  shell:  "{{ nvm_symlink_exec }} use --delete-prefix {{ node_version }}"
+  shell: "{{ nvm_symlink_dir }}/nvm use --delete-prefix {{ node_version }}"
   register: fubarhouse_npm_switch
   changed_when: false
   when: 'node_version in nodejs_available_versions.stdout'
 
 - name: "NodeJS | Linking"
-  shell: "{{ nvm_symlink_exec }} alias default {{ node_version }}"
+  shell: "{{ nvm_symlink_dir }}/nvm alias default {{ node_version }}"
   changed_when: false
   when: 'node_version in nodejs_available_versions.stdout'
 
 - name: "NodeJS | Linking binaries"
   file:
     src: "{{ nvm_install_dir }}/versions/node/v{{ node_version }}/bin/{{ item }}"
-    dest: "/usr/local/bin/{{ item }}"
+    dest: "{{ nvm_symlink_dir }}/{{ item }}"
     state: link
     force: yes
   with_items:
@@ -46,7 +46,7 @@
   when: item.item.stat.exists|bool == true
 
 - name: "NodeJS | Verify version in use"
-  shell: "{{ nvm_symlink_exec }} current"
+  shell: "{{ nvm_symlink_dir }}/nvm current"
   register: node_current_version
   changed_when: false
   failed_when: 'node_current_version.stdout.find(node_version) == -1'

@@ -54,6 +54,15 @@ node_versions:
 
 Note: In order for this role to do what it does, it uses a script which includes the nvm script to make the function available. This is stored as a file which is then executed from the $PATH. You may configure where the file is stored for execution, however the task associated to this is executed by the `root` user.
 ````yaml
+nvm_symlink_dir: /usr/local/bin
+````
+
+**Deprecated**
+
+The following variable has been replaced by `nvm_symlink_dir` and will continue to work. Please migrate any non-default declarations of this variable to the folder directory which should contain the symlinks (ie `/usr/local/bin`).
+
+````yaml
+# DEPRECATED, migrate to nvm_symlink_dir in the event of failure.
 nvm_symlink_exec: /usr/local/bin/nvm
 ````
 
