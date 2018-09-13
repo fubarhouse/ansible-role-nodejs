@@ -16,7 +16,7 @@
     - tar
   when:
     - ansible_os_family == "RedHat"
-    - ansible_distribution == "CentOS"
+    - (ansible_distribution == "CentOS" or ansible_distribution == "Amazon")
 
 - name: "NodeJS | Install dependencies (Debian)"
   become: yes
@@ -50,4 +50,4 @@
     - tar
   when:
     - ansible_os_family == "RedHat"
-    - ansible_distribution != "CentOS"
+    - (ansible_distribution != "CentOS" and ansible_distribution != "Amazon")
