@@ -128,6 +128,10 @@
     version: "{{ nvm_version }}"
   when: install_nvm_git|bool == true
 
+- name: "NVM | Fetch"
+  shell: "cd {{ nvm_install_dir }} && git fetch --tags origin"
+  when: install_nvm_git|bool == true and fubarhouse_npm_nvm_installed.stat.exists|bool == false
+
 - name: "NVM | Install"
   shell: "{{ nvm_install_dir }}/install.sh"
   when: fubarhouse_npm_nvm_installed.stat.exists|bool == false
