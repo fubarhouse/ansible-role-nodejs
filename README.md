@@ -17,6 +17,14 @@
 
 ## Role Variables
 
+Install NVM dependencies:
+````yaml
+# By default, NVM dependencies will not install.
+# Enable dependency installation using the following:
+# NOTE: Installing dependencies does require privilege escalation.
+install_nvm_deps: true
+````
+
 Default Node version
 ````yaml
 node_version: 10.5.0

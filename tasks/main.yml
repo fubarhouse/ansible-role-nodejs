@@ -2,6 +2,7 @@
 # Main tasks file for fubarhouse.nodejs
 
 - include_tasks: setup.yml
+  when: install_nvm_deps|bool == true
 
 - name: "Set default ivm installation directory"
   set_fact:

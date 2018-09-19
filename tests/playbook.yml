@@ -1,9 +1,9 @@
 ---
 
 - hosts: localhost
-  become: true
 
   vars:
+    install_nvm_deps: true
     nvm_install_dir: /home/travis/nvm_install_test
     install_ivm: true
     install_iojs: true

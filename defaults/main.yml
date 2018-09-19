@@ -9,6 +9,7 @@ nvm_version: v0.33.8
 #nvm_repo: "https://github.com/xtuple/nvm.git"
 ivm_repo: "https://github.com/demohi/ivm.git"
 
+install_nvm_deps: false
 install_nvm: true
 install_nvm_git: true
 install_nodejs: true

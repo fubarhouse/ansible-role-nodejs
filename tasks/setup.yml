@@ -1,6 +1,8 @@
 ---
 
 - name: "NodeJS | Install dependencies (CentOS)"
+  become: yes
+  become_user: root
   yum:
     name: "{{ item }}"
     state: installed
@@ -17,6 +19,8 @@
     - ansible_distribution == "CentOS"
 
 - name: "NodeJS | Install dependencies (Debian)"
+  become: yes
+  become_user: root
   apt:
     name: "{{ item }}"
     state: installed
@@ -31,6 +35,8 @@
   when: ansible_os_family == "Debian"
 
 - name: "NodeJS | Install dependencies (RedHat)"
+  become: yes
+  become_user: root
   dnf:
     name: "{{ item }}"
     state: installed
