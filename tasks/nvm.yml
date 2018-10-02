@@ -154,13 +154,12 @@
   with_items: "{{ available_shell_profiles.results }}"
   failed_when: false
 
-- name: NVM | Ensure shell profiles are configured for other versions
+- name: NVM | Ensure shell profiles are configured
   lineinfile:
     dest: "~/{{ item[0].item.item }}"
-    regexp: '{{ nvm_install_dir }}/v{{ item[1] }}/bin'
-    line:  'export PATH=$PATH:{{ nvm_install_dir }}/v{{ item[1] }}/bin;'
+    regexp: "{{ item[1] }}"
+    line:  "{{ item[1] }}"
     state: present
   with_nested:
     - "{{ available_shell_profiles.results }}"
-    - "{{ node_versions }}"
-  when: item[0].item.stat.exists|bool == true
+    - "{{ nvm_shell_profile }}"
