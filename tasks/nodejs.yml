@@ -46,7 +46,7 @@
   when: item.item.stat.exists|bool == true
 
 - name: "NodeJS | Verify version in use"
-  shell: "{{ nvm_symlink_dir }}/nvm current"
+  shell: ". ~/{{ item.item.item }} && node -v"
   register: node_current_version
   changed_when: false
   failed_when: 'node_current_version.stdout.find(node_version) == -1'
