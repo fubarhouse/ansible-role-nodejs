@@ -39,4 +39,6 @@
   changed_when: false
   failed_when: 'node_current_version.stdout.find(node_version) == -1'
   with_items:
-  - "{{ available_shell_profiles.results }}"
+    - "{{ available_shell_profiles.results }}"
+  when:
+    - 'item.item.stat.exists|bool == true'

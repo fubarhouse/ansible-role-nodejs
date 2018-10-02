@@ -163,3 +163,5 @@
   with_nested:
     - "{{ available_shell_profiles.results }}"
     - "{{ nvm_shell_profile }}"
+  when:
+    - '{{ item[0].item.stat.exists|bool }} == true'
