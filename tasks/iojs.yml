@@ -59,7 +59,7 @@
   when: 'node_version in iojs_available_versions.stdout'
 
 - name: "IOJS | Verify version in use"
-  shell: "{{ nvm_symlink_dir }}/ivm ls | grep ο | cat"
+  shell: "iojs -v"
   register: iojs_current_version
   changed_when: false
   failed_when: 'iojs_current_version.stdout.find("{{ node_version }}") == -1'
