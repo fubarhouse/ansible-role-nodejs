@@ -36,5 +36,7 @@
       changed_when: false
       failed_when: false
 
+    - shell: touch /home/travis/.bash_profile
+
   roles:
     - role_under_test
