@@ -36,7 +36,11 @@
       changed_when: false
       failed_when: false
 
-    - shell: touch /home/travis/.bash_profile
+    - name: Create shell profile
+      file:
+        path: "/home/travis/.bash_profile"
+        state: touch
+
 
   roles:
     - role_under_test
