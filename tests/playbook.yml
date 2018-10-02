@@ -36,5 +36,11 @@
       changed_when: false
       failed_when: false
 
+    - name: Create shell profile
+      file:
+        path: "/root/.bash_profile"
+        state: touch
+      changed_when: false
+
   roles:
     - role_under_test
