@@ -24,18 +24,6 @@
   changed_when: false
   when: 'node_version in nodejs_available_versions.stdout'
 
-- name: "NodeJS | Linking binaries"
-  file:
-    src: "{{ nvm_install_dir }}/versions/node/v{{ node_version }}/bin/{{ item }}"
-    dest: "{{ nvm_symlink_dir }}/{{ item }}"
-    state: link
-    force: yes
-  with_items:
-    - node
-    - npm
-  when: 'node_version in nodejs_available_versions.stdout'
-  changed_when: false
-
 - name: "NodeJS | Import exports"
   lineinfile:
     dest: "~/{{ item.item.item }}"
