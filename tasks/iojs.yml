@@ -33,13 +33,15 @@
   shell:  "{{ nvm_symlink_dir }}/ivm {{ node_version }}"
   when:
     - fubarhouse_npm_io_install_result is defined
-    - '"{{ node_version }}" not in fubarhouse_npm_io_install_results.results'
-    - '"{{ node_version }}" in iojs_available_versions.stdout'
+    - node_version not in fubarhouse_npm_io_install_results.results
+    - node_version in iojs_available_versions.stdout
   changed_when: false
 
 - name: "IOJS | Install all"
   shell:  "{{ nvm_symlink_dir }}/ivm {{ item }}"
-  when: 'iojs_available_versions is defined and "{{ item }}" in iojs_available_versions.stdout'
+  when:
+    - iojs_available_versions is defined
+    - item in iojs_available_versions.stdout
   with_items:
    - "{{ node_versions }}"
   changed_when: false
