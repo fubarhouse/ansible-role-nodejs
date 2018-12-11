@@ -7,7 +7,7 @@
 
 * Installs NVM (Node Version Manager)
 * Installs IVM (IOJS Version Manager) when configured
-* Installs Node.js v4, v5, v6, v7, v8 and v9 (uses NVM - Node Javascript Library)
+* Installs Node.js v4, v5, v6, v7, v8, v9, v10 and v11 (uses NVM - Node Javascript Library)
 * Installs IOJS when configured
 * Installs NPM packages (Node Package Manager)
 
@@ -27,7 +27,7 @@ install_nvm_deps: true
 
 Default Node version
 ````yaml
-node_version: 10.5.0
+node_version: 11.3.0
 ````
 
 All Node versions to install
@@ -39,6 +39,7 @@ node_versions:
   - 7.10.1
   - 8.11.3
   - 9.11.2
+  - 10.14.1
 ````
 
 Node packages to download
