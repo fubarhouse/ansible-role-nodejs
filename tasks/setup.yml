@@ -4,16 +4,15 @@
   become: yes
   become_user: root
   yum:
-    name: "{{ item }}"
+    name:
+      - curl
+      - gcc
+      - git
+      - findutils
+      - make
+      - rsync
+      - tar
     state: installed
-  with_items:
-    - curl
-    - gcc
-    - git
-    - findutils
-    - make
-    - rsync
-    - tar
   when:
     - ansible_os_family == "RedHat"
     - (ansible_distribution == "CentOS" or ansible_distribution == "Amazon")
@@ -22,32 +21,30 @@
   become: yes
   become_user: root
   apt:
-    name: "{{ item }}"
+    name:
+      - curl
+      - gcc
+      - git
+      - findutils
+      - make
+      - rsync
+      - tar
     state: installed
-  with_items:
-    - curl
-    - gcc
-    - git
-    - findutils
-    - make
-    - rsync
-    - tar
   when: ansible_os_family == "Debian"
 
 - name: "NodeJS | Install dependencies (RedHat)"
   become: yes
   become_user: root
   dnf:
-    name: "{{ item }}"
+    name:
+      - curl
+      - gcc
+      - git
+      - findutils
+      - make
+      - rsync
+      - tar
     state: installed
-  with_items:
-    - curl
-    - gcc
-    - git
-    - findutils
-    - make
-    - rsync
-    - tar
   when:
     - ansible_os_family == "RedHat"
     - (ansible_distribution != "CentOS" and ansible_distribution != "Amazon")
