@@ -162,6 +162,6 @@
     state: present
   with_nested:
     - "{{ available_shell_profiles.results }}"
-    - "{{ nvm_shell_profile }}"
+    - "{{ nvm_shell_exports }}"
   when:
     - item[0].item.stat.exists|bool == true
