@@ -12,7 +12,7 @@
       - make
       - rsync
       - tar
-    state: installed
+    state: present
   when:
     - ansible_os_family == "RedHat"
     - (ansible_distribution == "CentOS" or ansible_distribution == "Amazon")
@@ -29,7 +29,7 @@
       - make
       - rsync
       - tar
-    state: installed
+    state: present
   when: ansible_os_family == "Debian"
 
 - name: "NodeJS | Install dependencies (RedHat)"
@@ -44,7 +44,7 @@
       - make
       - rsync
       - tar
-    state: installed
+    state: present
   when:
     - ansible_os_family == "RedHat"
     - (ansible_distribution != "CentOS" and ansible_distribution != "Amazon")
