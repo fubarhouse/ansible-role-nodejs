@@ -3,12 +3,13 @@
 shell_profiles:
   - .bash_profile
 nodejs_clean_install: false
-nvm_symlink_exec: /usr/local/bin/nvm
+nvm_symlink_dir: /usr/local/bin
 nvm_version: v0.33.8
 
 #nvm_repo: "https://github.com/xtuple/nvm.git"
 ivm_repo: "https://github.com/demohi/ivm.git"
 
+install_nvm_deps: false
 install_nvm: true
 install_nvm_git: true
 install_nodejs: true
@@ -16,7 +17,7 @@ install_ivm: false
 install_iojs: false
 install_npm: true
 
-node_version: 10.5.0
+node_version: 11.3.0
 node_versions:
   - 4.9.1
   - 5.12.0
@@ -24,6 +25,7 @@ node_versions:
   - 7.10.1
   - 8.11.3
   - 9.11.2
+  - 10.14.1
 
 node_packages:
   - backbone
@@ -31,3 +33,8 @@ node_packages:
   - replace
   - underscore
   - yosay
+
+nvm_shell_exports:
+  - 'export NVM_DIR="$HOME/.nvm"'
+  - '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"'
+  - '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"'

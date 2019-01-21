@@ -7,7 +7,7 @@
 
 * Installs NVM (Node Version Manager)
 * Installs IVM (IOJS Version Manager) when configured
-* Installs Node.js v4, v5, v6, v7, v8 and v9 (uses NVM - Node Javascript Library)
+* Installs Node.js v4, v5, v6, v7, v8, v9, v10 and v11 (uses NVM - Node Javascript Library)
 * Installs IOJS when configured
 * Installs NPM packages (Node Package Manager)
 
@@ -17,9 +17,17 @@
 
 ## Role Variables
 
+Install NVM dependencies:
+````yaml
+# By default, NVM dependencies will not install.
+# Enable dependency installation using the following:
+# NOTE: Installing dependencies does require privilege escalation.
+install_nvm_deps: true
+````
+
 Default Node version
 ````yaml
-node_version: 10.5.0
+node_version: 11.3.0
 ````
 
 All Node versions to install
@@ -31,6 +39,7 @@ node_versions:
   - 7.10.1
   - 8.11.3
   - 9.11.2
+  - 10.14.1
 ````
 
 Node packages to download
@@ -54,6 +63,15 @@ node_versions:
 
 Note: In order for this role to do what it does, it uses a script which includes the nvm script to make the function available. This is stored as a file which is then executed from the $PATH. You may configure where the file is stored for execution, however the task associated to this is executed by the `root` user.
 ````yaml
+nvm_symlink_dir: /usr/local/bin
+````
+
+**Deprecated**
+
+The following variable has been replaced by `nvm_symlink_dir` and will continue to work. Please migrate any non-default declarations of this variable to the folder directory which should contain the symlinks (ie `/usr/local/bin`).
+
+````yaml
+# DEPRECATED, migrate to nvm_symlink_dir in the event of failure.
 nvm_symlink_exec: /usr/local/bin/nvm
 ````
 

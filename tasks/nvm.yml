@@ -137,15 +137,13 @@
   when: fubarhouse_npm_nvm_installed.stat.exists|bool == false
 
 - name: "NVM | Create an executable"
-  become: yes
-  become_user: root
   template:
     src: "nvm.sh"
-    dest: "{{ nvm_symlink_exec }}"
+    dest: "{{ nvm_symlink_dir }}/nvm"
     mode: 0755
 
 - name: "NVM | Get versions"
-  shell: "{{ nvm_symlink_exec }} ls-remote"
+  shell: "{{ nvm_symlink_dir }}/nvm ls-remote"
   register: nodejs_available_versions
   changed_when: false
 
@@ -156,23 +154,14 @@
   with_items: "{{ available_shell_profiles.results }}"
   failed_when: false
 
-- name: NVM | Ensure shell profiles are configured for default version
-  lineinfile:
-    dest: "~/{{ item.item.item }}"
-    regexp: '{{ nvm_install_dir }}/v{{ node_version }}/bin'
-    line:  'export PATH=$PATH:{{ nvm_install_dir }}/v{{ node_version }}/bin;'
-    state: present
-  with_items:
-    - "{{ available_shell_profiles.results }}"
-  when: item.item.stat.exists|bool == true
-
-- name: NVM | Ensure shell profiles are configured for other versions
+- name: NVM | Ensure shell profiles are configured
   lineinfile:
     dest: "~/{{ item[0].item.item }}"
-    regexp: '{{ nvm_install_dir }}/v{{ item[1] }}/bin'
-    line:  'export PATH=$PATH:{{ nvm_install_dir }}/v{{ item[1] }}/bin;'
+    regexp: "{{ item[1] }}"
+    line:  "{{ item[1] }}"
     state: present
   with_nested:
     - "{{ available_shell_profiles.results }}"
-    - "{{ node_versions }}"
-  when: item[0].item.stat.exists|bool == true
+    - "{{ nvm_shell_exports }}"
+  when:
+    - item[0].item.stat.exists|bool == true
