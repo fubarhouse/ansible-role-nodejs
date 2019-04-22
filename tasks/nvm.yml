@@ -149,7 +149,7 @@
 
 - name: NVM | Ensure shell profiles are available
   stat:
-    path: "~/{{ item }}"
+    path: "~/{{ item.item }}"
   register: available_shell_profiles
   with_items: "{{ available_shell_profiles.results }}"
   failed_when: false
