@@ -72,10 +72,6 @@ env:
     init: /usr/lib/systemd/systemd
     run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
     playbook: playbook.yml
-  - distro: wheezy
-    init: /bin/systemd
-    run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
-    playbook: playbook.yml
   - distro: jessie
     init: /lib/systemd/systemd
     run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
