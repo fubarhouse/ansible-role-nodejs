@@ -4,7 +4,7 @@ shell_profiles:
   - .bash_profile
 nodejs_clean_install: false
 nvm_symlink_dir: /usr/local/bin
-nvm_version: v0.33.8
+nvm_version: v0.34.0
 
 #nvm_repo: "https://github.com/xtuple/nvm.git"
 ivm_repo: "https://github.com/demohi/ivm.git"
