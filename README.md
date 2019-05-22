@@ -27,7 +27,7 @@ install_nvm_deps: true
 
 Default Node version
 ````yaml
-node_version: 11.3.0
+node_version: 12.3.0
 ````
 
 All Node versions to install
@@ -40,6 +40,7 @@ node_versions:
   - 8.11.3
   - 9.11.2
   - 10.14.1
+  - 11.15.0
 ````
 
 Node packages to download
