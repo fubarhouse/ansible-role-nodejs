@@ -38,6 +38,7 @@ galaxy_info:
         - artful
         - bionic
         - cuttlefish
+        - disco
   categories:
     - system
     - database
