@@ -64,10 +64,6 @@ env:
     init: /sbin/init
     run_opts: --privileged
     playbook: playbook.yml
-  - distro: centos-6
-    init: /sbin/init
-    run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
-    playbook: playbook.yml
   - distro: centos-7
     init: /usr/lib/systemd/systemd
     run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
